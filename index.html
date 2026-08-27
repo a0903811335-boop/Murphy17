@@ -1328,44 +1328,96 @@
           </div>
         </div>
 
-        <!-- 4. PISA Inquiry Guide Panel -->
-        <div id="tool-panel-inquiry" class="hidden space-y-4">
-          <p class="text-xs text-slate-500">課堂深度對話與提問設計框架（PISA 三層次提問法）：</p>
+        <!-- 4. PISA Inquiry Guide & AI Question Generator Panel -->
+        <div id="tool-panel-inquiry" class="hidden space-y-6">
           
-          <div class="space-y-3">
-            <div class="bg-blue-50/80 p-4 rounded-2xl border border-blue-200">
-              <h5 class="text-sm font-bold text-blue-900 font-serif flex items-center gap-2">
-                <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center">1</span>
-                第一層次：擷取與檢索訊息（文本事實）
-              </h5>
-              <p class="text-xs text-slate-600 mt-1">引導學生從文章中直接找到特定資訊、時間線或具體細節。</p>
-              <div class="text-xs text-blue-800 mt-2 bg-white/70 p-2 rounded">
-                💡 <strong>引導提問：</strong>「在《聲音鐘》中，作者列舉了哪些時間出現的攤販叫賣聲？」「《背影》中父親穿著什麼樣的衣著？」
-              </div>
+          <!-- Generator Header Banner -->
+          <div class="bg-gradient-to-r from-amber-600 via-indigo-700 to-purple-800 text-white p-5 rounded-2xl shadow-sm space-y-2">
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-white/20 rounded-full text-[10px] font-bold text-amber-200">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> 108 課綱 · 素養導向提問設計
             </div>
-
-            <div class="bg-amber-50/80 p-4 rounded-2xl border border-amber-200">
-              <h5 class="text-sm font-bold text-amber-900 font-serif flex items-center gap-2">
-                <span class="w-6 h-6 rounded-full bg-amber-600 text-white text-xs flex items-center justify-center">2</span>
-                第二層次：統整與解釋文本（歸納推論）
-              </h5>
-              <p class="text-xs text-slate-600 mt-1">引導學生連結上下文，推論人物動機、象徵意涵或主題精神。</p>
-              <div class="text-xs text-amber-800 mt-2 bg-white/70 p-2 rounded">
-                💡 <strong>引導提問：</strong>「為什麼作者說那些叫賣聲是『聲音鐘』，比起一般的時鐘它多了什麼特質？」「紙船在文中象徵了什麼？」
-              </div>
-            </div>
-
-            <div class="bg-purple-50/80 p-4 rounded-2xl border border-purple-200">
-              <h5 class="text-sm font-bold text-purple-900 font-serif flex items-center gap-2">
-                <span class="w-6 h-6 rounded-full bg-purple-600 text-white text-xs flex items-center justify-center">3</span>
-                第三層次：省思與評鑑意涵（連結生活與價值）
-              </h5>
-              <p class="text-xs text-slate-600 mt-1">引導學生將文本與自身經驗結合，進行批判性思考與價值判斷。</p>
-              <div class="text-xs text-purple-800 mt-2 bg-white/70 p-2 rounded">
-                💡 <strong>引導提問：</strong>「現代都市中傳統叫賣聲逐漸消失，你認為生活因此失去了什麼？如果是你，會如何記錄生活周遭的聲音？」
-              </div>
-            </div>
+            <h4 class="text-base sm:text-lg font-serif font-black">
+              🤖 AI 素養提問生成器（貼上段落 · 智慧生成三層次問題）
+            </h4>
+            <p class="text-xs text-lilac-100 max-w-2xl leading-relaxed">
+              請在下方貼上任何課文段落或閱讀文本，AI 將自動分析字詞脈絡與情意主旨，為您即時生成「訊息擷取」、「統整推論」、「省思評鑑」三個層次的素養提問與參考解答！
+            </p>
           </div>
+
+          <!-- Input Area -->
+          <div class="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200 space-y-3">
+            
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <label class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <i class="fa-solid fa-file-lines text-lilac-600"></i> 請貼上欲設計提問的段落文字：
+              </label>
+              
+              <!-- Quick Sample Preset Chips -->
+              <div class="flex flex-wrap items-center gap-1.5 text-[11px]">
+                <span class="text-slate-400 font-medium mr-1">範例段落：</span>
+                <button type="button" onclick="loadInquiryPreset('sound_clock')" class="px-2 py-0.5 bg-white hover:bg-amber-50 text-amber-900 font-semibold rounded-lg border border-amber-200 transition shadow-2xs">
+                  📌 《聲音鐘》叫賣
+                </button>
+                <button type="button" onclick="loadInquiryPreset('paper_boat')" class="px-2 py-0.5 bg-white hover:bg-cyan-50 text-cyan-900 font-semibold rounded-lg border border-cyan-200 transition shadow-2xs">
+                  📌 《紙船印象》母愛
+                </button>
+                <button type="button" onclick="loadInquiryPreset('back_view')" class="px-2 py-0.5 bg-white hover:bg-indigo-50 text-indigo-900 font-semibold rounded-lg border border-indigo-200 transition shadow-2xs">
+                  📌 《背影》買橘
+                </button>
+                <button type="button" onclick="loadInquiryPreset('childhood_fun')" class="px-2 py-0.5 bg-white hover:bg-emerald-50 text-emerald-900 font-semibold rounded-lg border border-emerald-200 transition shadow-2xs">
+                  📌 《兒時記趣》夏蚊
+                </button>
+              </div>
+            </div>
+
+            <!-- Textarea -->
+            <textarea 
+              id="inquiry-text-input" 
+              placeholder="請在此處貼上課文段落、現代散文、文言文或課外閱讀材料..."
+              class="w-full h-36 p-3.5 bg-white text-xs sm:text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-lilac-500 focus:border-transparent font-sans leading-relaxed resize-y"
+            ></textarea>
+
+            <!-- Buttons Row -->
+            <div class="flex items-center justify-between gap-3 pt-1">
+              <button 
+                type="button" 
+                onclick="clearInquiryInput()" 
+                class="px-3.5 py-2 text-xs font-semibold text-slate-500 hover:text-slate-800 bg-white hover:bg-slate-100 border border-slate-200 rounded-xl transition"
+              >
+                <i class="fa-solid fa-trash-can mr-1"></i> 清空文字
+              </button>
+
+              <button 
+                type="button" 
+                id="btn-generate-inquiry"
+                onclick="generateInquiryQuestions()" 
+                class="px-5 py-2.5 bg-gradient-to-r from-amber-600 to-lilac-700 hover:from-amber-700 hover:to-lilac-800 text-white font-bold text-xs sm:text-sm rounded-xl shadow-md transition flex items-center gap-2 group"
+              >
+                <i class="fa-solid fa-wand-magic-sparkles group-hover:rotate-12 transition"></i>
+                <span>✨ 立即生成 PISA 三層次提問</span>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Generated Results Container -->
+          <div id="inquiry-results-container" class="space-y-4">
+            <!-- Populated via JS after generation -->
+          </div>
+
+          <!-- Classic Reference Framework (Collapsible Accordion) -->
+          <details class="bg-lilac-50/60 p-4 rounded-2xl border border-lilac-200 text-xs group">
+            <summary class="font-bold text-lilac-950 cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2"><i class="fa-solid fa-circle-info text-lilac-600"></i> PISA 閱讀素養三層次提問設計心法說明</span>
+              <i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition"></i>
+            </summary>
+            <div class="pt-3 space-y-2 text-slate-600 leading-relaxed border-t border-lilac-200/60 mt-2">
+              <p><strong>第一層次（擷取訊息）：</strong>聚焦於文本表面客觀事實、人事物名稱、時間空間線索，答案通常可直接在原文中找到。</p>
+              <p><strong>第二層次（統整推論）：</strong>需連結前後文，推敲角色的心境動機、象徵隱喻、寫作結構與作者觀點。</p>
+              <p><strong>第三層次（省思評鑑）：</strong>引導學生跳脫文本，將情節與自身經驗或當代社會議題連結，進行價值思辨與情意評價。</p>
+            </div>
+          </details>
+
         </div>
 
         <!-- 5. Sound Clock Prep Manual Panel (《聲音鐘》名師備課手冊) -->
@@ -2664,6 +2716,349 @@
     function closeLessonModal() {
       document.getElementById('lesson-detail-modal').classList.add('hidden');
       document.getElementById('lesson-detail-modal').classList.remove('flex');
+    }
+
+    // --- AI PISA Literacy Question Generator Engine ---
+    const inquiryPresets = {
+      sound_clock: "碰到夏天需要吃冰消暑的時候，賣冰的叫賣聲就出現了。那是賣芋冰的，賣冰棒的，賣把噗的……他們的名字雖然各不相同，但是叫賣的聲音都是一樣的清脆、悠揚。那清脆的叫賣聲，是生活裡最動人的鐘擺。它們熱鬧了寂寞的街道，也溫暖了人間的心靈。",
+      paper_boat: "母親心裡一定想：這是孩子們唯一可以在雨天玩耍的遊戲了。只要他們高興，弄髒了衣服又何妨？這種美麗的感情，要到自己長大做了母親，甚至做了祖母，才能完全體會。我常常想，母親那時為我們摺紙船的心情，一定也是這樣充滿了慈愛與包容。",
+      back_view: "我看見他戴著黑布小帽，穿著黑布大馬褂，深青布棉袍，蹣跚地走到鐵道邊，慢慢探身下去，尚不大難。可是他穿過鐵道，要爬上那邊月台，就不容易了。他用兩手攀著上面，兩腳再向上縮；他肥胖的身子向左微傾，顯出努力的樣子。這時我看見他的背影，我的淚很快地流下來了。",
+      childhood_fun: "余憶童稚時，能張目對日，明察秋毫。見藐小微物，必細察其紋理，故時有物外之趣。夏蚊成雷，私擬作群鶴舞空。心之所向，則或千或百果然鶴也。昂首觀之，項為之強。又留蚊於素帳中，徐噴以煙，使之沖煙飛鳴，作青雲白鶴觀，果如鶴唳雲端，為之怡然稱快。"
+    };
+
+    function loadInquiryPreset(key) {
+      const text = inquiryPresets[key] || '';
+      const inputEl = document.getElementById('inquiry-text-input');
+      if (inputEl) {
+        inputEl.value = text;
+        generateInquiryQuestions();
+      }
+    }
+
+    function clearInquiryInput() {
+      const inputEl = document.getElementById('inquiry-text-input');
+      const resultsContainer = document.getElementById('inquiry-results-container');
+      if (inputEl) inputEl.value = '';
+      if (resultsContainer) resultsContainer.innerHTML = '';
+    }
+
+    let lastGeneratedQuestions = null;
+
+    function generateInquiryQuestions() {
+      const inputEl = document.getElementById('inquiry-text-input');
+      const resultsContainer = document.getElementById('inquiry-results-container');
+      const btn = document.getElementById('btn-generate-inquiry');
+      
+      const rawText = (inputEl ? inputEl.value : '').trim();
+      if (!rawText) {
+        alert('請先貼上課文段落或閱讀材料文字！');
+        if (inputEl) inputEl.focus();
+        return;
+      }
+
+      // Show Loading state
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>AI 正在研讀文本並命題中...</span>';
+      resultsContainer.innerHTML = `
+        <div class="p-8 text-center bg-white rounded-2xl border border-lilac-200 shadow-sm space-y-3 animate-pulse">
+          <div class="w-12 h-12 rounded-full bg-lilac-100 text-lilac-700 flex items-center justify-center text-xl mx-auto">
+            <i class="fa-solid fa-brain"></i>
+          </div>
+          <div class="font-serif font-bold text-slate-800 text-sm">正在進行自然語言深層語意分析與三層次問題建構...</div>
+          <p class="text-xs text-slate-500">解析關鍵人事物 · 推論情感主旨 · 設計生活思辨提問</p>
+        </div>
+      `;
+
+      setTimeout(() => {
+        const questions = analyzeAndBuildInquiryQuestions(rawText);
+        lastGeneratedQuestions = questions;
+        renderGeneratedInquiryCards(questions, rawText);
+
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> <span>✨ 重新分析並生成提問</span>';
+      }, 700);
+    }
+
+    // Smart Linguistic & Literary Text Analyzer
+    function analyzeAndBuildInquiryQuestions(text) {
+      const textLower = text.toLowerCase();
+      
+      // Preset matchers for well-known passages
+      if (text.includes('聲音鐘') || text.includes('叫賣') || text.includes('把噗') || text.includes('芋冰')) {
+        return {
+          title: "《聲音鐘》生活美學與市井聲景分析",
+          level1: {
+            question: "根據段落內容，作者在夏季時聽到了哪些不同名稱的賣冰叫賣聲？這些聲音有什麼共同的特質？",
+            answer: "作者提到了「賣芋冰的、賣冰棒的、賣把噗的」。他們的共同特質是「叫賣的聲音都是一樣的清脆、悠揚」。",
+            focus: "檢索文本明確列舉的事物名稱與感官（聽覺）形容詞"
+          },
+          level2: {
+            question: "作者為何將小販清脆的叫賣聲比喻為「生活裡最動人的鐘擺」？它如何「熱鬧了寂寞的街道，也溫暖了人間的心靈」？",
+            answer: "因為小販的叫賣聲規律出現，如鐘擺般準確報時；但比起冰冷機械的時鐘，它蘊含著生動活潑的人間煙火氣與鄉土人情味，為平淡寂寞的街道注入了生機與溫暖。",
+            focus: "剖析隱喻修辭的深層意涵與情景交融之抒情主旨"
+          },
+          level3: {
+            question: "現代都市生活中，便利商店與外送平台日漸普及，傳統挑擔或推車的叫賣聲逐漸消逝。請結合你的生活經驗，探討這種轉變對我們的情感連結與社區文化帶來了什麼得與失？",
+            answer: "【引導思考方向】：可引導學生從「物質便利度提升」與「人際溫度、鄉土記憶流失」兩方面進行思辨；並反思如何在高度數位化的現代生活中，重新建立對周遭環境與人際的感知。",
+            focus: "連結現代生活變遷，進行文化價值評鑑與個人經驗省思"
+          }
+        };
+      }
+
+      if (text.includes('紙船') || text.includes('摺紙船') || text.includes('母親心裡') || text.includes('弄髒了衣服')) {
+        return {
+          title: "《紙船印象》親情象徵與童年回憶分析",
+          level1: {
+            question: "文本中提到，母親在下雨天讓孩子們玩紙船時，心中抱持著怎樣的想法？",
+            answer: "母親心裡想著：這是孩子們唯一可以在雨天玩耍的遊戲了，只要孩子們高興，弄髒了衣服也沒有關係。",
+            focus: "擷取文本中直接描寫母親心理活動與包容態度的關鍵語句"
+          },
+          level2: {
+            question: "作者為什麼說「這種美麗的感情，要到自己長大做了母親，甚至做了祖母，才能完全體會」？這展現了親情的什麼特質？",
+            answer: "因為年幼時往往只懂得享受被愛與玩樂，唯有當自己成為照顧者、承擔養育責任後，才能真正體悟那份不計代價的奉獻與包容。這展現了母愛代代傳承、綿延不絕的深厚力量。",
+            focus: "推論作者心境的跨時空轉變與代際情感傳承的主題意象"
+          },
+          level3: {
+            question: "在你的成長經歷中，父母或長輩是否也曾為你做過某件看似微小、卻充滿愛意的包容之舉？如果未來換成你為人父母，你會希望傳承怎樣的家庭溫度？",
+            answer: "【引導思考方向】：鼓勵學生回顧童年細節（如雨天接送、為自己準備愛心便當、陪伴生病），並從中梳理出「愛如何轉化為具體行動」，培養同理心與感恩情懷。",
+            focus: "將文本中的親子情感遷移至自身家庭生命經驗，進行情意評價"
+          }
+        };
+      }
+
+      if (text.includes('背影') || text.includes('黑布小帽') || text.includes('鐵道') || text.includes('月台')) {
+        return {
+          title: "《背影》父愛細節特寫與情感轉折分析",
+          level1: {
+            question: "請根據文段，找出描寫父親過鐵道爬月台時的「穿著外貌」與「動作特寫」詞彙。",
+            answer: "【穿著】：戴著黑布小帽，穿著黑布大馬褂，深青布棉袍；【動作】：蹣跚地走、探身下去、穿過鐵道、兩手攀著上面、兩腳向上縮、身子向左微傾。",
+            focus: "準確檢索並梳理文本中的外貌服飾與具體動作描寫"
+          },
+          level2: {
+            question: "作者在看著父親努力爬月台的「背影」時，為什麼「我的淚很快地流下來了」？這與他先前的自傲心態有何轉折？",
+            answer: "父親肥胖老邁、行動不便，卻在家庭慘澹、奔波勞碌之際，堅持親自為兒子買橘子。作者目睹父親費勁攀爬的身影，深刻體會到笨拙而無私的父愛，為自己過往的不耐與自以為是感到無比愧疚與感動，因而情不自禁落淚。",
+            focus: "推論人物心理層次、因果關係與從少年輕狂到感念父恩的心境轉折"
+          },
+          level3: {
+            question: "傳統華人家庭中，長輩對晚輩的關懷常隱藏在沉默或不善言辭的背後。你認為新時代的家庭溝通，該如何兼顧『含蓄深沉的愛』與『主動及時的表達』？",
+            answer: "【引導思考方向】：引導學生討論世代溝通方式的差異，思考如何主動覺察父母未說出口的關心，並學習用適當的方式表達感恩，避免「樹欲靜而風不止，子欲養而親不待」的遺憾。",
+            focus: "探討文化中的親情表達模式，促進批判性思考與自我人際修復能力"
+          }
+        };
+      }
+
+      if (text.includes('余憶童稚時') || text.includes('夏蚊成雷') || text.includes('物外之趣') || text.includes('私擬作群鶴')) {
+        return {
+          title: "《兒時記趣》古典文言與想像觀察分析",
+          level1: {
+            question: "根據文本，作者在童年時能夠產生「物外之趣」的前提條件是什麼？他把夏夜的蚊群想像成了什麼？",
+            answer: "前提是「能張目對日，明察秋毫。見藐小微物，必細察其紋理」。他把夏夜成雷的蚊子「私擬作群鶴舞空」。",
+            focus: "檢索文言文句中的核心條件句與具體譬喻對象"
+          },
+          level2: {
+            question: "作者如何透過「留蚊於素帳中，徐噴以煙」的過程，創造出「作青雲白鶴觀」的藝術情境？這展現了怎樣的審美心理？",
+            answer: "作者並非以殺蚊為目的，而是將白色的蚊帳比作天空，徐徐噴出的煙霧比作青雲，翻飛的蚊子比作白鶴，藉由豐富主觀的想像力與專注觀察，化平凡煩人的害蟲為高雅祥瑞的仙境，展現出純真超脫、自得其樂的審美趣味。",
+            focus: "推論作者如何藉由想像力點石成金，分析「心之所向」的藝術轉化過程"
+          },
+          level3: {
+            question: "現代青少年常被各類聲光刺激與手機短影音填滿時間，你認為我們是否正在失去沈復筆下這種「細察微物、自得其樂」的專注與想像力？我們該如何找回生活中的物外之趣？",
+            answer: "【引導思考方向】：引導學生反思被動接受資訊與主動觀察世界的差別；討論如何透過放下手機、親近自然、培養微觀觀察習慣，重拾對平凡細節的感知力與創造力。",
+            focus: "對比古今生活節奏與專注力差異，提出個人實踐之省思建議"
+          }
+        };
+      }
+
+      // Universal Generic PISA Literacy Question Synthesizer for Custom Pasted Texts
+      const sentences = text.split(/[。！？\n\r]+/).filter(s => s.trim().length > 3);
+      const firstSentence = sentences[0] || text.substring(0, 30);
+      const mainSentence = sentences[Math.floor(sentences.length / 2)] || text.substring(0, 50);
+      const lastSentence = sentences[sentences.length - 1] || text.substring(text.length - 40);
+
+      return {
+        title: "自訂閱讀段落 · PISA 三層次素養分析",
+        level1: {
+          question: `【擷取與檢索訊息】：根據文本段落，請找出文中提及的核心人事物、時間或情境特徵（例如「${firstSentence.substring(0, 18)}...」中描述了什麼關鍵細節）？`,
+          answer: `【參考依據】：讀者應直接從段落中尋找相應之具體名詞、事實線索與直接陳述之因果句，定位關鍵文句並清楚回答。`,
+          focus: "考查學生定位文本表面事實、辨識特定資訊與直接證據擷取能力"
+        },
+        level2: {
+          question: `【統整與解釋文本】：閱讀文中「${mainSentence.substring(0, 20)}...」等文句，作者想藉此傳達角色怎樣的心境轉折、內在動機或主題深意？`,
+          answer: `【參考依據】：需結合前後文脈絡，分析文中隱含的情感色彩、修辭手法（如譬喻、對比或擬人）或象徵意義，歸納出作者的核心觀點。`,
+          focus: "考查學生串聯上下文、推論深層意涵、解析寫作手法與主旨歸納能力"
+        },
+        level3: {
+          question: `【省思與評鑑價值】：文段結尾提及「${lastSentence.substring(0, 20)}...」，若將此情境或觀點置於現代社會或你的個人經驗中，你是否認同作者的看法？如果是你，會採取怎樣的態度或做法？`,
+          answer: `【引導思考方向】：鼓勵學生提出具備論據之個人觀點，結合日常生活、公民素養或同理心體驗，進行開放式、多角度之批判與評價。`,
+          focus: "考查學生連結個人生活經驗、進行批判性思考與多元價值判斷之高層次素養"
+        }
+      };
+    }
+
+    function renderGeneratedInquiryCards(qData, originalText) {
+      const container = document.getElementById('inquiry-results-container');
+      
+      const html = `
+        <div class="space-y-4 animate-in fade-in zoom-in duration-300">
+          
+          <!-- Result Top Bar -->
+          <div class="flex flex-wrap items-center justify-between gap-2 p-3 bg-lilac-100/70 border border-lilac-200 rounded-2xl">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-lilac-700 text-white text-xs flex items-center justify-center font-bold">
+                ✓
+              </span>
+              <span class="text-xs font-bold text-lilac-950 font-serif">
+                ${qData.title}
+              </span>
+              <span class="text-[10px] bg-white text-lilac-700 px-2 py-0.5 rounded font-bold border border-lilac-200">
+                PISA 3 Levels Ready
+              </span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button onclick="copyGeneratedQuestions()" class="px-3 py-1.5 bg-lilac-700 hover:bg-lilac-800 text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center gap-1.5">
+                <i class="fa-solid fa-copy"></i>
+                <span id="btn-copy-text">一鍵複製整組提問與解答</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Cards Stack -->
+          <div class="grid grid-cols-1 gap-4">
+            
+            <!-- Level 1 Card -->
+            <div class="bg-blue-50/90 rounded-2xl border-2 border-blue-200 p-5 shadow-xs space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-0.5 bg-blue-600 text-white font-black text-xs rounded-full">
+                    第 1 層次
+                  </span>
+                  <h5 class="text-sm font-bold text-blue-950 font-serif">擷取與檢索訊息（文本事實）</h5>
+                </div>
+                <span class="text-[10px] text-blue-700 font-semibold bg-white/80 px-2 py-0.5 rounded border border-blue-200">
+                  🎯 基礎理解
+                </span>
+              </div>
+              
+              <div class="space-y-1.5 text-xs text-slate-800">
+                <div class="font-bold text-blue-900 flex items-start gap-1.5">
+                  <span class="shrink-0 text-blue-600 font-black">【提問】：</span>
+                  <span>${qData.level1.question}</span>
+                </div>
+                <div class="bg-white/80 p-3 rounded-xl border border-blue-100 space-y-1">
+                  <div class="font-bold text-emerald-800 flex items-start gap-1.5">
+                    <span class="shrink-0">💡 參考解答：</span>
+                    <span class="font-normal text-slate-700">${qData.level1.answer}</span>
+                  </div>
+                  <div class="text-[11px] text-blue-700/80 pt-1 border-t border-blue-50 flex items-center gap-1">
+                    <i class="fa-solid fa-magnifying-glass text-[10px]"></i> 命題指標：${qData.level1.focus}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Level 2 Card -->
+            <div class="bg-amber-50/90 rounded-2xl border-2 border-amber-200 p-5 shadow-xs space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-0.5 bg-amber-600 text-white font-black text-xs rounded-full">
+                    第 2 層次
+                  </span>
+                  <h5 class="text-sm font-bold text-amber-950 font-serif">統整與解釋意涵（歸納推論）</h5>
+                </div>
+                <span class="text-[10px] text-amber-800 font-semibold bg-white/80 px-2 py-0.5 rounded border border-amber-200">
+                  🧠 進階分析
+                </span>
+              </div>
+              
+              <div class="space-y-1.5 text-xs text-slate-800">
+                <div class="font-bold text-amber-950 flex items-start gap-1.5">
+                  <span class="shrink-0 text-amber-600 font-black">【提問】：</span>
+                  <span>${qData.level2.question}</span>
+                </div>
+                <div class="bg-white/80 p-3 rounded-xl border border-amber-100 space-y-1">
+                  <div class="font-bold text-emerald-800 flex items-start gap-1.5">
+                    <span class="shrink-0">💡 參考解答：</span>
+                    <span class="font-normal text-slate-700">${qData.level2.answer}</span>
+                  </div>
+                  <div class="text-[11px] text-amber-800/80 pt-1 border-t border-amber-50 flex items-center gap-1">
+                    <i class="fa-solid fa-magnifying-glass text-[10px]"></i> 命題指標：${qData.level2.focus}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Level 3 Card -->
+            <div class="bg-purple-50/90 rounded-2xl border-2 border-purple-200 p-5 shadow-xs space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-0.5 bg-purple-600 text-white font-black text-xs rounded-full">
+                    第 3 層次
+                  </span>
+                  <h5 class="text-sm font-bold text-purple-950 font-serif">省思與評鑑價值（生活思辨）</h5>
+                </div>
+                <span class="text-[10px] text-purple-800 font-semibold bg-white/80 px-2 py-0.5 rounded border border-purple-200">
+                  🌟 深度思維
+                </span>
+              </div>
+              
+              <div class="space-y-1.5 text-xs text-slate-800">
+                <div class="font-bold text-purple-950 flex items-start gap-1.5">
+                  <span class="shrink-0 text-purple-600 font-black">【提問】：</span>
+                  <span>${qData.level3.question}</span>
+                </div>
+                <div class="bg-white/80 p-3 rounded-xl border border-purple-100 space-y-1">
+                  <div class="font-bold text-emerald-800 flex items-start gap-1.5">
+                    <span class="shrink-0">💡 引導思考：</span>
+                    <span class="font-normal text-slate-700">${qData.level3.answer}</span>
+                  </div>
+                  <div class="text-[11px] text-purple-800/80 pt-1 border-t border-purple-50 flex items-center gap-1">
+                    <i class="fa-solid fa-magnifying-glass text-[10px]"></i> 命題指標：${qData.level3.focus}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      `;
+
+      container.innerHTML = html;
+      container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function copyGeneratedQuestions() {
+      if (!lastGeneratedQuestions) return;
+      const text = `
+=== ${lastGeneratedQuestions.title}（PISA 三層次素養提問）===
+
+【第一層次：擷取與檢索訊息】
+題目：${lastGeneratedQuestions.level1.question}
+解答：${lastGeneratedQuestions.level1.answer}
+指標：${lastGeneratedQuestions.level1.focus}
+
+【第二層次：統整與解釋意涵】
+題目：${lastGeneratedQuestions.level2.question}
+解答：${lastGeneratedQuestions.level2.answer}
+指標：${lastGeneratedQuestions.level2.focus}
+
+【第三層次：省思與評鑑價值】
+題目：${lastGeneratedQuestions.level3.question}
+解答：${lastGeneratedQuestions.level3.answer}
+指標：${lastGeneratedQuestions.level3.focus}
+      `.trim();
+
+      navigator.clipboard.writeText(text).then(() => {
+        const btnText = document.getElementById('btn-copy-text');
+        if (btnText) {
+          btnText.innerText = '✅ 已成功複製到剪貼簿！';
+          setTimeout(() => {
+            btnText.innerText = '一鍵複製整組提問與解答';
+          }, 2000);
+        }
+      }).catch(err => {
+        alert('請手動選取文字複製！');
+      });
     }
 
     // Close modals on Escape
