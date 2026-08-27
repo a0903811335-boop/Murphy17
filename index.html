@@ -973,50 +973,143 @@
       <!-- Toolkit Content Areas -->
       <div class="p-6 overflow-y-auto flex-1 space-y-6">
 
-        <!-- 1. Random Picker Panel -->
-        <div id="tool-panel-picker" class="space-y-5">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+        <!-- 1. Random Picker / Fortune Stick Canister Panel -->
+        <div id="tool-panel-picker" class="space-y-6">
+          
+          <!-- Mode Tabs & Quick Controls -->
+          <div class="flex flex-wrap items-center justify-between gap-3 bg-lilac-100/60 p-3 rounded-2xl border border-lilac-200">
+            <div class="flex items-center space-x-2">
+              <span class="text-xs font-bold text-lilac-950 flex items-center gap-1.5">
+                <i class="fa-solid fa-scroll text-sunlight-600"></i> 籤筒規格：
+              </span>
+              <button onclick="setStickRange(20)" id="btn-stick-20" class="stick-preset-btn px-3 py-1.5 bg-lilac-700 text-white rounded-xl text-xs font-bold shadow-sm transition">
+                🎋 1 到 20 號 經典籤筒
+              </button>
+              <button onclick="setStickRange(35)" id="btn-stick-35" class="stick-preset-btn px-3 py-1.5 bg-white text-slate-700 hover:bg-lilac-50 border border-lilac-200 rounded-xl text-xs font-medium transition">
+                35 號班級
+              </button>
+              <button onclick="setStickRange(45)" id="btn-stick-45" class="stick-preset-btn px-3 py-1.5 bg-white text-slate-700 hover:bg-lilac-50 border border-lilac-200 rounded-xl text-xs font-medium transition">
+                45 號大班
+              </button>
+              <button onclick="toggleCustomNameInput()" id="btn-stick-custom" class="stick-preset-btn px-3 py-1.5 bg-white text-slate-700 hover:bg-lilac-50 border border-lilac-200 rounded-xl text-xs font-medium transition">
+                ✍️ 自訂名單
+              </button>
+            </div>
+
+            <!-- Options -->
+            <div class="flex items-center space-x-3 text-xs text-slate-600">
+              <label class="flex items-center space-x-1.5 cursor-pointer font-medium">
+                <input type="checkbox" id="no-repeat-checkbox" checked class="rounded text-lilac-600 focus:ring-lilac-500">
+                <span>不重複抽籤</span>
+              </label>
+              <button onclick="resetDrawnSticks()" class="text-lilac-700 hover:text-lilac-900 font-bold flex items-center gap-1">
+                <i class="fa-solid fa-rotate-left text-[11px]"></i> 重置籤筒
+              </button>
+            </div>
+          </div>
+
+          <!-- Custom Name Input Drawer (Hidden by default) -->
+          <div id="custom-name-drawer" class="hidden bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
+            <label class="text-xs font-semibold text-slate-700 block">請輸入學生姓名（每行一人）：</label>
+            <textarea id="picker-custom-names" placeholder="例如：
+01 王小明
+02 李大華
+03 陳怡君" class="w-full h-24 px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-lilac-500 font-sans"></textarea>
+            <button onclick="applyCustomNames()" class="px-4 py-1.5 bg-lilac-600 text-white rounded-lg text-xs font-bold hover:bg-lilac-700 transition">
+              確認套用名單
+            </button>
+          </div>
+
+          <!-- Main Interactive Stage -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
             
-            <!-- Left: Settings -->
-            <div class="space-y-4 bg-slate-50 p-5 rounded-2xl border border-slate-200">
-              <h4 class="text-sm font-bold text-slate-800 flex items-center gap-2">
-                <i class="fa-solid fa-sliders text-lilac-600"></i> 抽籤設定
-              </h4>
-              <div>
-                <label class="text-xs font-semibold text-slate-600 mb-1 block">班級座號範圍 (1 ~ N 號)：</label>
-                <div class="flex items-center space-x-2">
-                  <input type="number" id="picker-max-seat" value="35" min="2" max="60" class="w-24 px-3 py-2 border border-slate-300 rounded-xl text-sm font-bold text-center focus:ring-2 focus:ring-lilac-500">
-                  <span class="text-xs text-slate-500">號（預設 1~35 號）</span>
+            <!-- Left Column: Canister Animation & Trigger (5 cols) -->
+            <div class="lg:col-span-5 bg-gradient-to-b from-amber-50/70 via-sunlight-50/50 to-amber-100/40 p-6 rounded-3xl border border-amber-200 text-center flex flex-col items-center justify-between min-h-[340px] shadow-inner">
+              
+              <div class="text-xs font-serif font-bold text-amber-900 uppercase tracking-widest flex items-center gap-1.5">
+                <i class="fa-solid fa-award text-sunlight-600"></i> 國文課堂 · 隨堂點名籤筒
+              </div>
+
+              <!-- Bamboo Canister Graphic with animated sticks -->
+              <div id="bamboo-canister-container" class="relative my-4 transition-transform duration-300">
+                
+                <!-- Sticks Fan -->
+                <div class="relative w-36 h-28 mx-auto flex items-end justify-center overflow-visible">
+                  <!-- Emerging Stick (Shown when drawn) -->
+                  <div id="emerging-stick" class="absolute -top-12 z-20 w-8 h-28 bg-gradient-to-t from-amber-600 via-sunlight-400 to-amber-200 rounded-t-lg shadow-lg border border-amber-700 flex flex-col items-center justify-start pt-1 text-[11px] font-serif font-black text-amber-950 transition-all duration-500 opacity-0 transform -translate-y-4">
+                    <span id="emerging-stick-num">7</span>
+                    <div class="w-2 h-2 bg-rose-600 rounded-full mt-1"></div>
+                  </div>
+
+                  <!-- Decorative Background Sticks in Barrel -->
+                  <div class="w-3.5 h-20 bg-amber-200 border border-amber-400 rounded-t-md -rotate-12 shadow-sm"></div>
+                  <div class="w-3.5 h-22 bg-amber-300 border border-amber-500 rounded-t-md -rotate-6 shadow-sm -ml-1"></div>
+                  <div class="w-3.5 h-24 bg-amber-100 border border-amber-400 rounded-t-md rotate-0 shadow-sm -ml-1"></div>
+                  <div class="w-3.5 h-22 bg-amber-300 border border-amber-500 rounded-t-md rotate-6 shadow-sm -ml-1"></div>
+                  <div class="w-3.5 h-20 bg-amber-200 border border-amber-400 rounded-t-md rotate-12 shadow-sm -ml-1"></div>
+                </div>
+
+                <!-- Bamboo Cylinder Barrel Body -->
+                <div class="w-32 h-24 bg-gradient-to-r from-amber-700 via-amber-600 to-amber-800 rounded-b-2xl rounded-t-sm shadow-xl border-2 border-amber-900 mx-auto flex flex-col items-center justify-center text-amber-100 relative overflow-hidden">
+                  <div class="absolute inset-x-0 top-1 h-1 bg-amber-400/40"></div>
+                  <div class="absolute inset-x-0 bottom-2 h-1 bg-amber-400/30"></div>
+                  <span class="font-serif font-black text-lg tracking-widest text-sunlight-200 drop-shadow">國文籤筒</span>
+                  <span id="canister-count-badge" class="text-[10px] bg-amber-950/70 text-sunlight-300 px-2 py-0.5 rounded-full mt-1 font-mono">
+                    剩餘: 20 支籤
+                  </span>
+                </div>
+
+              </div>
+
+              <!-- Action Button -->
+              <button 
+                id="btn-draw-stick"
+                onclick="drawFortuneStick()" 
+                class="w-full py-3.5 bg-gradient-to-r from-amber-600 via-amber-500 to-sunlight-500 hover:from-amber-700 hover:to-sunlight-600 text-white font-serif font-black text-base rounded-2xl shadow-lg shadow-amber-600/30 hover:shadow-xl transition transform active:scale-95 flex items-center justify-center gap-2"
+              >
+                <i class="fa-solid fa-hand-sparkles"></i> 搖動籤筒 · 抽一支籤
+              </button>
+
+            </div>
+
+            <!-- Right Column: Result Display & Sticks Grid (7 cols) -->
+            <div class="lg:col-span-7 space-y-4">
+              
+              <!-- Draw Result Banner Card -->
+              <div id="draw-result-card" class="bg-gradient-to-tr from-lilac-900 via-lilac-800 to-indigo-900 text-white p-6 rounded-3xl shadow-lg border border-lilac-700 text-center min-h-[150px] flex flex-col justify-center items-center relative overflow-hidden">
+                <div class="absolute -right-6 -bottom-6 text-7xl text-white/5 font-serif font-black">籤</div>
+                <div class="text-[11px] uppercase tracking-widest text-sunlight-300 font-bold mb-1">
+                  ✨ 抽籤結果
+                </div>
+                <div id="picker-result" class="text-4xl sm:text-5xl font-serif font-black text-white py-1 transition-all duration-300 tracking-wider">
+                  點擊左側「抽籤」
+                </div>
+                <div id="picker-subtext" class="text-xs text-lilac-200 mt-1 font-medium">
+                  準備抽籤中（支援 1~20 號籤筒，自動防重複點名）
                 </div>
               </div>
 
-              <div>
-                <label class="text-xs font-semibold text-slate-600 mb-1 block">或直接自訂學生名單（每行一位）：</label>
-                <textarea id="picker-custom-names" placeholder="例如：
-王小明
-李大華
-陳怡君" class="w-full h-20 px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-lilac-500"></textarea>
+              <!-- 1~20 Sticks Grid Overview -->
+              <div class="bg-white p-4 rounded-2xl border border-lilac-200 shadow-sm space-y-2">
+                <div class="flex items-center justify-between text-xs font-bold text-slate-700">
+                  <span class="flex items-center gap-1.5">
+                    <i class="fa-solid fa-cubes text-lilac-600"></i> 籤筒籤位一覽表 (1 ~ <span id="max-stick-label">20</span> 號)
+                  </span>
+                  <span id="drawn-ratio-text" class="text-[11px] text-lilac-700 font-mono">
+                    已抽出: 0 / 20
+                  </span>
+                </div>
+
+                <!-- Number Sticks Badges Grid -->
+                <div id="sticks-grid-container" class="grid grid-cols-5 sm:grid-cols-10 gap-1.5 pt-1">
+                  <!-- Populated by JS -->
+                </div>
               </div>
 
-              <div class="flex items-center justify-between pt-2">
-                <button onclick="triggerDraw()" class="w-full py-3 bg-gradient-to-r from-lilac-600 to-indigo-700 hover:from-lilac-700 hover:to-indigo-800 text-white font-bold text-sm rounded-xl shadow-lg shadow-lilac-600/25 transition flex items-center justify-center gap-2">
-                  <i class="fa-solid fa-shuffle"></i> 立即隨機抽籤
-                </button>
-              </div>
-            </div>
-
-            <!-- Right: Display Area -->
-            <div class="text-center p-8 bg-gradient-to-tr from-lilac-100 via-white to-sunlight-50 rounded-2xl border border-lilac-200 flex flex-col items-center justify-center min-h-[260px]">
-              <div class="text-xs uppercase tracking-widest text-lilac-800 font-bold mb-2">🎉 抽中幸運同學</div>
-              <div id="picker-result" class="text-5xl sm:text-6xl font-serif font-black text-lilac-950 py-4 my-2 transition-all duration-300">
-                ？
-              </div>
-              <div id="picker-subtext" class="text-xs text-slate-500">
-                點擊左側「立即隨機抽籤」開始點名發言！
-              </div>
             </div>
 
           </div>
+
         </div>
 
         <!-- 2. Countdown Timer Panel -->
@@ -1582,42 +1675,208 @@
       });
     }
 
-    // Random Picker Execution
-    function triggerDraw() {
-      const customNames = document.getElementById('picker-custom-names').value.trim();
-      let candidates = [];
-      if (customNames) {
-        candidates = customNames.split('\n').map(n => n.trim()).filter(n => n.length > 0);
-      } else {
-        const maxSeat = parseInt(document.getElementById('picker-max-seat').value) || 35;
-        for (let i = 1; i <= maxSeat; i++) {
-          candidates.push(`${i} 號同學`);
+    // --- Bamboo Fortune Stick Canister (1~20 號專屬籤筒) ---
+    let currentStickCount = 20;
+    let drawnSticks = new Set();
+    let isCustomMode = false;
+    let customCandidates = [];
+    let isDrawing = false;
+
+    const fortuneQuotes = [
+      "✨ 大吉 · 文思泉湧！請分享你的段落解析",
+      "🎋 上上籤 · 朗朗上口！請為全班朗讀一段課文",
+      "🌸 靈感乍現 · 請點出本段課文的核心修辭",
+      "🍃 妙筆生花 · 請提出一個深度素養好問題",
+      "☀️ 旭日東升 · 請代表小組分享討論精華",
+      "🕊️ 意氣風發 · 請找出作者在此處的關鍵寄託",
+      "🏆 金榜題名 · 請試著說明本課的寫作特色",
+      "📖 韋編三絕 · 請為大家翻譯這句文言意涵"
+    ];
+
+    function setStickRange(count) {
+      isCustomMode = false;
+      currentStickCount = count;
+      document.getElementById('custom-name-drawer').classList.add('hidden');
+      
+      // Update Tab Styles
+      document.querySelectorAll('.stick-preset-btn').forEach(b => {
+        b.className = "stick-preset-btn px-3 py-1.5 bg-white text-slate-700 hover:bg-lilac-50 border border-lilac-200 rounded-xl text-xs font-medium transition";
+      });
+      const activeBtn = document.getElementById(`btn-stick-${count}`);
+      if (activeBtn) {
+        activeBtn.className = "stick-preset-btn px-3 py-1.5 bg-lilac-700 text-white rounded-xl text-xs font-bold shadow-sm transition";
+      }
+
+      resetDrawnSticks();
+    }
+
+    function toggleCustomNameInput() {
+      const drawer = document.getElementById('custom-name-drawer');
+      drawer.classList.toggle('hidden');
+    }
+
+    function applyCustomNames() {
+      const text = document.getElementById('picker-custom-names').value.trim();
+      if (!text) {
+        alert("請輸入至少一位學生姓名！");
+        return;
+      }
+      customCandidates = text.split('\n').map(n => n.trim()).filter(n => n.length > 0);
+      isCustomMode = true;
+      currentStickCount = customCandidates.length;
+
+      document.querySelectorAll('.stick-preset-btn').forEach(b => {
+        b.className = "stick-preset-btn px-3 py-1.5 bg-white text-slate-700 hover:bg-lilac-50 border border-lilac-200 rounded-xl text-xs font-medium transition";
+      });
+      document.getElementById('btn-stick-custom').className = "stick-preset-btn px-3 py-1.5 bg-lilac-700 text-white rounded-xl text-xs font-bold shadow-sm transition";
+      
+      document.getElementById('custom-name-drawer').classList.add('hidden');
+      resetDrawnSticks();
+    }
+
+    function resetDrawnSticks() {
+      drawnSticks.clear();
+      updateCanisterDisplay();
+      renderSticksGrid();
+      document.getElementById('picker-result').innerText = "點擊左側「抽籤」";
+      document.getElementById('picker-subtext').innerText = `已重置籤筒（共 ${currentStickCount} 支籤）`;
+      
+      const emerging = document.getElementById('emerging-stick');
+      emerging.style.opacity = '0';
+      emerging.style.transform = 'translateY(-10px)';
+    }
+
+    function updateCanisterDisplay() {
+      const remaining = currentStickCount - drawnSticks.size;
+      document.getElementById('canister-count-badge').innerText = `剩餘: ${remaining} 支籤`;
+      document.getElementById('drawn-ratio-text').innerText = `已抽出: ${drawnSticks.size} / ${currentStickCount}`;
+      document.getElementById('max-stick-label').innerText = currentStickCount;
+    }
+
+    function renderSticksGrid() {
+      const container = document.getElementById('sticks-grid-container');
+      container.innerHTML = '';
+
+      for (let i = 1; i <= currentStickCount; i++) {
+        const isDrawn = drawnSticks.has(i);
+        const nameLabel = isCustomMode ? (customCandidates[i - 1] || `${i}號`) : `${i}號`;
+        
+        const stickEl = document.createElement('div');
+        stickEl.id = `stick-badge-${i}`;
+        if (isDrawn) {
+          stickEl.className = "py-1 px-1 bg-slate-200 text-slate-400 border border-slate-300 rounded-lg text-center text-[10px] font-bold line-through transition cursor-not-allowed";
+          stickEl.innerHTML = `<i class="fa-solid fa-check text-[9px] mr-0.5 text-slate-400"></i>${nameLabel}`;
+        } else {
+          stickEl.className = "py-1 px-1 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 rounded-lg text-center text-[10px] font-bold transition shadow-xs cursor-pointer";
+          stickEl.innerHTML = `🎋 ${nameLabel}`;
+          stickEl.onclick = () => drawSpecificStick(i);
+        }
+        container.appendChild(stickEl);
+      }
+      updateCanisterDisplay();
+    }
+
+    function drawSpecificStick(num) {
+      if (isDrawing) return;
+      executeStickDraw(num);
+    }
+
+    function drawFortuneStick() {
+      if (isDrawing) return;
+
+      const noRepeat = document.getElementById('no-repeat-checkbox').checked;
+      let available = [];
+      for (let i = 1; i <= currentStickCount; i++) {
+        if (!noRepeat || !drawnSticks.has(i)) {
+          available.push(i);
         }
       }
 
-      if (candidates.length === 0) return;
+      if (available.length === 0) {
+        alert("🎋 籤筒裡的所有籤都已經抽完囉！已為您自動放回籤筒重新洗籤。");
+        resetDrawnSticks();
+        return;
+      }
 
+      const selectedNum = available[Math.floor(Math.random() * available.length)];
+      executeStickDraw(selectedNum);
+    }
+
+    function executeStickDraw(num) {
+      isDrawing = true;
+      const canister = document.getElementById('bamboo-canister-container');
+      const emerging = document.getElementById('emerging-stick');
+      const emergingNum = document.getElementById('emerging-stick-num');
       const resultEl = document.getElementById('picker-result');
       const subtextEl = document.getElementById('picker-subtext');
+      const btn = document.getElementById('btn-draw-stick');
 
-      let rollCount = 0;
-      const maxRolls = 15;
-      const interval = setInterval(() => {
-        const randIndex = Math.floor(Math.random() * candidates.length);
-        resultEl.innerText = candidates[randIndex];
-        resultEl.style.transform = `scale(${1 + (rollCount % 2) * 0.1})`;
-        rollCount++;
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-arrows-rotate animate-spin"></i> 搖動籤筒中...';
 
-        if (rollCount >= maxRolls) {
-          clearInterval(interval);
-          const finalIndex = Math.floor(Math.random() * candidates.length);
-          resultEl.innerText = candidates[finalIndex];
-          resultEl.style.transform = 'scale(1.15)';
-          subtextEl.innerHTML = `<span class="text-lilac-700 font-bold">✨ 請 ${candidates[finalIndex]} 發表想法或朗讀課文！</span>`;
+      // Canister Shaking Animation
+      let shakeCount = 0;
+      const shakeInterval = setInterval(() => {
+        const angle = (shakeCount % 2 === 0 ? -6 : 6);
+        canister.style.transform = `rotate(${angle}deg) translateY(-4px)`;
+        shakeCount++;
+
+        // Sound effect click
+        if (shakeCount % 3 === 0) playWoodKnockSound();
+
+        if (shakeCount >= 10) {
+          clearInterval(shakeInterval);
+          canister.style.transform = 'rotate(0deg) translateY(0px)';
+
+          // Stick rises
+          emergingNum.innerText = num.toString().padStart(2, '0');
+          emerging.style.opacity = '1';
+          emerging.style.transform = 'translateY(-30px)';
+
+          // Record Drawn
+          drawnSticks.add(num);
+          renderSticksGrid();
+
+          const studentLabel = isCustomMode ? (customCandidates[num - 1] || `${num} 號同學`) : `第 ${num.toString().padStart(2, '0')} 號 籤`;
+          const randQuote = fortuneQuotes[Math.floor(Math.random() * fortuneQuotes.length)];
+
+          resultEl.innerText = studentLabel;
+          resultEl.style.transform = 'scale(1.1)';
+          setTimeout(() => resultEl.style.transform = 'scale(1)', 300);
+
+          subtextEl.innerHTML = `<span class="text-sunlight-300 font-bold">${randQuote}</span>`;
+
           playDingSound();
+
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-hand-sparkles"></i> 再抽一支籤';
+          isDrawing = false;
         }
-      }, 80);
+      }, 70);
     }
+
+    // Synthesize gentle bamboo/wood knock sound
+    function playWoodKnockSound() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(320 + Math.random() * 80, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.08);
+        gain.gain.setValueAtTime(0.2, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.08);
+      } catch(e) {}
+    }
+
+    // Initialize Sticks Grid on Start
+    setTimeout(() => {
+      renderSticksGrid();
+    }, 100);
 
     // Timer Execution
     let timerTotalSeconds = 180;
