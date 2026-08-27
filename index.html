@@ -214,10 +214,19 @@
 
       <!-- Navigation & Action Buttons -->
       <div class="flex items-center space-x-2 sm:space-x-3">
+        <!-- Dedicated Link to Teacher Prep Hub -->
+        <a href="prep_hub.html" class="flex items-center space-x-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-rose-600 via-rose-700 to-lilac-800 text-white hover:from-rose-700 hover:to-lilac-900 font-bold text-xs sm:text-sm shadow-md transition whitespace-nowrap">
+          <i class="fa-solid fa-graduation-cap"></i>
+          <span>📚 名師備課教材專區</span>
+        </a>
+
         <!-- Teacher Toolkit Button -->
-        <button onclick="openToolkitModal()" class="flex items-center space-x-1.5 px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-lilac-600 to-lilac-700 hover:from-lilac-700 hover:to-lilac-800 text-white text-xs sm:text-sm font-semibold shadow-md shadow-lilac-600/20 hover:shadow-lg transition">
+        <button 
+          onclick="openToolkitModal()"
+          class="flex items-center space-x-1.5 px-3.5 py-2.5 rounded-xl bg-lilac-700 hover:bg-lilac-800 text-white text-xs sm:text-sm font-semibold shadow-sm hover:shadow transition"
+        >
           <i class="fa-solid fa-toolbox text-sunlight-300"></i>
-          <span>教師備課百寶箱</span>
+          <span class="hidden sm:inline">教師備課百寶箱</span>
         </button>
 
         <!-- Quick Jump to Lessons -->
@@ -270,17 +279,17 @@
 
           <!-- Action Buttons -->
           <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
-            <a href="#curriculum-section" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-lilac-700 to-indigo-800 hover:from-lilac-800 hover:to-indigo-900 text-white font-semibold text-sm shadow-lg shadow-lilac-700/25 hover:shadow-xl transition flex items-center gap-2">
-              <i class="fa-solid fa-book-open"></i> 探索精選課文
+            <a href="prep_hub.html" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-rose-600 via-rose-700 to-lilac-800 hover:from-rose-700 hover:to-lilac-900 text-white font-bold text-sm shadow-lg shadow-rose-700/25 hover:shadow-xl transition flex items-center gap-2">
+              <i class="fa-solid fa-folder-open"></i> 📚 名師備課教材專區
             </a>
-            <a href="lesson_sound_clock.html" class="px-5 py-3.5 rounded-xl bg-white hover:bg-amber-50 border border-amber-300 text-amber-900 font-semibold text-sm shadow-sm hover:shadow transition flex items-center gap-2">
-              <i class="fa-solid fa-bell text-sunlight-500"></i> 《聲音鐘》互動教材
+            <a href="#curriculum-section" class="px-5 py-3.5 rounded-xl bg-white hover:bg-lilac-50 border border-lilac-300 text-lilac-900 font-semibold text-sm shadow-sm hover:shadow transition flex items-center gap-2">
+              <i class="fa-solid fa-book-open"></i> 探索課文
             </a>
-            <a href="lesson_sound_clock_prep.html" class="px-4 py-3.5 rounded-xl bg-lilac-50 hover:bg-lilac-100 border border-lilac-300 text-lilac-900 font-bold text-sm shadow-sm hover:shadow transition flex items-center gap-2" title="查看 16 題引導提問、形音義考點與類文">
-              <i class="fa-solid fa-chalkboard-user text-lilac-700"></i> 《聲音鐘》備課寶典
+            <a href="lesson_sound_clock.html" class="px-4 py-3.5 rounded-xl bg-white hover:bg-amber-50 border border-amber-300 text-amber-900 font-semibold text-sm shadow-sm hover:shadow transition flex items-center gap-2">
+              <i class="fa-solid fa-bell text-sunlight-500"></i> 《聲音鐘》教材
             </a>
             <a href="lesson_paper_boat.html" class="px-4 py-3.5 rounded-xl bg-white hover:bg-cyan-50 border border-cyan-300 text-cyan-900 font-semibold text-sm shadow-sm hover:shadow transition flex items-center gap-2">
-              <i class="fa-solid fa-paper-plane text-cyan-600"></i> 《紙船印象》教材
+              <i class="fa-solid fa-paper-plane text-cyan-600"></i> 《紙船印象》
             </a>
           </div>
 
@@ -1516,12 +1525,13 @@
         </div>
 
         <div class="md:col-span-3 space-y-2">
-          <h5 class="text-xs font-bold text-white uppercase tracking-wider">教師教學工具</h5>
+          <h5 class="text-xs font-bold text-white uppercase tracking-wider">教師教學與備課資源</h5>
           <ul class="text-xs space-y-1.5 text-lilac-300">
+            <li><a href="prep_hub.html" class="hover:text-sunlight-300 transition flex items-center gap-1.5 font-bold text-rose-300"><i class="fa-solid fa-graduation-cap text-[10px]"></i> 📚 名師備課教材專區</a></li>
+            <li><a href="lesson_sound_clock_prep.html" class="hover:text-sunlight-300 transition flex items-center gap-1.5"><i class="fa-solid fa-book-bookmark text-[10px] text-amber-400"></i> 《聲音鐘》備課寶典</a></li>
             <li><a href="修辭.html" class="hover:text-sunlight-300 transition flex items-center gap-1.5"><i class="fa-solid fa-pen-nib text-[10px] text-sunlight-400"></i> 《國語修辭學堂》互動系統</a></li>
             <li><button onclick="openToolkitModal('picker');" class="hover:text-sunlight-300 transition flex items-center gap-1.5"><i class="fa-solid fa-dice text-[10px]"></i> 1~20 號隨堂點名籤筒</button></li>
             <li><button onclick="openToolkitModal('timer');" class="hover:text-sunlight-300 transition flex items-center gap-1.5"><i class="fa-solid fa-stopwatch text-[10px]"></i> 3分/5分小組討論計時器</button></li>
-            <li><button onclick="openToolkitModal('inquiry');" class="hover:text-sunlight-300 transition flex items-center gap-1.5"><i class="fa-solid fa-lightbulb text-[10px]"></i> PISA 素養導向提問指南</button></li>
           </ul>
         </div>
 
