@@ -281,44 +281,52 @@
             </a>
           </div>
 
-          <!-- Feature Highlights Badges -->
+          <!-- Feature Highlights Badges (Clickable & Interactive) -->
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-lilac-200/80">
-            <div class="bg-white/70 backdrop-blur-sm p-2.5 rounded-xl border border-lilac-100 flex items-center space-x-2.5">
-              <div class="w-8 h-8 rounded-lg bg-lilac-100 text-lilac-700 flex items-center justify-center text-sm">
+            <button onclick="toggleSoundscape()" class="bg-white/80 hover:bg-white p-2.5 rounded-xl border border-lilac-200/80 hover:border-lilac-400 hover:shadow-md transition flex items-center space-x-2.5 text-left group">
+              <div class="w-8 h-8 rounded-lg bg-lilac-100 group-hover:bg-lilac-200 text-lilac-700 flex items-center justify-center text-sm transition">
                 <i class="fa-solid fa-headphones"></i>
               </div>
-              <div class="text-left">
-                <div class="text-xs font-bold text-slate-800">聲景與報讀</div>
+              <div>
+                <div class="text-xs font-bold text-slate-800 group-hover:text-lilac-800">聲景與報讀</div>
                 <div class="text-[10px] text-slate-500">課文多模態聆聽</div>
               </div>
-            </div>
-            <div class="bg-white/70 backdrop-blur-sm p-2.5 rounded-xl border border-lilac-100 flex items-center space-x-2.5">
-              <div class="w-8 h-8 rounded-lg bg-sunlight-100 text-sunlight-700 flex items-center justify-center text-sm">
+            </button>
+
+            <button onclick="openToolkitModal(); switchToolkitTab('rhetoric');" class="bg-white/80 hover:bg-white p-2.5 rounded-xl border border-lilac-200/80 hover:border-sunlight-400 hover:shadow-md transition flex items-center space-x-2.5 text-left group">
+              <div class="w-8 h-8 rounded-lg bg-sunlight-100 group-hover:bg-sunlight-200 text-sunlight-700 flex items-center justify-center text-sm transition">
                 <i class="fa-solid fa-pen-nib"></i>
               </div>
-              <div class="text-left">
-                <div class="text-xs font-bold text-slate-800">修辭大圖鑑</div>
+              <div>
+                <div class="text-xs font-bold text-slate-800 group-hover:text-sunlight-800">修辭大圖鑑</div>
                 <div class="text-[10px] text-slate-500">國中必考全解析</div>
               </div>
-            </div>
-            <div class="bg-white/70 backdrop-blur-sm p-2.5 rounded-xl border border-lilac-100 flex items-center space-x-2.5">
-              <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm">
+            </button>
+
+            <button onclick="openToolkitModal(); switchToolkitTab('inquiry');" class="bg-white/80 hover:bg-white p-2.5 rounded-xl border border-lilac-200/80 hover:border-emerald-400 hover:shadow-md transition flex items-center space-x-2.5 text-left group">
+              <div class="w-8 h-8 rounded-lg bg-emerald-100 group-hover:bg-emerald-200 text-emerald-700 flex items-center justify-center text-sm transition">
                 <i class="fa-solid fa-clipboard-check"></i>
               </div>
-              <div class="text-left">
-                <div class="text-xs font-bold text-slate-800">素養導向題</div>
+              <div>
+                <div class="text-xs font-bold text-slate-800 group-hover:text-emerald-800">素養導向題</div>
                 <div class="text-[10px] text-slate-500">PISA 三層次探究</div>
               </div>
-            </div>
-            <div class="bg-white/70 backdrop-blur-sm p-2.5 rounded-xl border border-lilac-100 flex items-center space-x-2.5">
-              <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm">
+            </button>
+
+            <!-- 備課抽籤箱 (1~20 號籤筒直接入口) -->
+            <button onclick="openToolkitModal(); switchToolkitTab('picker');" class="bg-gradient-to-tr from-amber-50 to-amber-100/90 hover:from-amber-100 hover:to-amber-200/90 p-2.5 rounded-xl border-2 border-amber-300 hover:border-amber-500 hover:shadow-lg transition flex items-center space-x-2.5 text-left group ring-2 ring-amber-200/50 relative overflow-hidden">
+              <span class="absolute -right-2 -bottom-2 text-2xl text-amber-500/20 font-serif font-black">🎋</span>
+              <div class="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center text-sm shadow-sm group-hover:scale-110 transition">
                 <i class="fa-solid fa-dice"></i>
               </div>
-              <div class="text-left">
-                <div class="text-xs font-bold text-slate-800">備課抽籤箱</div>
-                <div class="text-[10px] text-slate-500">隨堂互動小工具</div>
+              <div>
+                <div class="text-xs font-bold text-amber-950 flex items-center gap-1">
+                  <span>備課抽籤箱</span>
+                  <span class="text-[9px] bg-rose-500 text-white px-1 rounded font-normal">1~20號</span>
+                </div>
+                <div class="text-[10px] text-amber-700 font-medium">隨堂互動小工具</div>
               </div>
-            </div>
+            </button>
           </div>
 
         </div>
@@ -1651,7 +1659,8 @@
     }
 
     // --- Teacher Toolkit Modal Logic ---
-    function openToolkitModal() {
+    function openToolkitModal(defaultTab = 'picker') {
+      if (defaultTab) switchToolkitTab(defaultTab);
       document.getElementById('toolkit-modal').classList.remove('hidden');
       document.getElementById('toolkit-modal').classList.add('flex');
     }
