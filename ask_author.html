@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>問問作者 · 跨時空文學對話室 | 國中文學數位互動教材</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Google Fonts: Noto Serif TC & Noto Sans TC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;900&family=Noto+Serif+TC:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans TC"', 'sans-serif'],
+            serif: ['"Noto Serif TC"', 'serif'],
+          },
+          colors: {
+            lilac: {
+              50: '#faf8ff',
+              100: '#f3eeff',
+              200: '#e7dcfe',
+              300: '#d5bffd',
+              400: '#bc96fb',
+              500: '#a16bf6',
+              600: '#8742eb',
+              700: '#732ad3',
+              800: '#6022b0',
+              900: '#4f1e8e',
+              950: '#320f63',
+            },
+            sunlight: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              200: '#fde68a',
+              300: '#fcd34d',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+              800: '#92400e',
+              900: '#78350f',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #fdfbf7;
+    }
+    .chat-bubble-author {
+      background: linear-gradient(135deg, #ffffff 0%, #faf5ff 100%);
+      border-left: 4px solid #732ad3;
+    }
+    .chat-bubble-user {
+      background: linear-gradient(135deg, #732ad3 0%, #4f1e8e 100%);
+      color: #ffffff;
+    }
+    .author-card.active {
+      border-color: #732ad3;
+      background-color: #f3eeff;
+      box-shadow: 0 10px 20px -5px rgba(115, 42, 211, 0.2);
+    }
+    .typing-cursor::after {
+      content: '▋';
+      display: inline-block;
+      animation: blink 0.8s infinite;
+      color: #732ad3;
+      margin-left: 2px;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body class="text-slate-800 antialiased font-sans flex flex-col min-h-screen">
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-lilac-200 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- Left: Logo & Home Link -->
+        <div class="flex items-center space-x-3">
+          <a href="index.html" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-lilac-100 border border-slate-200 text-slate-700 hover:text-lilac-900 font-bold text-xs transition">
+            <i class="fa-solid fa-house text-slate-500"></i>
+            <span>教材首頁</span>
+          </a>
+          <span class="text-slate-300">/</span>
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-700 text-white flex items-center justify-center text-sm shadow-sm">
+              <i class="fa-solid fa-feather-pointed"></i>
+            </div>
+            <h1 class="text-base sm:text-lg font-serif font-black text-slate-900 leading-tight">
+              問問作者 · 跨時空文學對話室
+            </h1>
+          </div>
+        </div>
+
+        <!-- Right Quick Links -->
+        <div class="flex items-center space-x-2">
+          <a href="prep_hub.html" class="px-3.5 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-800 font-bold text-xs transition border border-rose-200">
+            <i class="fa-solid fa-book-bookmark mr-1 text-rose-600"></i> 備課寶典
+          </a>
+          <a href="修辭.html" class="px-3.5 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 font-bold text-xs transition border border-amber-200 hidden sm:inline-flex">
+            ✍️ 修辭學堂
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Header -->
+  <section class="bg-gradient-to-r from-purple-950 via-lilac-950 to-slate-950 text-white py-8 px-4 sm:px-6 lg:px-8 border-b border-lilac-800 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4 relative z-10">
+      <div class="space-y-2">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-sunlight-300 border border-white/20">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> AI 模擬文人智者 · 跨越時空的思維對談
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-serif font-black text-white">
+          與歷代詩人作家，展開一場靈魂的深度對話
+        </h2>
+        <p class="text-xs sm:text-sm text-lilac-200 max-w-2xl leading-relaxed">
+          點選左側詩人或現代名家，向他們請教詩詞創作心法、人生抉擇、豁達哲學或課文背後的真實故事。
+        </p>
+      </div>
+
+      <!-- Quick Reset Button -->
+      <button onclick="resetCurrentChat()" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-white border border-white/30 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shrink-0">
+        <i class="fa-solid fa-rotate-left"></i> 清空對話記錄
+      </button>
+    </div>
+  </section>
+
+  <!-- Main Container: Split into Left Author Selector & Right Chat Box -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    
+    <!-- LEFT: Author List (4 cols on lg) -->
+    <aside class="lg:col-span-4 bg-white rounded-3xl p-5 border border-lilac-200 shadow-sm space-y-4">
+      
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="text-sm font-bold text-slate-900 font-serif flex items-center gap-2">
+          <i class="fa-solid fa-users text-lilac-700"></i> 請選擇對話詩人 / 作家
+        </h3>
+        <span id="authors-count" class="text-[11px] bg-lilac-100 text-lilac-800 font-bold px-2.5 py-0.5 rounded-full">
+          10 位名家
+        </span>
+      </div>
+
+      <!-- Category Filter Tabs (古典詩人 vs 經典作家) -->
+      <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl text-xs">
+        <button onclick="filterAuthorCategory('all')" id="cat-all" class="cat-tab active flex-1 py-1.5 font-bold rounded-lg bg-white text-lilac-900 shadow-xs transition">
+          全部名家
+        </button>
+        <button onclick="filterAuthorCategory('ancient')" id="cat-ancient" class="cat-tab flex-1 py-1.5 font-medium rounded-lg text-slate-600 hover:text-slate-900 transition">
+          古典詩人
+        </button>
+        <button onclick="filterAuthorCategory('modern')" id="cat-modern" class="cat-tab flex-1 py-1.5 font-medium rounded-lg text-slate-600 hover:text-slate-900 transition">
+          當代作家
+        </button>
+      </div>
+
+      <!-- Author Card Scroll List -->
+      <div id="author-list" class="space-y-2.5 max-h-[600px] overflow-y-auto pr-1">
+        <!-- Populated via JS -->
+      </div>
+
+    </aside>
+
+    <!-- RIGHT: Interactive Chat Room (8 cols on lg) -->
+    <section class="lg:col-span-8 bg-white rounded-3xl border border-lilac-200 shadow-sm flex flex-col h-[700px] overflow-hidden">
+      
+      <!-- Chat Header -->
+      <div class="p-4 sm:p-5 border-b border-slate-100 bg-slate-50/70 flex items-center justify-between gap-3">
+        
+        <div class="flex items-center space-x-3 min-w-0">
+          <div id="current-author-avatar" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-lilac-600 to-indigo-700 text-white flex items-center justify-center text-xl shadow-md shrink-0">
+            <i class="fa-solid fa-moon"></i>
+          </div>
+          <div class="min-w-0">
+            <div class="flex items-center gap-2">
+              <h3 id="current-author-name" class="text-base sm:text-lg font-serif font-black text-slate-900 truncate">
+                李白
+              </h3>
+              <span id="current-author-badge" class="px-2 py-0.5 bg-amber-100 text-amber-900 text-[10px] font-bold rounded-full border border-amber-200 shrink-0">
+                詩仙 · 盛唐
+              </span>
+            </div>
+            <p id="current-author-quote" class="text-xs text-slate-500 truncate font-serif italic">
+              「天生我材必有用，千金散盡還復來。」
+            </p>
+          </div>
+        </div>
+
+        <!-- Author Profile Tag Info -->
+        <div class="hidden sm:flex flex-col items-end text-right text-[11px] text-slate-500 shrink-0">
+          <span id="current-author-dynasty" class="font-semibold text-slate-700">唐朝 (701 - 762)</span>
+          <span id="current-author-style" class="text-lilac-700 font-medium">浪漫主義豪放詩風</span>
+        </div>
+
+      </div>
+
+      <!-- Messages Stream Area -->
+      <div id="chat-messages" class="flex-1 p-5 sm:p-6 overflow-y-auto space-y-4 bg-[#fbf9f5]">
+        <!-- Dynamic Chat Messages rendered here -->
+      </div>
+
+      <!-- Quick Question Pills Bar -->
+      <div class="px-4 py-2.5 bg-lilac-50/70 border-t border-lilac-100 overflow-x-auto whitespace-nowrap space-x-2 flex items-center">
+        <span class="text-[11px] font-bold text-lilac-900 shrink-0 flex items-center gap-1">
+          <i class="fa-solid fa-lightbulb text-sunlight-600"></i> 請教靈感：
+        </span>
+        <div id="preset-questions" class="flex space-x-2">
+          <!-- Dynamic Preset Question Pills -->
+        </div>
+      </div>
+
+      <!-- User Input Box Area -->
+      <div class="p-3 sm:p-4 bg-white border-t border-slate-200">
+        <form onsubmit="handleUserSubmit(event)" class="flex items-center gap-2">
+          <div class="relative flex-1">
+            <input 
+              type="text" 
+              id="user-input" 
+              placeholder="請輸入您想請教的問題...（例如：您當初寫這首詩的心情是什麼？）"
+              class="w-full pl-4 pr-10 py-3 bg-slate-50 border border-slate-300 rounded-2xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-lilac-500 focus:bg-white transition"
+              autocomplete="off"
+            >
+            <button type="button" onclick="clearInput()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 hidden" id="btn-clear-input">
+              <i class="fa-solid fa-circle-xmark text-sm"></i>
+            </button>
+          </div>
+          <button 
+            type="submit" 
+            id="btn-send"
+            class="px-5 py-3 bg-gradient-to-r from-lilac-700 to-indigo-800 hover:from-lilac-800 hover:to-indigo-900 text-white font-bold text-xs sm:text-sm rounded-2xl shadow-md transition flex items-center gap-1.5 shrink-0"
+          >
+            <span>請教</span>
+            <i class="fa-solid fa-paper-plane text-xs"></i>
+          </button>
+        </form>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 text-slate-400 py-6 border-t border-slate-800 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+      <div class="flex items-center space-x-3">
+        <a href="index.html" class="text-white hover:text-lilac-300 font-serif font-bold">🏠 教材首頁</a>
+        <span>·</span>
+        <a href="ask_author.html" class="text-sunlight-300 font-bold">🤖 問問作者</a>
+        <span>·</span>
+        <a href="prep_hub.html" class="hover:text-white">📖 備課寶典</a>
+        <span>·</span>
+        <a href="修辭.html" class="hover:text-white">✍️ 修辭學堂</a>
+      </div>
+      <div>
+        © 2026 國中文學數位美感教學資源網 · 問問作者 AI 文學對話系統
+      </div>
+    </div>
+  </footer>
+
+  <!-- Core JavaScript Logic & Literary Persona Knowledge Engine -->
+  <script>
+    // --- Literary Personas Master Database ---
+    const authorsData = [
+      {
+        id: "libai",
+        name: "李白",
+        category: "ancient",
+        dynasty: "唐朝 (701 - 762)",
+        style: "浪漫主義豪放詩仙",
+        badge: "詩仙 · 盛唐",
+        badgeColor: "bg-amber-100 text-amber-900 border-amber-300",
+        icon: "fa-solid fa-wine-bottle",
+        iconBg: "from-amber-500 to-orange-600",
+        quote: "「天生我材必有用，千金散盡還復來。」",
+        bio: "字太白，號青蓮居士。個性豪放不羈，好飲酒作詩，喜任俠遊歷。詩風雄奇豪放，想像豐富，清新飄逸，有「詩仙」之美譽。",
+        greeting: "哈！天地為廬，明月為友！吾乃李太白。小友今日遠道而來，何不與老夫共飲一杯？不知有何詩詞天地之惑想同我切磋探討？",
+        presets: [
+          "太白先生，你寫《靜夜思》時真的想家了嗎？",
+          "你為何如此嗜酒？喝酒真的能帶給你靈感嗎？",
+          "面對人生的失意與挫折，你如何保持豪邁豁達？",
+          "能教我如何寫出像你一樣有想像力的詩嗎？"
+        ],
+        qaPatterns: [
+          {
+            keywords: ["靜夜思", "想家", "思鄉", "月亮", "床前明月光"],
+            response: "哈哈！那晚在揚州旅舍，病臥客榻，推窗見秋月如霜，皎潔灑滿地，恍惚間真以為是初冬之霜。客居異鄉，仰首望那輪孤懸千古的明月，低頭便想起故鄉錦繡江山與親故。詩不必繁複，二十字吐盡天下遊子之心，此乃天機自然流瀉也！"
+          },
+          {
+            keywords: ["酒", "喝酒", "靈感", "醉", "將進酒"],
+            response: "「古來聖賢皆寂寞，唯有飲者留其名！」酒非凡水，乃引出胸中萬丈豪情之仙露。吾之醉非沉淪，而是解開世俗拘束，神遊八極，乘風上九天攬月！若無杯中之物，安得《將進酒》呼兒將出換美酒之痛快？"
+          },
+          {
+            keywords: ["挫折", "失意", "官場", "賜金放還", "樂觀", "心態"],
+            response: "夫天地者萬物之逆旅，光陰者百代之過客。當年玄宗待詔翰林，力士脫靴、貴妃捧硯，然權貴俗人安能容我？「安能摧眉折腰事權貴，使我不得開心顏！」人生天地間，若白駒過隙，千金散盡自會復來，莫讓眼前陰霾障了胸中日月！"
+          },
+          {
+            keywords: ["寫詩", "技巧", "想像力", "怎麼寫", "教學"],
+            response: "寫詩貴在「真性情」與「奇氣」。不必拘泥於尋章摘句，當如黃河之水天上記來，奔流到海不復回！多讀天地大書，登名山、觀滄海、友明月，心胸開闊了，吐字自然驚風雨、泣鬼神！"
+          }
+        ],
+        defaultFallback: "哈哈！好問題！吾李太白一生浪跡天涯，劍氣與詩酒相伴。世人常為名利所困，殊不知長風破浪會有時，直掛雲帆濟滄海！小友若有志氣，且放寬眼界，乘風高飛便是！"
+      },
+      {
+        id: "sushi",
+        name: "蘇軾 (蘇東坡)",
+        category: "ancient",
+        dynasty: "北宋 (1037 - 1101)",
+        style: "豪放曠達一代文宗",
+        badge: "東坡居士 · 北宋",
+        badgeColor: "bg-purple-100 text-purple-900 border-purple-300",
+        icon: "fa-solid fa-feather-pointed",
+        iconBg: "from-purple-600 to-indigo-700",
+        quote: "「回首向來蕭瑟處，歸去，也無風雨也無晴。」",
+        bio: "字子瞻，號東坡居士。北宋大文豪，詩、詞、散文、書、畫無一不精，唐宋八大家之一。歷經烏臺詩案、多次貶謫，始終保持樂觀曠達與對生活的深情。",
+        greeting: "老夫蘇子瞻是也！今日剛煮得一鍋東坡肉，正巧小友前來。人生如逆旅，我亦是行人。有何學問文章或生活困惑，但說無妨，老夫知無不言！",
+        presets: [
+          "東坡先生，被貶到黃州那麼苦，你為何還能寫出《赤壁賦》？",
+          "《水調歌頭》中「人有悲歡離合」是在思念誰？",
+          "你發明東坡肉的心得是什麼？如何把生活過得知足？",
+          "面對人際關係或考試挫折，你給我們現代學生的建議是什麼？"
+        ],
+        qaPatterns: [
+          {
+            keywords: ["黃州", "赤壁", "赤壁賦", "貶謫", "苦", "烏臺詩案"],
+            response: "哈哈！烏臺詩案後貶黃州，無官一身輕，雖囊空如洗，但在東坡開荒種地，與漁樵為伍，反得大自在！夜遊赤壁，見江上清風、山間明月，取之無禁，用之不竭，此造物者之無盡藏也！人生之苦不在境遇，而在心境；心無罣礙，天地何處不是桃源？"
+          },
+          {
+            keywords: ["水調歌頭", "明月幾時有", "弟弟", "蘇轍", "子由", "思念"],
+            response: "那是丙辰中秋，歡飲達旦，大醉作此篇，兼懷子由（蘇轍）。吾與子由兄弟情深，七年未見。望著那輪明月，我想到月尚有陰晴圓缺，何況人事？「但願人長久，千里共嬋娟」，只要彼此安好，共看同一輪明月，便是最大的圓滿。"
+          },
+          {
+            keywords: ["東坡肉", "美食", "生活", "吃", "豬肉", "知足"],
+            response: "「慢著火，少著水，火候足時它自美！」黃州好豬肉，價賤如泥土，富者不肯吃，貧者不解煮。老夫親自操刀，慢火細燉，軟爛香濃！生活就如燉肉，急躁不得，只要用心對待周遭平凡之物，粗茶淡飯亦是人間至味！"
+          },
+          {
+            keywords: ["建議", "挫折", "考試", "學生", "壓力", "煩惱"],
+            response: "小友莫愁！「竹杖芒鞋輕勝馬，誰怕？一蓑煙雨任平生。」人生在世，難免遇上狂風暴雨。考差了、失意了，權當淋一場雨。只要心中坦蕩，待雲散天青，回首向來蕭瑟處，歸去，也無風雨也無晴！"
+          }
+        ],
+        defaultFallback: "妙哉此問！老夫一生遊歷四海，起伏跌宕，深知「人間有味是清歡」。無論身處順境逆境，順其自然、熱愛生活、善待他人，便是最通達的智慧！"
+      },
+      {
+        id: "dufu",
+        name: "杜甫",
+        category: "ancient",
+        dynasty: "唐朝 (712 - 770)",
+        style: "憂國憂民詩史聖手",
+        badge: "詩聖 · 盛唐",
+        badgeColor: "bg-emerald-100 text-emerald-900 border-emerald-300",
+        icon: "fa-solid fa-landmark",
+        iconBg: "from-emerald-600 to-teal-700",
+        quote: "「安得廣廈千萬間，大庇天下寒士俱歡顏！」",
+        bio: "字子美，自號少陵野老。歷經安史之亂，深切感受人民苦難，詩風沉鬱頓挫，語言精煉嚴謹，其詩真實反映唐代由盛轉衰之歷史，被尊為「詩聖」、「詩史」。",
+        greeting: "老朽杜子美見過小友。國破山河在，城春草木深。老夫平生所繫者，唯家國蒼生與民間疾苦。不知後世之天下可得安寧？小友有何教益欲與老夫暢談？",
+        presets: [
+          "杜甫先生，你在草堂屋頂被風吹走時，為何還想著天下寒士？",
+          "你和李白相遇時是什麼樣的情景？",
+          "你的詩為何被稱為「詩史」？",
+          "面對動盪混亂的時代，文人能做什麼？"
+        ],
+        qaPatterns: [
+          {
+            keywords: ["茅屋", "茅屋為秋風所破歌", "廣廈", "寒士", "屋頂", "大風"],
+            response: "唉！那年秋天狂風怒號，茅屋三重茅盡被捲去，床頭屋漏無乾處。老夫自顧不暇，但轉念一想，天下如我這般顛沛流離者不知凡幾！「安得廣廈千萬間，大庇天下寒士俱歡顏，風雨不動安如山！」若能讓天下寒士得所庇護，老夫便是茅屋受凍至死，亦心甘情願！"
+          },
+          {
+            keywords: ["李白", "相遇", "友誼", "太白", "李杜"],
+            response: "太白乃仙人也！天寶三載在洛陽初遇，我倆一見如故，同遊梁宋，縱馬馳騁，高談闊論。太白神采飛揚、天馬行空；我敬他豪氣，他待我如弟。其後天各一方，我常夢見他，「江南瘴癆地，逐客無消息」，唯願知己一生平安！"
+          },
+          {
+            keywords: ["詩史", "沉鬱頓挫", "創作", "嚴謹"],
+            response: "老夫寫詩，「為人性僻耽佳句，語不驚人死不休」。然更重要的，是真實記錄時代之血淚。《三吏》、《三別》、《春望》，字字皆為百姓泣血之聲。詩非粉飾太平之具，乃反映蒼生苦痛之鏡也。"
+          }
+        ],
+        defaultFallback: "老夫感念小友之問。國泰民安乃萬民之福。後世之青年，當胸懷天下、悲天憫人，莫忘天下受苦之人，此乃讀書人之本色也！"
+      },
+      {
+        id: "taoyuanming",
+        name: "陶淵明",
+        category: "ancient",
+        dynasty: "東晉 (365 - 427)",
+        style: "隱逸田園古今隱士之宗",
+        badge: "靖節先生 · 東晉",
+        badgeColor: "bg-teal-100 text-teal-900 border-teal-300",
+        icon: "fa-solid fa-leaf",
+        iconBg: "from-teal-600 to-green-700",
+        quote: "「採菊東籬下，悠然見南山。」",
+        bio: "名潛，字元亮，世稱靖節先生。不肯為五斗米折腰向鄉里小兒，辭官歸隱田園。其詩清新自然、質樸真純，被譽為「古今隱逸詩人之宗」。",
+        greeting: "五柳先生陶元亮在此。南山腳下，草盛豆苗稀，但覺心安理得。小友自喧囂塵世而來，不知有何心靈寧靜之道想與老夫品茗相談？",
+        presets: [
+          "靖節先生，你為何不願為五斗米折腰？",
+          "你在《桃花源記》中描繪的世界真的存在嗎？",
+          "田園生活那麼辛苦，草盛豆苗稀，你後悔過嗎？",
+          "在現代充滿競爭的社會中，如何保持心靈的自在？"
+        ],
+        qaPatterns: [
+          {
+            keywords: ["五斗米", "折腰", "辭官", "歸隱", "彭澤令"],
+            response: "「吾不能為五斗米折腰，拳拳事鄉里小兒！」官場虛偽逢迎、鑽營取巧，違逆我本性。人活一世，飢寒雖難耐，然心靈受奴役尤甚！歸去來兮，田園將蕪胡不歸？回歸真我，方得大自由！"
+          },
+          {
+            keywords: ["桃花源", "桃花源記", "黃髮垂髫", "理想國", "世外桃源"],
+            response: "「問今是何世，乃不知有漢，無論魏晉。」桃花源是老夫心中的一片淨土。那裡無苛政重稅、無戰亂殺戮，鄰里和睦、怡然自樂。世人苦苦尋訪而不得，因桃花源不在山林深處，而在每個人純樸清澈的心田裡。"
+          },
+          {
+            keywords: ["辛苦", "種豆", "豆苗", "後悔", "歸園田居"],
+            response: "「種豆南山下，草盛豆苗稀。晨興理荒穢，帶月荷鋤歸。」身體雖累，衣霑何足惜？但使願無違！能以雙手換取清白之食，在晨光夕暮中與自然合一，老夫此生無怨無悔！"
+          }
+        ],
+        defaultFallback: "「結廬在人境，而無車馬喧。問君何能爾？心遠地自偏。」只要內心有一方靜土，即使身處繁華鬧市，亦能採菊東籬、悠然自適。"
+      },
+      {
+        id: "chenli",
+        name: "陳黎",
+        category: "modern",
+        dynasty: "當代作家 · 花蓮",
+        style: "生活美學與後現代詩人",
+        badge: "當代作家 · 《聲音鐘》作者",
+        badgeColor: "bg-rose-100 text-rose-900 border-rose-300",
+        icon: "fa-solid fa-bell",
+        iconBg: "from-rose-500 to-amber-600",
+        quote: "「那清脆的叫賣聲，是生活裡最動人的鐘擺。」",
+        bio: "台灣花蓮人，當代著名詩人、散文家、翻譯家。曾任國中教師。作品融合鄉土情懷、現代主義與後現代遊戲精神，以敏銳五感捕捉生活微光。",
+        greeting: "嗨！我是陳黎。今天花蓮的風很舒服，窗外剛好傳來賣烤番薯的阿奇毛叫聲。很高興在數位世界遇見你！你對《聲音鐘》或是寫作有什麼好奇的嗎？",
+        presets: [
+          "陳黎老師，你為什麼會把街頭叫賣聲比喻成「聲音鐘」？",
+          "文章裡提到的那些小販，現在還在花蓮街頭出現嗎？",
+          "你在《陳腐先生傳》裡說自己有「字典癖」，是真的嗎？",
+          "國中生要如何培養對生活周遭聲音的觀察力？"
+        ],
+        qaPatterns: [
+          {
+            keywords: ["聲音鐘", "叫賣", "比喻", "靈感", "創作緣由"],
+            response: "哈哈！那是因為我天天坐在花蓮家裡的書桌前寫稿，時間久了，我發現那些小販的叫賣聲極有規律：清晨賣水煎包、午後賣肉圓、黃昏賣燒仙草。他們不是機械的鬧鐘，而是帶著人的體溫與鄉土人情味的『活時鐘』！這就是我寫《聲音鐘》的初衷。"
+          },
+          {
+            keywords: ["小販", "花蓮", "消失", "現代", "烤番薯", "阿奇毛"],
+            response: "隨著現代都市發展與便利商店普及，很多傳統挑擔叫賣確實慢慢變少了。但每當我聽到偶爾傳來的「阿奇毛～烤番薯」或是修理玻璃沙窗的廣播，依然倍感溫暖。我寫下這篇文章，就是希望能幫台灣留住這份漸漸消逝的市井天籟。"
+          },
+          {
+            keywords: ["陳腐先生傳", "字典", "查字典", "蠹魚", "筆名"],
+            response: "這可一點都不假！我真的非常愛讀字典，翻開字典就像看見成千上萬個字的生命家族。簡媜就曾戲稱我為『蠹魚體』散文。我的筆名『陳黎』也是當年翻《辭海》看到『黎』字字義是眾多、天明，心生喜愛而取的呢！"
+          },
+          {
+            keywords: ["觀察力", "五感", "寫作", "國中生", "建議"],
+            response: "現代大家都盯著手機螢幕，常常忽略了耳朵和鼻子！試著閉上眼睛五分鐘，聽聽走廊的腳步聲、窗外的風聲、廚房炒菜的滋滋聲。你會發現，生活處處都是未被命名的詩篇！"
+          }
+        ],
+        defaultFallback: "生活是一首充滿聲音與色彩的交響樂。只要你願意放慢腳步、用心傾聽，最平凡的街巷角落，都能遇見最動人的文學晨光！"
+      },
+      {
+        id: "liqinzhao",
+        name: "李清照",
+        category: "ancient",
+        dynasty: "宋朝 (1084 - 1155)",
+        style: "千古第一才女婉約詞宗",
+        badge: "易安居士 · 宋代",
+        badgeColor: "bg-pink-100 text-pink-900 border-pink-300",
+        icon: "fa-solid fa-fan",
+        iconBg: "from-pink-500 to-rose-600",
+        quote: "「生當作人傑，死亦為鬼雄。」",
+        bio: "號易安居士，宋代著名女詞人。前期生活美滿，詞風清新明快；金兵南侵後歷經國破家亡、喪夫流離，後期詞風轉為悽愴沉痛。為婉約派代表。",
+        greeting: "妾身李易安見過。尋尋覓覓，冷冷清清，淒淒慘慘戚戚。世人皆言易安善詞，不知小友今日前來，有何詩情詞意欲與妾身相訴？",
+        presets: [
+          "易安居士，你在《聲聲慢》裡的十四個疊字是如何想出來的？",
+          "你身為女子，為何能寫出「生當作人傑」這樣霸氣的詩句？",
+          "你和趙明誠的金石雅趣生活是怎樣的？",
+          "經歷顛沛流離，是什麼力量支撐你繼續寫作？"
+        ],
+        qaPatterns: [
+          {
+            keywords: ["聲聲慢", "尋尋覓覓", "疊字", "十四個字"],
+            response: "「尋尋覓覓，冷冷清清，淒淒慘慘戚戚。」那時北宋覆亡，明誠病故，我隻身流亡江南。秋風蕭瑟，心中的孤寂與空茫無以復加，隨口吐出，未曾雕琢，連用十四疊字，方足以抒寫心中層層疊疊、難以名狀之哀痛。"
+          },
+          {
+            keywords: ["生當作人傑", "夏日絕句", "項羽", "霸氣", "女子"],
+            response: "「生當作人傑，死亦為鬼雄。至今思項羽，不肯過江東！」南渡之時，見滿朝文武渡江苟安，毫無血性，妾身雖為女子，亦有忠烈之氣！寧可如項羽般壯烈赴死，亦不願屈膝偷生！"
+          }
+        ],
+        defaultFallback: "詞以寄情，文以載道。人生悲歡離合如飛絮，唯有真實流淌於筆尖的性情，可歷千年而不朽。"
+      },
+      {
+        id: "shenfu",
+        name: "沈復",
+        category: "ancient",
+        dynasty: "清朝 (1763 - 1825)",
+        style: "浮生六記物外之趣",
+        badge: "三白 · 《兒時記趣》作者",
+        badgeColor: "bg-blue-100 text-blue-900 border-blue-300",
+        icon: "fa-solid fa-mosquito",
+        iconBg: "from-blue-600 to-indigo-600",
+        quote: "「見藐小微物，必細察其紋理，故時有物外之趣。」",
+        bio: "字三白，號梅逸，清代蘇州人。《浮生六記》作者，文中真摯記錄其童年趣事、與妻子陳芸的深摯情愛及坎坷人生，充滿文人真性情。",
+        greeting: "在下沈三白！小友可曾讀過我的《兒時記趣》？「夏蚊成雷，私擬作群鶴舞空」，哈哈！童心未泯，萬物皆有趣味。今天想聊些什麼好玩的事？",
+        presets: [
+          "沈三白先生，把蚊子當成仙鶴，你小時候想像力怎麼那麼豐富？",
+          "你抓到那隻吃蛤蟆的癩蝦蟆後，真的鞭打了數十下嗎？",
+          "在平凡的生活中，要如何找到「物外之趣」？",
+          "你和妻子芸娘的感情為何被後世傳頌為神仙伴侶？"
+        ],
+        qaPatterns: [
+          {
+            keywords: ["蚊子", "群鶴", "夏蚊成雷", "鶴", "白鶴"],
+            response: "哈哈！夏夜蚊帳之中，蚊鳴嗡嗡，若當作俗物則煩躁難耐；但若凝神靜看，徐噴以煙，使之沖煙飛鳴，便真如群鶴舞於青天白雲之間，豈不快哉！想像力乃是天地賜給每位孩童最珍貴的禮物！"
+          },
+          {
+            keywords: ["蝦蟆", "癩蝦蟆", "鞭數十", "驅之別院", "龐然大物"],
+            response: "「忽有龐然大物，拔山倒樹而來，蓋一癩蝦蟆也！」那時我正看得入神，忽見它舌一吐而二蟲盡為所吞，又驚又怒！年少氣盛，拔起竹條連鞭數十，驅逐出院。現在回想，依舊童趣盎然！"
+          }
+        ],
+        defaultFallback: "「情之所鍾，雖醜不嫌；心之所向，微塵見大千。」平凡生活裡不是缺乏美，而是缺乏那雙細察紋理、懂得欣賞的童真之眼。"
+      },
+      {
+        id: "hongxingfu",
+        name: "洪醒夫",
+        category: "modern",
+        dynasty: "當代作家 (1949 - 1982)",
+        style: "台灣鄉土文學小說家",
+        badge: "鄉土作家 · 《紙船印象》作者",
+        badgeColor: "bg-cyan-100 text-cyan-900 border-cyan-300",
+        icon: "fa-solid fa-paper-plane",
+        iconBg: "from-cyan-600 to-teal-700",
+        quote: "「只盼望自己能以母親的心情，為子女摺出一艘艘堅強的紙船。」",
+        bio: "本名洪媽從，彰化二林人。台灣鄉土文學重要作家，《紙船印象》、《散戲》、《黑面慶仔》皆為膾炙人口的名篇，文字樸實深情，刻劃農村小人物之堅韌與悲憫。",
+        greeting: "你好！我是洪醒夫。看見你們年輕一代在螢幕前讀書，真好。在雨天看著水溝奔流，我也常想起當年母親在昏黃燈下為我們摺紙船的身影。你想聊聊這篇文章嗎？",
+        presets: [
+          "洪醒夫老師，你文章中的「紙船」象徵了什麼？",
+          "你寫母親在農忙之餘還為孩子摺紙船，當時的心情是什麼？",
+          "身為鄉土作家，你最想透過文字傳達什麼價值觀？"
+        ],
+        qaPatterns: [
+          {
+            keywords: ["紙船", "象徵", "母親", "親情", "傳承"],
+            response: "紙船雖是用廢紙摺成的粗糙玩具，在雨水中隨時可能翻覆沉沒；但每一艘紙船上，都載著母親對孩子無微不至的愛與憐惜。它象徵著母愛的堅毅、溫暖，以及生命一代傳給一代的無私付出。"
+          }
+        ],
+        defaultFallback: "文學就是寫出土地上真實的情感與小人物的尊嚴。珍惜身邊愛你的家人，把這份愛化作堅強的舟楫，航向人生浩瀚的海洋！"
+      },
+      {
+        id: "zhuziqing",
+        name: "朱自清",
+        category: "modern",
+        dynasty: "現代散文名家 (1898 - 1948)",
+        style: "白話文典範與抒情宗師",
+        badge: "現代名家 · 《背影》作者",
+        badgeColor: "bg-indigo-100 text-indigo-900 border-indigo-300",
+        icon: "fa-solid fa-user-tie",
+        iconBg: "from-indigo-600 to-slate-700",
+        quote: "「我讀到此處，在晶瑩的淚光中，又看見那肥胖的、青布棉袍黑布馬褂的背影。」",
+        bio: "字佩弦，現代著名散文家、學者。《背影》、《荷塘月色》、《春》等散文語言清新洗鍊、情感真摯內斂，被譽為「白話美文的典範」。",
+        greeting: "你好，我是朱佩弦（朱自清）。在浦口車站月台上的那一幕，至今仍常在我眼前浮現。不知你在閱讀《背影》時，是否有任何感想想與我聊聊？",
+        presets: [
+          "朱自清老師，你父親穿過鐵道買橘子的背影，為何讓你流淚四次？",
+          "你年輕時曾覺得父親「說話不大漂亮」，這種心境是怎麼轉變的？",
+          "寫作記敘抒情文時，如何做到像《背影》這樣真摯而不造作？"
+        ],
+        qaPatterns: [
+          {
+            keywords: ["背影", "橘子", "月台", "眼淚", "流淚", "父親"],
+            response: "那時家中光景慘澹，祖母過世、父親賦閒。我看著父親肥胖蹣跚的身軀，穿過鐵道、爬上月台，用雙手攀著、兩腳縮著，只為了替即將遠行的我買幾顆朱紅的橘子。少年時的我總嫌他囉嗦，那一刻我才驚覺父愛的深沉與笨拙，淚水便再也忍不住了。"
+          }
+        ],
+        defaultFallback: "父愛如山，往往沉默無言。寫作最要緊的，是用最純淨克制的文字，刻劃最真實細膩的情感，不需要華麗辭藻，真誠自能動人。"
+      },
+      {
+        id: "baijuyi",
+        name: "白居易",
+        category: "ancient",
+        dynasty: "唐朝 (772 - 846)",
+        style: "老嫗能解平民詩王",
+        badge: "香山居士 · 中唐",
+        badgeColor: "bg-amber-100 text-amber-900 border-amber-300",
+        icon: "fa-solid fa-scroll",
+        iconBg: "from-amber-600 to-yellow-600",
+        quote: "「文章合為時而著，歌詩合為事而作。」",
+        bio: "字樂天，號香山居士。主張「文章合為時而著，歌詩合為事而作」。詩風平易通俗，相傳每作一詩必讀給不識字的老嫗聽，老嫗能解方定稿。",
+        greeting: "老夫白樂天！文章合為時而著，歌詩合為事而作。寫詩若不能讓街坊老嫗皆聽得懂、有所共鳴，便算不得好詩！小友今日有何指教？",
+        presets: [
+          "樂天先生，你寫詩真的會先讀給不識字的老婆婆聽嗎？",
+          "《琵琶行》中「同是天涯淪落人」是在同病相憐什麼？",
+          "給現代寫文章的人一句最重要的心法是什麼？"
+        ],
+        qaPatterns: [
+          {
+            keywords: ["老嫗能解", "老婆婆", "通俗", "寫詩"],
+            response: "確有此事！文辭若太過晦澀僻奧，不過是文人自娛而已。唯有語言平易通俗、情感直抒胸臆，方能穿透階級歲月，傳唱千家萬戶！"
+          }
+        ],
+        defaultFallback: "「同是天涯淪落人，相逢何必曾相識！」真誠的情感沒有古今之分，用心感受人間冷暖，寫下的文字便有千鈞之力。"
+      }
+    ];
+
+    // --- State Management ---
+    let currentAuthorId = "libai";
+    let chatHistories = {}; // { authorId: [ { sender: 'user'|'author', text: '' } ] }
+    let currentCategory = "all";
+    let isGenerating = false;
+
+    // --- Initialization ---
+    document.addEventListener('DOMContentLoaded', () => {
+      // Init greetings in history
+      authorsData.forEach(a => {
+        chatHistories[a.id] = [
+          { sender: 'author', text: a.greeting }
+        ];
+      });
+
+      renderAuthorList();
+      selectAuthor("libai");
+
+      // Enter key setup
+      const userInput = document.getElementById('user-input');
+      userInput.addEventListener('input', (e) => {
+        const clearBtn = document.getElementById('btn-clear-input');
+        if (e.target.value.trim().length > 0) {
+          clearBtn.classList.remove('hidden');
+        } else {
+          clearBtn.classList.add('hidden');
+        }
+      });
+    });
+
+    // --- Render Author List Left Panel ---
+    function renderAuthorList() {
+      const listEl = document.getElementById('author-list');
+      const filtered = authorsData.filter(a => {
+        if (currentCategory === 'all') return true;
+        return a.category === currentCategory;
+      });
+
+      document.getElementById('authors-count').innerText = `${filtered.length} 位名家`;
+
+      let html = '';
+      filtered.forEach(a => {
+        const isActive = (a.id === currentAuthorId) ? 'active ring-2 ring-lilac-500' : '';
+        html += `
+          <div onclick="selectAuthor('${a.id}')" class="author-card ${isActive} p-3.5 rounded-2xl border border-slate-200 hover:border-lilac-400 bg-white hover:bg-lilac-50/50 cursor-pointer transition flex items-center justify-between gap-3 group">
+            <div class="flex items-center space-x-3 min-w-0">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-tr ${a.iconBg} text-white flex items-center justify-center text-base shadow-xs shrink-0 group-hover:scale-105 transition">
+                <i class="${a.icon}"></i>
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-1.5">
+                  <h4 class="font-serif font-black text-sm text-slate-900 group-hover:text-lilac-900 truncate">${a.name}</h4>
+                  <span class="text-[10px] px-1.5 py-0.2 rounded font-semibold ${a.badgeColor} shrink-0">${a.badge}</span>
+                </div>
+                <p class="text-[11px] text-slate-500 truncate mt-0.5">${a.style}</p>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-xs text-slate-300 group-hover:text-lilac-600 transition shrink-0"></i>
+          </div>
+        `;
+      });
+      listEl.innerHTML = html;
+    }
+
+    function filterAuthorCategory(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.cat-tab').forEach(b => {
+        b.className = "cat-tab flex-1 py-1.5 font-medium rounded-lg text-slate-600 hover:text-slate-900 transition";
+      });
+      const activeBtn = document.getElementById(`cat-${cat}`);
+      if (activeBtn) {
+        activeBtn.className = "cat-tab active flex-1 py-1.5 font-bold rounded-lg bg-white text-lilac-900 shadow-xs transition";
+      }
+      renderAuthorList();
+    }
+
+    // --- Select Author & Switch Chat Context ---
+    function selectAuthor(authorId) {
+      currentAuthorId = authorId;
+      const author = authorsData.find(a => a.id === authorId);
+      if (!author) return;
+
+      // Update Top Chat Header Info
+      document.getElementById('current-author-name').innerText = author.name;
+      document.getElementById('current-author-badge').innerText = author.badge;
+      document.getElementById('current-author-badge').className = `px-2 py-0.5 text-[10px] font-bold rounded-full border shrink-0 ${author.badgeColor}`;
+      document.getElementById('current-author-quote').innerText = author.quote;
+      document.getElementById('current-author-dynasty').innerText = author.dynasty;
+      document.getElementById('current-author-style').innerText = author.style;
+      
+      const avatarEl = document.getElementById('current-author-avatar');
+      avatarEl.className = `w-12 h-12 rounded-2xl bg-gradient-to-tr ${author.iconBg} text-white flex items-center justify-center text-xl shadow-md shrink-0`;
+      avatarEl.innerHTML = `<i class="${author.icon}"></i>`;
+
+      // Update Preset Pills
+      renderPresetQuestions(author.presets);
+
+      // Render Messages
+      renderChatMessages();
+
+      // Refresh left active list
+      renderAuthorList();
+    }
+
+    function renderPresetQuestions(presets) {
+      const container = document.getElementById('preset-questions');
+      if (!presets || presets.length === 0) {
+        container.innerHTML = '';
+        return;
+      }
+      let html = '';
+      presets.forEach(p => {
+        html += `
+          <button onclick="askPresetQuestion('${escapeQuotes(p)}')" class="px-3 py-1 bg-white hover:bg-lilac-100 text-lilac-900 text-xs font-semibold rounded-full border border-lilac-200 shadow-xs hover:border-lilac-400 transition whitespace-nowrap">
+            💬 ${p}
+          </button>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function renderChatMessages() {
+      const container = document.getElementById('chat-messages');
+      const author = authorsData.find(a => a.id === currentAuthorId);
+      const history = chatHistories[currentAuthorId] || [];
+
+      let html = '';
+      history.forEach((msg, idx) => {
+        if (msg.sender === 'user') {
+          html += `
+            <div class="flex items-start justify-end space-x-2">
+              <div class="chat-bubble-user max-w-[80%] sm:max-w-[70%] p-3.5 sm:p-4 rounded-2xl rounded-tr-none text-xs sm:text-sm leading-relaxed shadow-sm">
+                ${escapeHtml(msg.text)}
+              </div>
+              <div class="w-8 h-8 rounded-full bg-lilac-200 text-lilac-900 flex items-center justify-center text-xs font-bold shrink-0">
+                我
+              </div>
+            </div>
+          `;
+        } else {
+          html += `
+            <div class="flex items-start space-x-2.5">
+              <div class="w-9 h-9 rounded-xl bg-gradient-to-tr ${author.iconBg} text-white flex items-center justify-center text-sm shadow-xs shrink-0 mt-0.5">
+                <i class="${author.icon}"></i>
+              </div>
+              <div class="chat-bubble-author max-w-[85%] sm:max-w-[75%] p-3.5 sm:p-4 rounded-2xl rounded-tl-none text-xs sm:text-sm leading-relaxed shadow-sm text-slate-800 space-y-1">
+                <div class="text-[11px] font-bold text-lilac-800 font-serif">${author.name}</div>
+                <div class="font-serif leading-relaxed text-slate-800">${formatResponseText(msg.text)}</div>
+              </div>
+            </div>
+          `;
+        }
+      });
+
+      container.innerHTML = html;
+      container.scrollTop = container.scrollHeight;
+    }
+
+    // --- Message Submission & AI Response Generation ---
+    function handleUserSubmit(e) {
+      if (e) e.preventDefault();
+      if (isGenerating) return;
+
+      const input = document.getElementById('user-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      input.value = '';
+      document.getElementById('btn-clear-input').classList.add('hidden');
+
+      // Append User message
+      chatHistories[currentAuthorId].push({ sender: 'user', text: text });
+      renderChatMessages();
+
+      // Trigger Author Response
+      generateAuthorResponse(text);
+    }
+
+    function askPresetQuestion(text) {
+      if (isGenerating) return;
+      chatHistories[currentAuthorId].push({ sender: 'user', text: text });
+      renderChatMessages();
+      generateAuthorResponse(text);
+    }
+
+    function generateAuthorResponse(userQuery) {
+      isGenerating = true;
+      const sendBtn = document.getElementById('btn-send');
+      sendBtn.disabled = true;
+      sendBtn.classList.add('opacity-50');
+
+      const author = authorsData.find(a => a.id === currentAuthorId);
+      const queryLower = userQuery.toLowerCase();
+
+      // Match Best QA Pattern
+      let reply = "";
+      if (author.qaPatterns) {
+        for (const pattern of author.qaPatterns) {
+          const isMatch = pattern.keywords.some(kw => queryLower.includes(kw.toLowerCase()));
+          if (isMatch) {
+            reply = pattern.response;
+            break;
+          }
+        }
+      }
+
+      if (!reply) {
+        reply = author.defaultFallback;
+      }
+
+      // Show Typing Placeholder in Chat
+      const container = document.getElementById('chat-messages');
+      const tempId = 'typing-' + Date.now();
+      const typingHtml = `
+        <div id="${tempId}" class="flex items-start space-x-2.5">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr ${author.iconBg} text-white flex items-center justify-center text-sm shadow-xs shrink-0 mt-0.5">
+            <i class="${author.icon}"></i>
+          </div>
+          <div class="chat-bubble-author max-w-[85%] sm:max-w-[75%] p-3.5 sm:p-4 rounded-2xl rounded-tl-none text-xs sm:text-sm leading-relaxed shadow-sm text-slate-800 space-y-1">
+            <div class="text-[11px] font-bold text-lilac-800 font-serif">${author.name} 正在提筆沉思...</div>
+            <div class="font-serif leading-relaxed text-slate-700 typing-cursor" id="${tempId}-text"></div>
+          </div>
+        </div>
+      `;
+      container.insertAdjacentHTML('beforeend', typingHtml);
+      container.scrollTop = container.scrollHeight;
+
+      // Stream / Typewriter Effect
+      let charIndex = 0;
+      const textEl = document.getElementById(`${tempId}-text`);
+      const speed = 25; // ms per character
+
+      const interval = setInterval(() => {
+        charIndex += 2;
+        if (charIndex <= reply.length) {
+          textEl.innerHTML = formatResponseText(reply.substring(0, charIndex));
+          container.scrollTop = container.scrollHeight;
+        } else {
+          clearInterval(interval);
+          textEl.classList.remove('typing-cursor');
+          textEl.innerHTML = formatResponseText(reply);
+          
+          // Save to persistent history
+          chatHistories[currentAuthorId].push({ sender: 'author', text: reply });
+          
+          isGenerating = false;
+          sendBtn.disabled = false;
+          sendBtn.classList.remove('opacity-50');
+        }
+      }, speed);
+    }
+
+    function resetCurrentChat() {
+      const author = authorsData.find(a => a.id === currentAuthorId);
+      if (!author) return;
+      chatHistories[currentAuthorId] = [
+        { sender: 'author', text: author.greeting }
+      ];
+      renderChatMessages();
+    }
+
+    function clearInput() {
+      const input = document.getElementById('user-input');
+      input.value = '';
+      document.getElementById('btn-clear-input').classList.add('hidden');
+      input.focus();
+    }
+
+    // Helper: Format line breaks and quotes gracefully
+    function formatResponseText(str) {
+      if (!str) return '';
+      return escapeHtml(str)
+        .replace(/\n/g, '<br>')
+        .replace(/「([^」]+)」/g, '<strong class="text-lilac-900 font-bold">「$1」</strong>');
+    }
+
+    function escapeHtml(str) {
+      return (str || '').replace(/[&<>"']/g, function(m) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+      });
+    }
+
+    function escapeQuotes(str) {
+      return (str || '').replace(/'/g, "\\'");
+    }
+  </script>
+
+</body>
+</html>
