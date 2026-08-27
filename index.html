@@ -195,20 +195,27 @@
         </div>
       </a>
 
-      <!-- Quick Search Bar -->
-      <div class="hidden md:flex items-center flex-1 max-w-md mx-6">
+      <!-- Quick Search Bar with Instant Live Dropdown -->
+      <div class="hidden md:flex items-center flex-1 max-w-md mx-6 relative">
         <div class="relative w-full">
           <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-lilac-400"></i>
           <input 
             type="text" 
             id="search-input" 
             oninput="handleSearch(this.value)" 
-            placeholder="搜尋課名、作者、修辭或文體（例如：聲音鐘、陳黎、文言文）..."
+            onfocus="handleSearch(this.value)"
+            onkeydown="handleSearchKeydown(event)"
+            placeholder="搜尋課名、作者、修辭、備課或工具（例如：聲音鐘、陳黎、修辭）..."
             class="w-full pl-10 pr-9 py-2.5 bg-white/90 border border-lilac-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-lilac-500 focus:border-transparent placeholder:text-slate-400 shadow-inner"
           >
           <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
             <i class="fa-solid fa-circle-xmark text-sm"></i>
           </button>
+        </div>
+
+        <!-- Desktop Instant Search Dropdown Popover -->
+        <div id="search-dropdown" class="hidden absolute left-0 right-0 top-full mt-2 bg-white/98 backdrop-blur-md rounded-2xl shadow-2xl border border-lilac-200 p-3 z-50 max-h-96 overflow-y-auto space-y-2 text-xs">
+          <!-- Populated by JS -->
         </div>
       </div>
 
@@ -238,16 +245,22 @@
     </div>
 
     <!-- Mobile Search Row -->
-    <div class="md:hidden px-4 pb-3">
+    <div class="md:hidden px-4 pb-3 relative">
       <div class="relative w-full">
         <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-lilac-400 text-xs"></i>
         <input 
           type="text" 
           id="mobile-search-input" 
           oninput="handleSearch(this.value)" 
+          onfocus="handleSearch(this.value)"
+          onkeydown="handleSearchKeydown(event)"
           placeholder="搜尋課名、作者、關鍵字..."
           class="w-full pl-9 pr-8 py-2 bg-white/90 border border-lilac-200 rounded-full text-xs focus:outline-none focus:ring-2 focus:ring-lilac-500 shadow-inner"
         >
+      </div>
+      <!-- Mobile Search Dropdown -->
+      <div id="mobile-search-dropdown" class="hidden absolute left-4 right-4 top-full mt-1 bg-white rounded-2xl shadow-2xl border border-lilac-200 p-3 z-50 max-h-80 overflow-y-auto space-y-2 text-xs">
+        <!-- Populated by JS -->
       </div>
     </div>
   </header>
@@ -1731,27 +1744,275 @@
       } catch(e) {}
     }
 
+    // --- Global Search Master Database ---
+    const searchDatabase = [
+      {
+        type: "課文教材",
+        badge: "bg-amber-100 text-amber-900 border-amber-300",
+        icon: "fa-solid fa-bell text-amber-500",
+        title: "第一課 聲音鐘",
+        author: "陳黎",
+        desc: "七年級上冊 · 台灣當代記敘散文 · 叫賣聲景與生活美學",
+        keywords: "聲音鐘 聲音 鐘 陳黎 散文 聲景 叫賣 報時 時間 外來語 乍暖還寒 台灣",
+        url: "lesson_sound_clock.html",
+        prepUrl: "lesson_sound_clock_prep.html",
+        actionText: "進入課堂"
+      },
+      {
+        type: "備課手冊",
+        badge: "bg-rose-100 text-rose-900 border-rose-300",
+        icon: "fa-solid fa-chalkboard-user text-rose-500",
+        title: "《聲音鐘》名師深度備課寶典",
+        author: "陳黎 / 備課教材",
+        desc: "完整 16 題引導提問 · 字音字形考點 · 外來語大百科 · 類文選讀",
+        keywords: "聲音鐘 備課 備課手冊 備課寶典 提問 考點 乍暖還寒 外來語 陳腐先生傳 江文也 麻糬 鐵馬豆腐伯",
+        url: "lesson_sound_clock_prep.html",
+        actionText: "開啟備課手冊"
+      },
+      {
+        type: "課文教材",
+        badge: "bg-cyan-100 text-cyan-900 border-cyan-300",
+        icon: "fa-solid fa-paper-plane text-cyan-500",
+        title: "第三課 紙船印象",
+        author: "洪醒夫",
+        desc: "七年級上冊 · 經典抒情散文 · 母愛象徵與童年回憶",
+        keywords: "紙船印象 紙船 洪醒夫 散文 母親 童年 雨天 親情 摺紙船",
+        url: "lesson_paper_boat.html",
+        actionText: "進入課堂"
+      },
+      {
+        type: "修辭系統",
+        badge: "bg-purple-100 text-purple-900 border-purple-300",
+        icon: "fa-solid fa-pen-nib text-purple-500",
+        title: "國語修辭學堂（互動圖鑑與題庫）",
+        author: "修辭總覽",
+        desc: "譬喻、轉化、借代、映襯等 16+ 國中必考修辭大圖鑑與即時測驗",
+        keywords: "修辭 國語修辭學堂 譬喻 轉化 擬人 借代 映襯 誇飾 頂真 類疊 測驗 題庫",
+        url: "修辭.html",
+        actionText: "進入修辭學堂"
+      },
+      {
+        type: "備課專區",
+        badge: "bg-rose-100 text-rose-900 border-rose-300",
+        icon: "fa-solid fa-graduation-cap text-rose-500",
+        title: "名師備課教材資源專區",
+        author: "備課總庫",
+        desc: "各課深度備課手冊 · 16 題 PISA 提問庫 · 隨堂教學互動小工具",
+        keywords: "備課 備課教材 備課專區 備課手冊 教案 提問庫 資源 老師",
+        url: "prep_hub.html",
+        actionText: "進入備課專區"
+      },
+      {
+        type: "課文預覽",
+        badge: "bg-indigo-100 text-indigo-900 border-indigo-300",
+        icon: "fa-solid fa-book text-indigo-500",
+        title: "第二課 背影",
+        author: "朱自清",
+        desc: "八年級上冊 · 現代經典散文 · 父愛與蹣跚背影",
+        keywords: "背影 朱自清 散文 父親 父愛 親情 橘子 月台 八年級",
+        modalKey: "back_view",
+        actionText: "預覽教材重點"
+      },
+      {
+        type: "課文預覽",
+        badge: "bg-emerald-100 text-emerald-900 border-emerald-300",
+        icon: "fa-solid fa-leaf text-emerald-500",
+        title: "第四課 兒時記趣",
+        author: "沈復",
+        desc: "七年級上冊 · 古典文言記敘 · 浮生六記物外之趣",
+        keywords: "兒時記趣 沈復 文言文 童趣 浮生六記 夏蚊成雷",
+        modalKey: "childhood_fun",
+        actionText: "預覽教材重點"
+      },
+      {
+        type: "教學工具",
+        badge: "bg-amber-100 text-amber-900 border-amber-300",
+        icon: "fa-solid fa-dice text-amber-500",
+        title: "1 到 20 號 隨堂課堂竹木籤筒",
+        author: "教學工具",
+        desc: "隨堂點名抽籤 · 經典竹木籤筒 · 自動防重複",
+        keywords: "抽籤 籤筒 點名 抽籤筒 1到20號 抽籤箱 籤詩",
+        toolTab: "picker",
+        actionText: "開啟籤筒"
+      },
+      {
+        type: "教學工具",
+        badge: "bg-emerald-100 text-emerald-900 border-emerald-300",
+        icon: "fa-solid fa-stopwatch text-emerald-500",
+        title: "課堂討論計時器（3分 / 5分）",
+        author: "教學工具",
+        desc: "專注小組討論倒數 · 電子白板全螢幕投影 · 提示鈴聲",
+        keywords: "計時器 計時 討論 3分鐘 5分鐘 倒數 碼表",
+        toolTab: "timer",
+        actionText: "開啟計時器"
+      }
+    ];
+
     // --- Search & Filtering Logic ---
     let currentGrade = 'all';
     let currentGenre = 'all';
     let searchQuery = '';
 
     function handleSearch(val) {
-      searchQuery = val.trim().toLowerCase();
+      searchQuery = (val || '').trim().toLowerCase();
+      
+      // Sync both input fields
+      const desktopInput = document.getElementById('search-input');
+      const mobileInput = document.getElementById('mobile-search-input');
+      if (desktopInput && desktopInput.value !== val) desktopInput.value = val;
+      if (mobileInput && mobileInput.value !== val) mobileInput.value = val;
+
       const clearBtn = document.getElementById('clear-search-btn');
-      if (searchQuery.length > 0) {
-        clearBtn.classList.remove('hidden');
-      } else {
-        clearBtn.classList.add('hidden');
+      if (clearBtn) {
+        if (searchQuery.length > 0) {
+          clearBtn.classList.remove('hidden');
+        } else {
+          clearBtn.classList.add('hidden');
+        }
       }
+
+      // Render instant dropdown results
+      renderSearchDropdown(searchQuery);
+
+      // Also filter curriculum cards below
       applyFilters();
     }
 
+    function renderSearchDropdown(query) {
+      const desktopDd = document.getElementById('search-dropdown');
+      const mobileDd = document.getElementById('mobile-search-dropdown');
+      if (!desktopDd && !mobileDd) return;
+
+      if (!query || query.length === 0) {
+        if (desktopDd) desktopDd.classList.add('hidden');
+        if (mobileDd) mobileDd.classList.add('hidden');
+        return;
+      }
+
+      const matches = searchDatabase.filter(item => {
+        const fullStr = `${item.title} ${item.author} ${item.desc} ${item.keywords} ${item.type}`.toLowerCase();
+        return fullStr.includes(query);
+      });
+
+      let html = '';
+      if (matches.length === 0) {
+        html = `
+          <div class="p-3 text-center text-slate-500 text-xs">
+            <i class="fa-solid fa-magnifying-glass mr-1.5 text-slate-400"></i>
+            找不到與「<strong>${escapeHtml(query)}</strong>」相關的教材或工具
+          </div>
+        `;
+      } else {
+        html = `
+          <div class="px-2 py-1 text-[11px] font-bold text-slate-400 flex items-center justify-between border-b border-slate-100">
+            <span>即時搜尋結果（共 ${matches.length} 項）</span>
+            <span class="text-lilac-700">按 Enter 可跳至課文列表</span>
+          </div>
+        `;
+        matches.slice(0, 6).forEach(item => {
+          let actionOnClick = '';
+          if (item.url) {
+            actionOnClick = `location.href='${item.url}'`;
+          } else if (item.modalKey) {
+            actionOnClick = `openLessonModal('${item.modalKey}'); closeSearchDropdown();`;
+          } else if (item.toolTab) {
+            actionOnClick = `openToolkitModal('${item.toolTab}'); closeSearchDropdown();`;
+          }
+
+          let extraPrepBtn = '';
+          if (item.prepUrl) {
+            extraPrepBtn = `
+              <a href="${item.prepUrl}" onclick="event.stopPropagation()" class="px-2 py-1 bg-rose-100 hover:bg-rose-200 text-rose-800 rounded-lg text-[11px] font-bold border border-rose-200 whitespace-nowrap transition flex items-center gap-1">
+                <i class="fa-solid fa-chalkboard-user"></i> 備課寶典
+              </a>
+            `;
+          }
+
+          html += `
+            <div onclick="${actionOnClick}" class="p-2.5 rounded-xl hover:bg-lilac-50 cursor-pointer border border-transparent hover:border-lilac-200 transition flex items-center justify-between gap-3 group">
+              <div class="flex items-center space-x-2.5 min-w-0">
+                <div class="w-8 h-8 rounded-lg bg-slate-100 group-hover:bg-white flex items-center justify-center shrink-0 shadow-xs">
+                  <i class="${item.icon}"></i>
+                </div>
+                <div class="min-w-0">
+                  <div class="flex items-center gap-1.5">
+                    <span class="font-bold text-slate-900 text-xs truncate group-hover:text-lilac-900">${item.title}</span>
+                    <span class="text-[10px] px-1.5 py-0.2 rounded border ${item.badge} shrink-0">${item.type}</span>
+                  </div>
+                  <p class="text-[11px] text-slate-500 truncate">${item.desc}</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-1.5 shrink-0">
+                ${extraPrepBtn}
+                <button class="px-2.5 py-1 bg-lilac-700 hover:bg-lilac-800 text-white rounded-lg text-[11px] font-bold shadow-xs whitespace-nowrap">
+                  ${item.actionText}
+                </button>
+              </div>
+            </div>
+          `;
+        });
+      }
+
+      if (desktopDd) {
+        desktopDd.innerHTML = html;
+        desktopDd.classList.remove('hidden');
+      }
+      if (mobileDd) {
+        mobileDd.innerHTML = html;
+        mobileDd.classList.remove('hidden');
+      }
+    }
+
+    function handleSearchKeydown(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        closeSearchDropdown();
+        const curriculumEl = document.getElementById('curriculum-section');
+        if (curriculumEl) {
+          curriculumEl.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else if (e.key === 'Escape') {
+        closeSearchDropdown();
+      }
+    }
+
+    function closeSearchDropdown() {
+      const desktopDd = document.getElementById('search-dropdown');
+      const mobileDd = document.getElementById('mobile-search-dropdown');
+      if (desktopDd) desktopDd.classList.add('hidden');
+      if (mobileDd) mobileDd.classList.add('hidden');
+    }
+
+    function escapeHtml(str) {
+      return (str || '').replace(/[&<>"']/g, function(m) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+      });
+    }
+
+    // Close search dropdown on clicking outside
+    document.addEventListener('click', function(e) {
+      const desktopInput = document.getElementById('search-input');
+      const desktopDd = document.getElementById('search-dropdown');
+      const mobileInput = document.getElementById('mobile-search-input');
+      const mobileDd = document.getElementById('mobile-search-dropdown');
+
+      if (desktopDd && !desktopDd.contains(e.target) && e.target !== desktopInput) {
+        desktopDd.classList.add('hidden');
+      }
+      if (mobileDd && !mobileDd.contains(e.target) && e.target !== mobileInput) {
+        mobileDd.classList.add('hidden');
+      }
+    });
+
     function clearSearch() {
-      document.getElementById('search-input').value = '';
-      document.getElementById('mobile-search-input').value = '';
+      const desktopInput = document.getElementById('search-input');
+      const mobileInput = document.getElementById('mobile-search-input');
+      if (desktopInput) desktopInput.value = '';
+      if (mobileInput) mobileInput.value = '';
       searchQuery = '';
-      document.getElementById('clear-search-btn').classList.add('hidden');
+      const clearBtn = document.getElementById('clear-search-btn');
+      if (clearBtn) clearBtn.classList.add('hidden');
+      closeSearchDropdown();
       applyFilters();
     }
 
@@ -1815,12 +2076,14 @@
 
       const countEl = document.getElementById('results-count');
       const emptyEl = document.getElementById('empty-state');
-      countEl.innerText = `共顯示 ${visibleCount} 篇經典教材`;
+      if (countEl) countEl.innerText = `共顯示 ${visibleCount} 篇經典教材`;
 
-      if (visibleCount === 0) {
-        emptyEl.classList.remove('hidden');
-      } else {
-        emptyEl.classList.add('hidden');
+      if (emptyEl) {
+        if (visibleCount === 0) {
+          emptyEl.classList.remove('hidden');
+        } else {
+          emptyEl.classList.add('hidden');
+        }
       }
     }
 
