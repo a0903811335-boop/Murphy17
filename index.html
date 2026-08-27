@@ -281,40 +281,11 @@
             </a>
           </div>
 
-          <!-- Feature Highlights Badges (Clickable & Interactive) -->
+          <!-- Feature Highlights Badges (Clickable & Interactive Classroom Tools) -->
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-lilac-200/80">
-            <button onclick="toggleSoundscape()" class="bg-white/80 hover:bg-white p-2.5 rounded-xl border border-lilac-200/80 hover:border-lilac-400 hover:shadow-md transition flex items-center space-x-2.5 text-left group">
-              <div class="w-8 h-8 rounded-lg bg-lilac-100 group-hover:bg-lilac-200 text-lilac-700 flex items-center justify-center text-sm transition">
-                <i class="fa-solid fa-headphones"></i>
-              </div>
-              <div>
-                <div class="text-xs font-bold text-slate-800 group-hover:text-lilac-800">聲景與報讀</div>
-                <div class="text-[10px] text-slate-500">課文多模態聆聽</div>
-              </div>
-            </button>
-
-            <button onclick="openToolkitModal(); switchToolkitTab('rhetoric');" class="bg-white/80 hover:bg-white p-2.5 rounded-xl border border-lilac-200/80 hover:border-sunlight-400 hover:shadow-md transition flex items-center space-x-2.5 text-left group">
-              <div class="w-8 h-8 rounded-lg bg-sunlight-100 group-hover:bg-sunlight-200 text-sunlight-700 flex items-center justify-center text-sm transition">
-                <i class="fa-solid fa-pen-nib"></i>
-              </div>
-              <div>
-                <div class="text-xs font-bold text-slate-800 group-hover:text-sunlight-800">修辭大圖鑑</div>
-                <div class="text-[10px] text-slate-500">國中必考全解析</div>
-              </div>
-            </button>
-
-            <button onclick="openToolkitModal(); switchToolkitTab('inquiry');" class="bg-white/80 hover:bg-white p-2.5 rounded-xl border border-lilac-200/80 hover:border-emerald-400 hover:shadow-md transition flex items-center space-x-2.5 text-left group">
-              <div class="w-8 h-8 rounded-lg bg-emerald-100 group-hover:bg-emerald-200 text-emerald-700 flex items-center justify-center text-sm transition">
-                <i class="fa-solid fa-clipboard-check"></i>
-              </div>
-              <div>
-                <div class="text-xs font-bold text-slate-800 group-hover:text-emerald-800">素養導向題</div>
-                <div class="text-[10px] text-slate-500">PISA 三層次探究</div>
-              </div>
-            </button>
-
-            <!-- 備課抽籤箱 (1~20 號籤筒直接入口) -->
-            <button onclick="openToolkitModal(); switchToolkitTab('picker');" class="bg-gradient-to-tr from-amber-50 to-amber-100/90 hover:from-amber-100 hover:to-amber-200/90 p-2.5 rounded-xl border-2 border-amber-300 hover:border-amber-500 hover:shadow-lg transition flex items-center space-x-2.5 text-left group ring-2 ring-amber-200/50 relative overflow-hidden">
+            
+            <!-- 1. 備課抽籤箱 (1~20 號籤筒直接入口) -->
+            <button onclick="openToolkitModal('picker')" class="bg-gradient-to-tr from-amber-50 to-amber-100/90 hover:from-amber-100 hover:to-amber-200/90 p-2.5 rounded-xl border-2 border-amber-300 hover:border-amber-500 hover:shadow-lg transition flex items-center space-x-2.5 text-left group ring-2 ring-amber-200/50 relative overflow-hidden">
               <span class="absolute -right-2 -bottom-2 text-2xl text-amber-500/20 font-serif font-black">🎋</span>
               <div class="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center text-sm shadow-sm group-hover:scale-110 transition">
                 <i class="fa-solid fa-dice"></i>
@@ -324,9 +295,47 @@
                   <span>備課抽籤箱</span>
                   <span class="text-[9px] bg-rose-500 text-white px-1 rounded font-normal">1~20號</span>
                 </div>
-                <div class="text-[10px] text-amber-700 font-medium">隨堂互動小工具</div>
+                <div class="text-[10px] text-amber-700 font-medium">隨堂竹木籤筒</div>
               </div>
             </button>
+
+            <!-- 2. 小組討論計時器 (3分/5分直接入口) -->
+            <button onclick="openToolkitModal('timer')" class="bg-gradient-to-tr from-emerald-50 to-emerald-100/90 hover:from-emerald-100 hover:to-emerald-200/90 p-2.5 rounded-xl border-2 border-emerald-300 hover:border-emerald-500 hover:shadow-lg transition flex items-center space-x-2.5 text-left group ring-2 ring-emerald-200/50 relative overflow-hidden">
+              <span class="absolute -right-2 -bottom-2 text-2xl text-emerald-500/20 font-serif font-black">⏱️</span>
+              <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-sm shadow-sm group-hover:scale-110 transition">
+                <i class="fa-solid fa-stopwatch"></i>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-emerald-950 flex items-center gap-1">
+                  <span>討論計時器</span>
+                  <span class="text-[9px] bg-emerald-600 text-white px-1 rounded font-normal">3分/5分</span>
+                </div>
+                <div class="text-[10px] text-emerald-700 font-medium">小組專注倒數</div>
+              </div>
+            </button>
+
+            <!-- 3. 修辭大圖鑑 -->
+            <button onclick="openToolkitModal('rhetoric')" class="bg-white/80 hover:bg-white p-2.5 rounded-xl border border-lilac-200/80 hover:border-sunlight-400 hover:shadow-md transition flex items-center space-x-2.5 text-left group">
+              <div class="w-8 h-8 rounded-lg bg-sunlight-100 group-hover:bg-sunlight-200 text-sunlight-700 flex items-center justify-center text-sm transition">
+                <i class="fa-solid fa-pen-nib"></i>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-slate-800 group-hover:text-sunlight-800">修辭大圖鑑</div>
+                <div class="text-[10px] text-slate-500">國中必考全解析</div>
+              </div>
+            </button>
+
+            <!-- 4. 素養導向題 -->
+            <button onclick="openToolkitModal('inquiry')" class="bg-white/80 hover:bg-white p-2.5 rounded-xl border border-lilac-200/80 hover:border-indigo-400 hover:shadow-md transition flex items-center space-x-2.5 text-left group">
+              <div class="w-8 h-8 rounded-lg bg-indigo-100 group-hover:bg-indigo-200 text-indigo-700 flex items-center justify-center text-sm transition">
+                <i class="fa-solid fa-clipboard-check"></i>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-slate-800 group-hover:text-indigo-800">素養導向題</div>
+                <div class="text-[10px] text-slate-500">PISA 三層次探究</div>
+              </div>
+            </button>
+
           </div>
 
         </div>
@@ -1120,34 +1129,85 @@
 
         </div>
 
-        <!-- 2. Countdown Timer Panel -->
-        <div id="tool-panel-timer" class="hidden space-y-6 text-center">
-          <div class="max-w-md mx-auto bg-slate-50 p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+        <!-- 2. Countdown Timer Panel (課堂小組討論專用計時器) -->
+        <div id="tool-panel-timer" class="hidden space-y-6">
+          <div id="timer-container-card" class="max-w-2xl mx-auto bg-gradient-to-b from-emerald-50/40 via-white to-slate-50 p-6 sm:p-8 rounded-3xl border border-emerald-200 shadow-sm space-y-5 text-center transition-all duration-300">
             
-            <!-- Quick Preset Buttons -->
-            <div class="flex justify-center gap-2">
-              <button onclick="setTimerSeconds(60)" class="px-3 py-1.5 bg-white border border-slate-200 hover:border-lilac-400 rounded-lg text-xs font-bold text-slate-700">1 分鐘 (快答)</button>
-              <button onclick="setTimerSeconds(180)" class="px-3 py-1.5 bg-white border border-slate-200 hover:border-lilac-400 rounded-lg text-xs font-bold text-slate-700">3 分鐘 (討論)</button>
-              <button onclick="setTimerSeconds(300)" class="px-3 py-1.5 bg-white border border-slate-200 hover:border-lilac-400 rounded-lg text-xs font-bold text-slate-700">5 分鐘 (書寫)</button>
-              <button onclick="setTimerSeconds(600)" class="px-3 py-1.5 bg-white border border-slate-200 hover:border-lilac-400 rounded-lg text-xs font-bold text-slate-700">10 分鐘 (評量)</button>
+            <!-- Header & Discussion Topic Input -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold font-serif text-emerald-900 flex items-center gap-1.5">
+                  <i class="fa-solid fa-people-group text-emerald-600 text-sm"></i> 國文課堂 · 小組專注討論計時器
+                </span>
+                <button onclick="toggleTimerFullscreen()" id="btn-timer-fullscreen" class="text-xs text-emerald-700 hover:text-emerald-900 font-semibold flex items-center gap-1 px-2.5 py-1 bg-emerald-100/60 rounded-lg hover:bg-emerald-200/60 transition" title="放大至全螢幕投影">
+                  <i class="fa-solid fa-expand text-[11px]"></i> <span>全螢幕投影</span>
+                </button>
+              </div>
+
+              <!-- Editable Topic for the Class -->
+              <input 
+                type="text" 
+                id="timer-topic" 
+                value="💬 小組討論任務：請針對本課核心意象與修辭進行討論" 
+                placeholder="點擊此處可自訂本階段小組討論任務與提問..."
+                class="w-full text-center text-xs sm:text-sm font-bold px-3 py-2 bg-white border border-emerald-200 rounded-xl text-emerald-950 focus:ring-2 focus:ring-emerald-500 shadow-xs placeholder:text-slate-400"
+              >
             </div>
 
-            <!-- Big Digital Timer Display -->
-            <div id="timer-display" class="text-6xl sm:text-7xl font-mono font-bold text-slate-900 tracking-wider">
-              03:00
+            <!-- Quick Preset Buttons (Prominently featuring 3m and 5m) -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+              <button onclick="setTimerSeconds(180)" id="btn-preset-180" class="timer-preset-btn py-3 px-2 bg-emerald-600 text-white rounded-2xl font-bold text-xs sm:text-sm shadow-md shadow-emerald-600/20 transition flex flex-col items-center justify-center">
+                <span class="text-base sm:text-lg font-black">3 分鐘</span>
+                <span class="text-[10px] text-emerald-100">🌟 小組快思討論</span>
+              </button>
+              <button onclick="setTimerSeconds(300)" id="btn-preset-300" class="timer-preset-btn py-3 px-2 bg-white hover:bg-emerald-50 text-slate-700 border border-emerald-200 rounded-2xl font-bold text-xs sm:text-sm transition flex flex-col items-center justify-center">
+                <span class="text-base sm:text-lg font-black">5 分鐘</span>
+                <span class="text-[10px] text-slate-500">🌟 深入探究撰寫</span>
+              </button>
+              <button onclick="setTimerSeconds(60)" id="btn-preset-60" class="timer-preset-btn py-3 px-2 bg-white hover:bg-emerald-50 text-slate-700 border border-emerald-200 rounded-2xl font-bold text-xs sm:text-sm transition flex flex-col items-center justify-center">
+                <span class="text-base sm:text-lg font-black">1 分鐘</span>
+                <span class="text-[10px] text-slate-500">⚡ 隨堂快問快答</span>
+              </button>
+              <button onclick="setTimerSeconds(600)" id="btn-preset-600" class="timer-preset-btn py-3 px-2 bg-white hover:bg-emerald-50 text-slate-700 border border-emerald-200 rounded-2xl font-bold text-xs sm:text-sm transition flex flex-col items-center justify-center">
+                <span class="text-base sm:text-lg font-black">10 分鐘</span>
+                <span class="text-[10px] text-slate-500">📝 分組成果發表</span>
+              </button>
+            </div>
+
+            <!-- Micro Adjust Buttons -->
+            <div class="flex items-center justify-center gap-1.5 text-xs">
+              <span class="text-slate-400 text-[11px] mr-1">微調：</span>
+              <button onclick="adjustTimerSeconds(60)" class="px-2.5 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-700 font-bold transition">+1 分鐘</button>
+              <button onclick="adjustTimerSeconds(30)" class="px-2.5 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-700 font-bold transition">+30 秒</button>
+              <button onclick="adjustTimerSeconds(-30)" class="px-2.5 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-700 font-bold transition">-30 秒</button>
+              <button onclick="adjustTimerSeconds(-60)" class="px-2.5 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-700 font-bold transition">-1 分鐘</button>
+            </div>
+
+            <!-- Big Digital Timer Display & Progress Bar -->
+            <div class="py-4 my-2 relative">
+              <div id="timer-display" class="text-7xl sm:text-8xl font-mono font-black text-emerald-950 tracking-wider transition-all duration-300 drop-shadow-sm">
+                03:00
+              </div>
+              <!-- Progress Bar -->
+              <div class="w-full max-w-md mx-auto bg-slate-200 h-2.5 rounded-full overflow-hidden mt-3 shadow-inner">
+                <div id="timer-progress-bar" class="bg-gradient-to-r from-emerald-500 to-teal-500 h-full w-full rounded-full transition-all duration-500"></div>
+              </div>
             </div>
 
             <!-- Controls -->
-            <div class="flex items-center justify-center space-x-3">
-              <button id="btn-timer-start" onclick="toggleTimer()" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-md transition flex items-center gap-2">
-                <i class="fa-solid fa-play"></i> 開始計時
+            <div class="flex flex-wrap items-center justify-center gap-3 pt-1">
+              <button id="btn-timer-start" onclick="toggleTimer()" class="px-8 py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold text-base rounded-2xl shadow-lg shadow-emerald-600/25 transition transform active:scale-95 flex items-center gap-2">
+                <i class="fa-solid fa-play"></i> 開始討論計時
               </button>
-              <button onclick="resetTimer()" class="px-5 py-3 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-sm rounded-xl transition flex items-center gap-2">
+              <button onclick="resetTimer()" class="px-6 py-3.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-sm rounded-2xl transition flex items-center gap-1.5">
                 <i class="fa-solid fa-rotate-left"></i> 重設
+              </button>
+              <button onclick="playDingSound()" class="px-4 py-3.5 bg-white hover:bg-amber-50 border border-amber-200 text-amber-800 font-bold text-xs rounded-2xl transition flex items-center gap-1.5" title="試聽結束提示鐘聲">
+                <i class="fa-solid fa-bell text-amber-600"></i> 試聽鐘聲
               </button>
             </div>
 
-            <p class="text-[11px] text-slate-400">計時結束時將自動發出清脆提示鐘聲 🔔</p>
+            <p class="text-[11px] text-slate-400">計時結束時將自動發出清脆提示鐘聲 🔔，提醒全班回神準備發言！</p>
           </div>
         </div>
 
@@ -1887,33 +1947,72 @@
       renderSticksGrid();
     }, 100);
 
-    // Timer Execution
+    // --- Classroom Discussion Timer Execution (3分/5分小組討論專用) ---
     let timerTotalSeconds = 180;
     let timerRemaining = 180;
     let timerInterval = null;
+    let isTimerFullscreen = false;
 
     function setTimerSeconds(sec) {
       clearInterval(timerInterval);
       timerInterval = null;
-      document.getElementById('btn-timer-start').innerHTML = '<i class="fa-solid fa-play"></i> 開始計時';
-      document.getElementById('btn-timer-start').className = "px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-md transition flex items-center gap-2";
       timerTotalSeconds = sec;
       timerRemaining = sec;
+
+      // Update preset buttons active state
+      document.querySelectorAll('.timer-preset-btn').forEach(b => {
+        b.className = "timer-preset-btn py-3 px-2 bg-white hover:bg-emerald-50 text-slate-700 border border-emerald-200 rounded-2xl font-bold text-xs sm:text-sm transition flex flex-col items-center justify-center";
+      });
+      const activeBtn = document.getElementById(`btn-preset-${sec}`);
+      if (activeBtn) {
+        activeBtn.className = "timer-preset-btn py-3 px-2 bg-emerald-600 text-white rounded-2xl font-bold text-xs sm:text-sm shadow-md shadow-emerald-600/20 transition flex flex-col items-center justify-center";
+      }
+
+      const btn = document.getElementById('btn-timer-start');
+      btn.innerHTML = '<i class="fa-solid fa-play"></i> 開始討論計時';
+      btn.className = "px-8 py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold text-base rounded-2xl shadow-lg shadow-emerald-600/25 transition transform active:scale-95 flex items-center gap-2";
+
+      updateTimerDisplay();
+    }
+
+    function adjustTimerSeconds(delta) {
+      timerRemaining = Math.max(10, timerRemaining + delta);
+      if (timerRemaining > timerTotalSeconds) {
+        timerTotalSeconds = timerRemaining;
+      }
       updateTimerDisplay();
     }
 
     function updateTimerDisplay() {
       const min = Math.floor(timerRemaining / 60).toString().padStart(2, '0');
       const sec = (timerRemaining % 60).toString().padStart(2, '0');
-      document.getElementById('timer-display').innerText = `${min}:${sec}`;
+      const displayEl = document.getElementById('timer-display');
+      displayEl.innerText = `${min}:${sec}`;
+
+      // Update Progress Bar
+      const percentage = (timerTotalSeconds > 0) ? (timerRemaining / timerTotalSeconds) * 100 : 0;
+      const progressEl = document.getElementById('timer-progress-bar');
+      progressEl.style.width = `${percentage}%`;
+
+      // Color coding
+      if (percentage <= 20) {
+        progressEl.className = "bg-rose-500 h-full w-full rounded-full transition-all duration-500";
+        displayEl.className = "text-7xl sm:text-8xl font-mono font-black text-rose-600 tracking-wider transition-all duration-300 drop-shadow-sm animate-pulse";
+      } else if (percentage <= 45) {
+        progressEl.className = "bg-amber-500 h-full w-full rounded-full transition-all duration-500";
+        displayEl.className = "text-7xl sm:text-8xl font-mono font-black text-amber-700 tracking-wider transition-all duration-300 drop-shadow-sm";
+      } else {
+        progressEl.className = "bg-gradient-to-r from-emerald-500 to-teal-500 h-full w-full rounded-full transition-all duration-500";
+        displayEl.className = "text-7xl sm:text-8xl font-mono font-black text-emerald-950 tracking-wider transition-all duration-300 drop-shadow-sm";
+      }
     }
 
     function toggleTimer() {
       const btn = document.getElementById('btn-timer-start');
       if (!timerInterval) {
         // Start
-        btn.innerHTML = '<i class="fa-solid fa-pause"></i> 暫停計時';
-        btn.className = "px-6 py-3 bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm rounded-xl shadow-md transition flex items-center gap-2";
+        btn.innerHTML = '<i class="fa-solid fa-pause"></i> 暫停討論';
+        btn.className = "px-8 py-3.5 bg-amber-600 hover:bg-amber-700 text-white font-bold text-base rounded-2xl shadow-md transition flex items-center gap-2";
         timerInterval = setInterval(() => {
           if (timerRemaining > 0) {
             timerRemaining--;
@@ -1921,17 +2020,18 @@
           } else {
             clearInterval(timerInterval);
             timerInterval = null;
-            btn.innerHTML = '<i class="fa-solid fa-check"></i> 時間到！';
-            btn.className = "px-6 py-3 bg-rose-600 text-white font-bold text-sm rounded-xl shadow-md transition flex items-center gap-2";
+            btn.innerHTML = '<i class="fa-solid fa-bell"></i> 討論時間到！';
+            btn.className = "px-8 py-3.5 bg-rose-600 text-white font-bold text-base rounded-2xl shadow-lg shadow-rose-600/30 transition flex items-center gap-2 animate-bounce";
             playDingSound();
+            setTimeout(() => playDingSound(), 400);
           }
         }, 1000);
       } else {
         // Pause
         clearInterval(timerInterval);
         timerInterval = null;
-        btn.innerHTML = '<i class="fa-solid fa-play"></i> 繼續計時';
-        btn.className = "px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-md transition flex items-center gap-2";
+        btn.innerHTML = '<i class="fa-solid fa-play"></i> 繼續討論計時';
+        btn.className = "px-8 py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold text-base rounded-2xl shadow-md transition flex items-center gap-2";
       }
     }
 
@@ -1941,9 +2041,40 @@
       timerRemaining = timerTotalSeconds;
       updateTimerDisplay();
       const btn = document.getElementById('btn-timer-start');
-      btn.innerHTML = '<i class="fa-solid fa-play"></i> 開始計時';
-      btn.className = "px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-md transition flex items-center gap-2";
+      btn.innerHTML = '<i class="fa-solid fa-play"></i> 開始討論計時';
+      btn.className = "px-8 py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold text-base rounded-2xl shadow-lg shadow-emerald-600/25 transition transform active:scale-95 flex items-center gap-2";
     }
+
+    function toggleTimerFullscreen() {
+      const card = document.getElementById('timer-container-card');
+      const btn = document.getElementById('btn-timer-fullscreen');
+
+      if (!isTimerFullscreen) {
+        if (card.requestFullscreen) {
+          card.requestFullscreen();
+        } else if (card.webkitRequestFullscreen) {
+          card.webkitRequestFullscreen();
+        }
+        btn.innerHTML = '<i class="fa-solid fa-compress text-[11px]"></i> <span>退出全螢幕</span>';
+        isTimerFullscreen = true;
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        }
+        btn.innerHTML = '<i class="fa-solid fa-expand text-[11px]"></i> <span>全螢幕投影</span>';
+        isTimerFullscreen = false;
+      }
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement) {
+        isTimerFullscreen = false;
+        const btn = document.getElementById('btn-timer-fullscreen');
+        if (btn) btn.innerHTML = '<i class="fa-solid fa-expand text-[11px]"></i> <span>全螢幕投影</span>';
+      }
+    });
 
     // --- Lesson Detail Modal Preview Data ---
     const lessonData = {
