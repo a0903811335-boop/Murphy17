@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>《聲音鐘》名師深度備課手冊與教學資源庫 | 翰墨韶光</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Google Fonts: Noto Serif TC & Noto Sans TC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;900&family=Noto+Serif+TC:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans TC"', 'sans-serif'],
+            serif: ['"Noto Serif TC"', 'serif'],
+          },
+          colors: {
+            lilac: {
+              50: '#faf8ff',
+              100: '#f3eeff',
+              200: '#e7dcfe',
+              300: '#d5bffd',
+              400: '#bc96fb',
+              500: '#a16bf6',
+              600: '#8742eb',
+              700: '#732ad3',
+              800: '#6022b0',
+              900: '#4f1e8e',
+              950: '#320f63',
+            },
+            sunlight: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              200: '#fde68a',
+              300: '#fcd34d',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+              800: '#92400e',
+              900: '#78350f',
+            },
+            sage: {
+              50: '#f2f9f6',
+              100: '#e1f2ec',
+              500: '#10b981',
+              700: '#047857',
+              800: '#065f46',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #fdfbf7;
+    }
+    .textbook-shadow {
+      box-shadow: 0 10px 30px -5px rgba(79, 30, 142, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white; color: black; }
+      .print-break { page-break-before: always; }
+    }
+  </style>
+</head>
+<body class="text-slate-800 antialiased selection:bg-lilac-200 selection:text-lilac-900 font-sans">
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-lilac-200/80 shadow-xs no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- Left: Logo & Navigation back to Portal -->
+        <div class="flex items-center space-x-3">
+          <a href="index.html" class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-lilac-50 hover:bg-lilac-100 border border-lilac-200 text-lilac-900 font-semibold text-xs transition">
+            <i class="fa-solid fa-house text-lilac-600"></i>
+            <span>教材首頁</span>
+          </a>
+          <a href="lesson_sound_clock.html" class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-900 font-semibold text-xs transition">
+            <i class="fa-solid fa-bell text-sunlight-600"></i>
+            <span>《聲音鐘》學生教材</span>
+          </a>
+          <span class="text-slate-300 hidden md:inline">|</span>
+          <div class="hidden sm:block">
+            <h1 class="text-sm font-serif font-black text-slate-900 flex items-center gap-2">
+              <span>《聲音鐘》教師深度備課手冊</span>
+              <span class="text-[10px] bg-lilac-800 text-white px-2 py-0.5 rounded-full font-sans font-bold">名師備課專用</span>
+            </h1>
+          </div>
+        </div>
+
+        <!-- Right: Action Tools -->
+        <div class="flex items-center space-x-2">
+          <!-- Print Button -->
+          <button onclick="window.print()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1.5" title="列印或另存 PDF">
+            <i class="fa-solid fa-print"></i>
+            <span class="hidden md:inline">列印 / 存為PDF</span>
+          </button>
+          <!-- Quick Search -->
+          <div class="relative hidden lg:block w-48">
+            <input 
+              type="text" 
+              id="prep-search"
+              onkeyup="filterPrepContent()" 
+              placeholder="搜尋字詞、成語、提問..." 
+              class="w-full pl-8 pr-3 py-1.5 bg-slate-100 border border-slate-200 rounded-xl text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-lilac-500"
+            >
+            <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-400 text-[11px]"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <section class="relative bg-gradient-to-r from-lilac-900 via-lilac-800 to-indigo-950 text-white py-10 lg:py-14 border-b border-lilac-700 overflow-hidden">
+    <!-- Decorative background elements -->
+    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#d5bffd_1px,transparent_1px)] [background-size:16px_16px]"></div>
+    <div class="absolute -right-16 -top-16 w-80 h-80 bg-sunlight-500/20 rounded-full blur-3xl"></div>
+    <div class="absolute left-10 -bottom-20 w-80 h-80 bg-lilac-500/20 rounded-full blur-3xl"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <div class="lg:col-span-8 space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-xs font-semibold text-sunlight-300">
+            <i class="fa-solid fa-graduation-cap"></i> 國中七年級國文（下）第一課 · 翰林版完整備課用書彙編
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-serif font-black tracking-tight leading-tight text-white">
+            第一課《聲音鐘》名師深度備課寶典
+          </h2>
+          <p class="text-xs sm:text-sm text-lilac-200 max-w-2xl leading-relaxed">
+            作者：陳黎（本名陳膺文）｜體裁：現代抒情記敘散文｜核心素養：觀察日常聲景、掌握時間軸線、理解市井庶民情懷與外來語源流。
+          </p>
+
+          <!-- Quick Stat Badges -->
+          <div class="flex flex-wrap gap-2 pt-2">
+            <span class="px-3 py-1 bg-white/10 rounded-lg text-xs font-mono font-medium"><i class="fa-solid fa-list-ol mr-1 text-sunlight-400"></i> 16 題 PISA 素養段落提問</span>
+            <span class="px-3 py-1 bg-white/10 rounded-lg text-xs font-mono font-medium"><i class="fa-solid fa-spell-check mr-1 text-emerald-400"></i> 12+ 組形音義考點</span>
+            <span class="px-3 py-1 bg-white/10 rounded-lg text-xs font-mono font-medium"><i class="fa-solid fa-globe mr-1 text-cyan-400"></i> 40+ 外來語大百科</span>
+            <span class="px-3 py-1 bg-white/10 rounded-lg text-xs font-mono font-medium"><i class="fa-solid fa-book-open mr-1 text-rose-400"></i> 4 篇精選類文擴充</span>
+          </div>
+        </div>
+
+        <!-- Right Quick Jump Menu -->
+        <div class="lg:col-span-4 bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20 text-xs space-y-2.5">
+          <div class="font-bold text-sunlight-300 flex items-center justify-between pb-1 border-b border-white/10">
+            <span><i class="fa-solid fa-compass mr-1"></i> 備課單元快速導航</span>
+            <span class="text-[10px] text-lilac-200">共 8 大模組</span>
+          </div>
+          <div class="grid grid-cols-2 gap-1.5 font-medium text-lilac-100">
+            <a href="#module-teaching" class="p-1.5 rounded-lg hover:bg-white/10 transition flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-[10px] text-emerald-400"></i> 1. 教學活動資源</a>
+            <a href="#module-inquiry" class="p-1.5 rounded-lg hover:bg-white/10 transition flex items-center gap-1.5"><i class="fa-solid fa-circle-question text-[10px] text-sunlight-400"></i> 2. 課文引導提問</a>
+            <a href="#module-author" class="p-1.5 rounded-lg hover:bg-white/10 transition flex items-center gap-1.5"><i class="fa-solid fa-feather text-[10px] text-pink-400"></i> 3. 陳黎作家專題</a>
+            <a href="#module-words" class="p-1.5 rounded-lg hover:bg-white/10 transition flex items-center gap-1.5"><i class="fa-solid fa-font text-[10px] text-cyan-400"></i> 4. 字詞形音義</a>
+            <a href="#module-analysis" class="p-1.5 rounded-lg hover:bg-white/10 transition flex items-center gap-1.5"><i class="fa-solid fa-layer-group text-[10px] text-amber-400"></i> 5. 課文賞析寫作</a>
+            <a href="#module-loanwords" class="p-1.5 rounded-lg hover:bg-white/10 transition flex items-center gap-1.5"><i class="fa-solid fa-language text-[10px] text-indigo-400"></i> 6. 外來語大百科</a>
+            <a href="#module-idioms" class="p-1.5 rounded-lg hover:bg-white/10 transition flex items-center gap-1.5"><i class="fa-solid fa-quote-left text-[10px] text-teal-400"></i> 7. 成語與會考題</a>
+            <a href="#module-companion" class="p-1.5 rounded-lg hover:bg-white/10 transition flex items-center gap-1.5"><i class="fa-solid fa-book-bookmark text-[10px] text-orange-400"></i> 8. 類文選讀欣賞</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Layout -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+
+    <!-- ========================================== -->
+    <!-- MODULE 1: 教學活動與媒體資源庫 -->
+    <!-- ========================================== -->
+    <section id="module-teaching" class="bg-white rounded-3xl p-6 sm:p-8 textbook-shadow border border-lilac-200/80 space-y-6">
+      
+      <div class="flex items-center justify-between border-b border-lilac-100 pb-4">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-2xl bg-lilac-100 text-lilac-700 flex items-center justify-center font-bold text-lg">
+            <i class="fa-solid fa-chalkboard-user"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-serif font-black text-slate-900">一、教學活動設計與影音資源庫</h3>
+            <p class="text-xs text-slate-500">掌握選文宗旨、課堂破冰互動與全方位影音教材</p>
+          </div>
+        </div>
+        <span class="text-xs bg-lilac-50 text-lilac-700 font-bold px-3 py-1 rounded-full border border-lilac-200">課前準備 P1～2</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- 選文理由 & 活動設計 -->
+        <div class="space-y-4">
+          <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/80 space-y-3">
+            <h4 class="text-sm font-bold text-lilac-900 flex items-center gap-2">
+              <i class="fa-solid fa-lightbulb text-sunlight-500"></i> 選文理由與教學核心
+            </h4>
+            <ul class="text-xs text-slate-700 space-y-2 leading-relaxed">
+              <li class="flex items-start gap-2">
+                <span class="text-lilac-600 font-bold">1.</span>
+                <span>陳黎風格鮮明，不論散文或詩作都能在詼諧幽默的氣氛中傳遞深刻哲思，極適合國中生閱讀與涵養性情。</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-lilac-600 font-bold">2.</span>
+                <span>本文運用精湛的<strong>「聽覺摹寫」</strong>刻畫叫賣聲。教師可藉文中實例，訓練學生日常生活的觀察力、聲景敏銳度與寫作表達能力。</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="bg-emerald-50/50 p-5 rounded-2xl border border-emerald-200/80 space-y-3">
+            <h4 class="text-sm font-bold text-emerald-900 flex items-center gap-2">
+              <i class="fa-solid fa-wand-magic-sparkles text-emerald-600"></i> 課堂破冰活動設計
+            </h4>
+            <div class="text-xs text-slate-700 space-y-2.5">
+              <div class="p-2.5 bg-white rounded-xl border border-emerald-100">
+                <strong class="text-emerald-900">🎋 活動 1：生活中的聲音鐘</strong>
+                <p class="text-slate-600 mt-1">請學生課前記錄生活周遭的聲音（時間、地點、提醒自己做什麼），課堂上鼓勵學生模仿叫賣聲或播放錄音分享。</p>
+              </div>
+              <div class="p-2.5 bg-white rounded-xl border border-emerald-100">
+                <strong class="text-emerald-900">🎵 活動 2：歌曲中的叫賣聲</strong>
+                <p class="text-slate-600 mt-1">播放融入叫賣聲的經典老歌（如《酒干倘賣無》、《燒肉粽》），引導學生感受音符與庶民叫賣的交織。</p>
+              </div>
+              <div class="p-2.5 bg-white rounded-xl border border-emerald-100">
+                <strong class="text-emerald-900">⏳ 活動 3：時光隧道</strong>
+                <p class="text-slate-600 mt-1">播放早期臺灣街頭叫賣影音，帶領學生重返古早味的巷弄時光。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 影音資源庫 Links -->
+        <div class="bg-gradient-to-br from-lilac-50/50 to-indigo-50/40 p-5 rounded-2xl border border-lilac-200 space-y-4">
+          <h4 class="text-sm font-bold text-slate-900 flex items-center justify-between">
+            <span class="flex items-center gap-2"><i class="fa-solid fa-video text-rose-500"></i> 推薦多媒體影音與文化網站</span>
+            <span class="text-[10px] text-slate-500">點擊外部連結</span>
+          </h4>
+          
+          <div class="space-y-2 text-xs">
+            <a href="https://youtu.be/XJfFYbZn_P8" target="_blank" class="p-3 bg-white hover:bg-lilac-50 rounded-xl border border-lilac-200/80 flex items-center justify-between transition group">
+              <div class="flex items-center gap-2.5">
+                <i class="fa-brands fa-youtube text-rose-600 text-base group-hover:scale-110 transition"></i>
+                <div>
+                  <div class="font-bold text-slate-800">《酒干倘賣無》（蘇芮演唱，4分半）</div>
+                  <div class="text-[10px] text-slate-500">聆聽早期收酒瓶小販的經典叫賣聲調</div>
+                </div>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square text-slate-400 text-[11px]"></i>
+            </a>
+
+            <a href="https://youtu.be/VXOcOFHQPA4" target="_blank" class="p-3 bg-white hover:bg-lilac-50 rounded-xl border border-lilac-200/80 flex items-center justify-between transition group">
+              <div class="flex items-center gap-2.5">
+                <i class="fa-brands fa-youtube text-rose-600 text-base group-hover:scale-110 transition"></i>
+                <div>
+                  <div class="font-bold text-slate-800">《燒肉粽》（郭金發演唱，3分半）</div>
+                  <div class="text-[10px] text-slate-500">低沉渾厚的夜間庶民生活寫照</div>
+                </div>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square text-slate-400 text-[11px]"></i>
+            </a>
+
+            <a href="https://youtu.be/BHUaDpxkylE" target="_blank" class="p-3 bg-white hover:bg-lilac-50 rounded-xl border border-lilac-200/80 flex items-center justify-between transition group">
+              <div class="flex items-center gap-2.5">
+                <i class="fa-brands fa-youtube text-rose-600 text-base group-hover:scale-110 transition"></i>
+                <div>
+                  <div class="font-bold text-slate-800">《雜細仔車沿街叫賣》（2分鐘）</div>
+                  <div class="text-[10px] text-slate-500">認識臺灣早期市井行腳小販的風貌</div>
+                </div>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square text-slate-400 text-[11px]"></i>
+            </a>
+
+            <a href="https://youtu.be/NdDoZTbTzeM" target="_blank" class="p-3 bg-white hover:bg-lilac-50 rounded-xl border border-lilac-200/80 flex items-center justify-between transition group">
+              <div class="flex items-center gap-2.5">
+                <i class="fa-brands fa-youtube text-rose-600 text-base group-hover:scale-110 transition"></i>
+                <div>
+                  <div class="font-bold text-slate-800">《飛越文學地景─島嶼之歌》（陳黎，1分半）</div>
+                  <div class="text-[10px] text-slate-500">跟著陳黎詩句欣賞臺灣土地與文字之美</div>
+                </div>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square text-slate-400 text-[11px]"></i>
+            </a>
+          </div>
+
+          <div class="pt-2 border-t border-lilac-200/60 flex items-center justify-between text-[11px] text-slate-600">
+            <span>★ 更多資源可至「翰林國中國文 YouTube 頻道」或「陳黎文學倉庫」查詢</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- MODULE 2: 課文引導提問 (PISA 3-tier Table) -->
+    <!-- ========================================== -->
+    <section id="module-inquiry" class="bg-white rounded-3xl p-6 sm:p-8 textbook-shadow border border-lilac-200/80 space-y-6">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-lilac-100 pb-4 gap-2">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-2xl bg-sunlight-100 text-sunlight-700 flex items-center justify-center font-bold text-lg">
+            <i class="fa-solid fa-circle-question"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-serif font-black text-slate-900">二、活化教學 · 課文引導提問全覽表（16 題）</h3>
+            <p class="text-xs text-slate-500">供教師課堂引導、隨堂抽籤點名與訓練口語表達使用</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="toggleAllAnswers()" id="btn-toggle-all-answers" class="px-3 py-1.5 bg-lilac-100 hover:bg-lilac-200 text-lilac-800 font-bold text-xs rounded-xl transition flex items-center gap-1">
+            <i class="fa-solid fa-eye"></i> <span>展開全部參考答案</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Inquiry Cards Grid -->
+      <div class="space-y-3" id="inquiry-container">
+
+        <!-- Q1 -->
+        <div class="inquiry-item bg-slate-50/70 p-4 rounded-2xl border border-slate-200/80 space-y-2">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 bg-lilac-700 text-white rounded text-[11px] font-bold">第一段</span>
+              <span class="text-xs font-bold text-slate-800">Q1. 首段點出篇名「聲音鐘」所指的是何種聲音？推測的理由為何？</span>
+            </div>
+            <span class="text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-bold whitespace-nowrap">文意推論</span>
+          </div>
+          <div class="inquiry-answer hidden pt-2 text-xs text-slate-700 border-t border-slate-200/60 bg-white p-3 rounded-xl">
+            <strong class="text-lilac-900">【參考答案】：</strong>
+            <p class="mt-1">(1) 小販的叫賣聲。<br>(2) 因為作者說這些叫賣聲像鐘一般準確出現，具有報時與生活提示的功能。</p>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="inquiry-item bg-slate-50/70 p-4 rounded-2xl border border-slate-200/80 space-y-2">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 bg-lilac-700 text-white rounded text-[11px] font-bold">第二段</span>
+              <span class="text-xs font-bold text-slate-800">Q2. 作者還未移動書桌前，他從哪些方面察覺時間的推移？</span>
+            </div>
+            <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold whitespace-nowrap">擷取訊息</span>
+          </div>
+          <div class="inquiry-answer hidden pt-2 text-xs text-slate-700 border-t border-slate-200/60 bg-white p-3 rounded-xl">
+            <strong class="text-lilac-900">【參考答案】：</strong>
+            <p class="mt-1">(1) 天晴時射入室內陽光的寬窄與亮暗變化。<br>(2) 郵差按門鈴的聲音（早上十點半）。<br>(3) 妻子忘了帶鑰匙，在門外的大聲呼喊（下午四點）。</p>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="inquiry-item bg-slate-50/70 p-4 rounded-2xl border border-slate-200/80 space-y-2">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 bg-lilac-700 text-white rounded text-[11px] font-bold">二、三段</span>
+              <span class="text-xs font-bold text-slate-800">Q3. 作者移動書桌前後所聽到的聲音有何差別？</span>
+            </div>
+            <span class="text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-bold whitespace-nowrap">文意推論</span>
+          </div>
+          <div class="inquiry-answer hidden pt-2 text-xs text-slate-700 border-t border-slate-200/60 bg-white p-3 rounded-xl">
+            <strong class="text-lilac-900">【參考答案】：</strong>
+            <p class="mt-1">(1) 移動前非常安靜，日子像掛在壁上的月曆，只有偶爾的門鈴與太太呼喊聲。<br>(2) 移動後才發覺屋後小空地小販傳來如時鐘般準確出現的豐富叫賣聲，生活頓時充滿活力。</p>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="inquiry-item bg-slate-50/70 p-4 rounded-2xl border border-slate-200/80 space-y-2">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 bg-lilac-700 text-white rounded text-[11px] font-bold">第四段</span>
+              <span class="text-xs font-bold text-slate-800">Q4. 根據本文，早餐時間作者可以聽到哪些不同的叫賣聲？</span>
+            </div>
+            <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold whitespace-nowrap">擷取訊息</span>
+          </div>
+          <div class="inquiry-answer hidden pt-2 text-xs text-slate-700 border-t border-slate-200/60 bg-white p-3 rounded-xl">
+            <strong class="text-lilac-900">【參考答案】：</strong>
+            <p class="mt-1">(1) 「豆奶哦！煎包哦！糯米飯哦！」（純正臺灣國語的呼叫聲，中華臺北版早餐）。<br>(2) 「最好吃的美心麵包，最好吃的美心三明治，請來吃最好吃的美心巧克力蛋糕……」（錄音機廣播的叫賣聲）。</p>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="inquiry-item bg-slate-50/70 p-4 rounded-2xl border border-slate-200/80 space-y-2">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 bg-lilac-700 text-white rounded text-[11px] font-bold">第五段</span>
+              <span class="text-xs font-bold text-slate-800">Q5. 作者認為「聲音鐘」構築的不是物理的時間，而是心情的時間，原因何在？【核心考點】</span>
+            </div>
+            <span class="text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-bold whitespace-nowrap">文意推論</span>
+          </div>
+          <div class="inquiry-answer hidden pt-2 text-xs text-slate-700 border-t border-slate-200/60 bg-white p-3 rounded-xl">
+            <strong class="text-lilac-900">【參考答案】：</strong>
+            <p class="mt-1">因為聲音鐘的報時方式與出現時機並非機械、刻板的一成不變，而是和這有情世界一樣充滿變化與趣味。有時將我們帶進懷舊情境，有時使心情由疑慮轉為開朗，聲調更具備鮮活的音樂性與鄉土情調。</p>
+          </div>
+        </div>
+
+        <!-- Q6 & Q7 -->
+        <div class="inquiry-item bg-slate-50/70 p-4 rounded-2xl border border-slate-200/80 space-y-2">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 bg-lilac-700 text-white rounded text-[11px] font-bold">第五段</span>
+              <span class="text-xs font-bold text-slate-800">Q6-7. 文中「人間天籟，臺語的瑰寶」所指為何？為何能聯想到《牛犁歌》或《丟丟銅仔》？</span>
+            </div>
+            <span class="text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-bold whitespace-nowrap">文意推論</span>
+          </div>
+          <div class="inquiry-answer hidden pt-2 text-xs text-slate-700 border-t border-slate-200/60 bg-white p-3 rounded-xl">
+            <strong class="text-lilac-900">【參考答案】：</strong>
+            <p class="mt-1">(1) 指賣芭樂老阿伯的叫賣聲（「鹹—芭樂，鹹—甜—脆，甘—的哦！」）。<br>(2) 因為鹹芭樂是在地小吃，那清脆鄉土、宛轉有致的吟唱，具體而微地濃縮了整個民族的生命力，讓人聯想起早期臺灣民謠的鮮活旋律與鄉土情味。</p>
+          </div>
+        </div>
+
+        <!-- Q8 - Q11 -->
+        <div class="inquiry-item bg-slate-50/70 p-4 rounded-2xl border border-slate-200/80 space-y-2">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 bg-lilac-700 text-white rounded text-[11px] font-bold">七、八段</span>
+              <span class="text-xs font-bold text-slate-800">Q8-11. 哪些情況聲音鐘會「停擺、慢擺」？聲音鐘如何告訴作者「星期」與「季節」？</span>
+            </div>
+            <span class="text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-bold whitespace-nowrap">文意推論</span>
+          </div>
+          <div class="inquiry-answer hidden pt-2 text-xs text-slate-700 border-t border-slate-200/60 bg-white p-3 rounded-xl">
+            <strong class="text-lilac-900">【參考答案】：</strong>
+            <p class="mt-1">
+              (1) 颳風下雨、小販太老太累或生病時會停擺或慢擺。<br>
+              (2) <strong>星期：</strong>賣麥芽糖鹹橄欖粉（週三）、賣衛生紙與豆腐乳（週日下午）、修理沙發（週末）。<br>
+              (3) <strong>季節：</strong>昨晚賣「燒仙草」（冬），今天改叫「冷豆花」（春），驚覺春天的到來。
+            </p>
+          </div>
+        </div>
+
+        <!-- Q13 - Q15 -->
+        <div class="inquiry-item bg-slate-50/70 p-4 rounded-2xl border border-slate-200/80 space-y-2">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 bg-lilac-700 text-white rounded text-[11px] font-bold">第九、十段</span>
+              <span class="text-xs font-bold text-slate-800">Q13-15. 本文首段與末段敘述相似，運用何種寫作手法？生活中有哪些聲音鐘？</span>
+            </div>
+            <span class="text-[10px] bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full font-bold whitespace-nowrap">寫作手法 & 延伸</span>
+          </div>
+          <div class="inquiry-answer hidden pt-2 text-xs text-slate-700 border-t border-slate-200/60 bg-white p-3 rounded-xl">
+            <strong class="text-lilac-900">【參考答案】：</strong>
+            <p class="mt-1">
+              (1) <strong>首尾呼應法（前後呼應）：</strong>強調主題，加深對聲音鐘喜愛之情的印象。<br>
+              (2) <strong>生活聲音鐘示例：</strong>清晨媽媽叫醒聲（媽媽鐘）、上課鐘聲、放學導護吆喝聲、倒垃圾時的《給愛麗絲》音樂、百貨公司打烊時的《晚安曲》等。
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- MODULE 3: 作家專題：陳黎的世界 -->
+    <!-- ========================================== -->
+    <section id="module-author" class="bg-white rounded-3xl p-6 sm:p-8 textbook-shadow border border-lilac-200/80 space-y-6">
+      
+      <div class="flex items-center justify-between border-b border-lilac-100 pb-4">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-2xl bg-rose-100 text-rose-700 flex items-center justify-center font-bold text-lg">
+            <i class="fa-solid fa-feather"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-serif font-black text-slate-900">三、作家深度專題：陳黎的文學世界與自況</h3>
+            <p class="text-xs text-slate-500">本名由來、字典癖好、蠹魚體散文與代表詩作賞析</p>
+          </div>
+        </div>
+        <span class="text-xs bg-rose-50 text-rose-700 font-bold px-3 py-1 rounded-full border border-rose-200">深度補充 P5-1～5-4</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Author Profile Card -->
+        <div class="bg-gradient-to-b from-rose-50/50 to-orange-50/30 p-5 rounded-2xl border border-rose-200/80 space-y-4">
+          <div class="space-y-2">
+            <span class="text-[10px] bg-rose-600 text-white px-2 py-0.5 rounded font-bold uppercase">作家小檔案</span>
+            <h4 class="text-lg font-serif font-black text-slate-900">陳黎（本名：陳膺文）</h4>
+            <p class="text-xs text-slate-600">臺灣花蓮人，1954年生。師大英語系畢。曾獲國家文藝獎、吳三連文藝獎、臺灣當代十大詩人。代表作《陳黎詩集》、《陳黎跨世紀散文選》。</p>
+          </div>
+
+          <div class="space-y-2.5 text-xs text-slate-700 pt-2 border-t border-rose-200/60">
+            <div class="p-2.5 bg-white rounded-xl border border-rose-100">
+              <strong class="text-rose-900">🖋️ 筆名「陳黎」的由來：</strong>
+              <p class="text-slate-600 mt-1">小時候練習寫「膺文」覺得筆畫懸殊像不平衡的翹翹板。中學讀《辭海》時發現「黎」字視覺平衡且具詩意，從此沿用至今。</p>
+            </div>
+            <div class="p-2.5 bg-white rounded-xl border border-rose-100">
+              <strong class="text-rose-900">📖 讀字典的獨特癖好：</strong>
+              <p class="text-slate-600 mt-1">高中時買兩巨冊辭海，把字典當作文學書籍般吟詠背誦，造就對文字的敏銳感與跳躍思考。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 散文風格 & 自況《陳腐先生傳》 -->
+        <div class="bg-gradient-to-b from-amber-50/50 to-yellow-50/30 p-5 rounded-2xl border border-amber-200/80 space-y-4">
+          <div class="space-y-1">
+            <span class="text-[10px] bg-amber-600 text-white px-2 py-0.5 rounded font-bold uppercase">文壇名家評價</span>
+            <h4 class="text-sm font-bold text-amber-950">簡媜讚譽：「自成一格的蠹魚體」</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              簡媜說陳黎的散文是「濃縮中的濃縮，剜股剔肉只見精髓，把文字與想像拉拔到與繪畫、音樂等高的境界。」
+            </p>
+          </div>
+
+          <div class="bg-white p-3.5 rounded-xl border border-amber-200 space-y-2 text-xs">
+            <strong class="text-amber-900 flex items-center gap-1.5"><i class="fa-solid fa-user-pen"></i> 自況名篇《陳腐先生傳》四絕：</strong>
+            <ul class="text-slate-600 space-y-1.5">
+              <li><strong>外表：</strong>頭髮像鳥窩，洗得有點髒的牛仔褲與無鞋帶拖鞋涼鞋。</li>
+              <li><strong>言行：</strong>大聲批評空洞作文比賽，常譏笑別人最後卻加一句「我自己也是！」</li>
+              <li><strong>教學態度：</strong>不讓學生喊起立敬禮，考題不按牌理出牌，常主動為學生加課。</li>
+              <li><strong>教學內容：</strong>把不可能湊一塊的古今中外知識、文學、音樂都集合在黑板上。</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 精選詩作賞析 -->
+        <div class="bg-gradient-to-b from-lilac-50/50 to-purple-50/30 p-5 rounded-2xl border border-lilac-200/80 space-y-3">
+          <span class="text-[10px] bg-lilac-700 text-white px-2 py-0.5 rounded font-bold uppercase">經典詩作選讀</span>
+          
+          <div class="bg-white p-3 rounded-xl border border-lilac-100 space-y-1.5 text-xs">
+            <strong class="text-lilac-900">🍳 《荷包蛋》</strong>
+            <p class="text-slate-600 font-serif italic">
+              「荷包蛋像一個搖籃，<br>
+              柔柔軟軟的蛋白絨布，<br>
+              裹著黃黃嫩嫩，熟睡的小嬰孩──<br>
+              啊，我不忍心用筷子吵醒他。」
+            </p>
+            <p class="text-[11px] text-lilac-700">【賞析】：蛋白喻為絨布，蛋黃喻為熟睡嬰兒，極富童趣與溫厚巧思。</p>
+          </div>
+
+          <div class="bg-white p-3 rounded-xl border border-lilac-100 space-y-1.5 text-xs">
+            <strong class="text-lilac-900">📺 《遙控器》（節選）</strong>
+            <p class="text-slate-600 font-serif italic">
+              「有沒有一支遙控器可以遙控數學老師的脾氣？<br>
+              有沒有一支遙控器可以遙控媽媽臉上忽冷忽熱的溫度計？」
+            </p>
+            <p class="text-[11px] text-lilac-700">【賞析】：幽默諷刺現代科技的萬能，面對人心的無能為力。</p>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- MODULE 4: 字詞形音義與疑難辨析 -->
+    <!-- ========================================== -->
+    <section id="module-words" class="bg-white rounded-3xl p-6 sm:p-8 textbook-shadow border border-lilac-200/80 space-y-6">
+      
+      <div class="flex items-center justify-between border-b border-lilac-100 pb-4">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-2xl bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold text-lg">
+            <i class="fa-solid fa-font"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-serif font-black text-slate-900">四、字詞形音義與段考必考疑難字辨析</h3>
+            <p class="text-xs text-slate-500">一字多音、易混淆字形、詞義辨析與教育部國語會考據</p>
+          </div>
+        </div>
+        <span class="text-xs bg-cyan-50 text-cyan-700 font-bold px-3 py-1 rounded-full border border-cyan-200">段考常考重點</span>
+      </div>
+
+      <!-- 乍暖還寒 權威考據 Special Callout -->
+      <div class="bg-gradient-to-r from-amber-500/10 via-sunlight-500/10 to-amber-500/10 p-4 rounded-2xl border-2 border-amber-400 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div class="space-y-1 text-xs">
+          <div class="font-bold text-amber-950 flex items-center gap-2">
+            <i class="fa-solid fa-circle-exclamation text-amber-600 text-base"></i>
+            <span class="text-sm">【權威考據】「乍暖『還』寒」之讀音釋疑（國語會函覆）：</span>
+          </div>
+          <p class="text-slate-700 leading-relaxed">
+            依教育部終身教育司（國語會）函覆說明：詩詞與文言詞彙之「還」字作「迴環反覆、回復」義時，仍宜依傳統文言讀音讀作 <strong>ㄏㄨㄢˊ（huan2）</strong>。
+          </p>
+        </div>
+        <span class="px-3 py-1 bg-amber-600 text-white font-bold text-xs rounded-xl shadow-xs whitespace-nowrap">音：ㄏㄨㄢˊ</span>
+      </div>
+
+      <!-- Grid of Words -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+        
+        <!-- 1. 鐘 vs 鍾 -->
+        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+          <div class="font-bold text-slate-900 border-b pb-1 flex justify-between">
+            <span>1. 鐘（ㄓㄨㄥ） vs 鍾（ㄓㄨㄥ）</span>
+          </div>
+          <ul class="text-slate-600 space-y-1">
+            <li>• <strong>鐘：</strong>金屬敲擊樂器 / 報時器。如：暮鼓晨鐘、聲音鐘。</li>
+            <li>• <strong>鍾：</strong>積聚 / 專一。如：鍾愛一生、一見鍾情。</li>
+          </ul>
+        </div>
+
+        <!-- 2. 膺 vs 贗 -->
+        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+          <div class="font-bold text-slate-900 border-b pb-1 flex justify-between">
+            <span>2. 膺（ㄧㄥ） vs 贗（ㄧㄢˋ）</span>
+          </div>
+          <ul class="text-slate-600 space-y-1">
+            <li>• <strong>膺：</strong>胸膛（義憤填膺）/ 承擔（榮膺大任）。</li>
+            <li>• <strong>贗：</strong>假的、偽造的。如：贗品。</li>
+          </ul>
+        </div>
+
+        <!-- 3. 空 (ㄎㄨㄥ vs ㄎㄨㄥˋ) -->
+        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+          <div class="font-bold text-slate-900 border-b pb-1 flex justify-between">
+            <span>3. 空（ㄎㄨㄥ / ㄎㄨㄥˋ）</span>
+          </div>
+          <ul class="text-slate-600 space-y-1">
+            <li>• <strong>ㄎㄨㄥˋ：</strong>尚未利用（空地）、閒暇（撥空）。</li>
+            <li>• <strong>ㄎㄨㄥ：</strong>廣闊（海闊天空）、不切實際（空論）。</li>
+          </ul>
+        </div>
+
+        <!-- 4. 糯 vs 懦 vs 儒 vs 孺 -->
+        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+          <div class="font-bold text-slate-900 border-b pb-1 flex justify-between">
+            <span>4. 糯 / 懦 / 儒 / 孺</span>
+          </div>
+          <ul class="text-slate-600 space-y-1">
+            <li>• <strong>糯（ㄋㄨㄛˋ）：</strong>糯米飯。</li>
+            <li>• <strong>懦（ㄋㄨㄛˋ）：</strong>膽小懦弱。</li>
+            <li>• <strong>儒（ㄖㄨˊ）：</strong>博學鴻儒、儒家。</li>
+            <li>• <strong>孺（ㄖㄨˊ）：</strong>老弱婦孺、孺慕之情。</li>
+          </ul>
+        </div>
+
+        <!-- 5. 嬌 vs 矯 vs 驕 vs 喬 -->
+        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+          <div class="font-bold text-slate-900 border-b pb-1 flex justify-between">
+            <span>5. 嬌 / 矯 / 驕 / 喬</span>
+          </div>
+          <ul class="text-slate-600 space-y-1">
+            <li>• <strong>嬌（ㄐㄧㄠ）：</strong>嬌滴滴、嬌生慣養。</li>
+            <li>• <strong>矯（ㄐㄧㄠˇ）：</strong>矯枉過正、身手矯健。</li>
+            <li>• <strong>驕（ㄐㄧㄠ）：</strong>驕矜自滿、驕傲。</li>
+            <li>• <strong>喬（ㄑㄧㄠˊ）：</strong>喬裝打扮、喬遷之喜。</li>
+          </ul>
+        </div>
+
+        <!-- 6. 致 的五種詞義 -->
+        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+          <div class="font-bold text-slate-900 border-b pb-1 flex justify-between">
+            <span>6. 「致」之多重詞義</span>
+          </div>
+          <ul class="text-slate-600 space-y-1">
+            <li>• 情趣意態：<strong>宛轉有致</strong>、雅致。</li>
+            <li>• 表達表示：<strong>致謝</strong>、致詞。</li>
+            <li>• 獲得：<strong>致富</strong>｜使得：<strong>導致</strong>｜竭盡：<strong>致力</strong>。</li>
+          </ul>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- MODULE 5: 課文賞析與寫作手法分析 -->
+    <!-- ========================================== -->
+    <section id="module-analysis" class="bg-white rounded-3xl p-6 sm:p-8 textbook-shadow border border-lilac-200/80 space-y-6">
+      
+      <div class="flex items-center justify-between border-b border-lilac-100 pb-4">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-lg">
+            <i class="fa-solid fa-layer-group"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-serif font-black text-slate-900">五、課文結構章法與精華句旨剖析</h3>
+            <p class="text-xs text-slate-500">掌握三段式結構、時間季節軸線與修辭手法</p>
+          </div>
+        </div>
+        <span class="text-xs bg-amber-50 text-amber-700 font-bold px-3 py-1 rounded-full border border-amber-200">章法結構表</span>
+      </div>
+
+      <!-- Structure Breakdown Flowchart -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+        
+        <div class="bg-lilac-50/70 p-4 rounded-2xl border border-lilac-200 space-y-2">
+          <div class="flex items-center justify-between font-bold text-lilac-950">
+            <span>（一）前言（第 1～3 段）</span>
+            <span class="px-2 py-0.5 bg-lilac-200 text-lilac-800 rounded">點題鋪墊</span>
+          </div>
+          <p class="text-slate-600 leading-relaxed">
+            首段開門見山點題「我喜歡那些像鐘一般準確出現的小販的叫賣聲」。二、三段說明移動書桌前後的靜與動對比，帶出聲音鐘的由來。
+          </p>
+        </div>
+
+        <div class="bg-sunlight-50/70 p-4 rounded-2xl border border-sunlight-200 space-y-2">
+          <div class="flex items-center justify-between font-bold text-amber-950">
+            <span>（二）正文（第 4～8 段）</span>
+            <span class="px-2 py-0.5 bg-sunlight-200 text-amber-800 rounded">時間與季節</span>
+          </div>
+          <p class="text-slate-600 leading-relaxed">
+            按早晨（豆奶/美心麵包）、白天（芭樂阿伯）、傍晚（肉圓/蝦仁羹）依序描摹。並述及聲音鐘隨心情起伏、按星期與季節（燒仙草轉冷豆花）轉換。
+          </p>
+        </div>
+
+        <div class="bg-emerald-50/70 p-4 rounded-2xl border border-emerald-200 space-y-2">
+          <div class="flex items-center justify-between font-bold text-emerald-950">
+            <span>（三）總結（第 9～10 段）</span>
+            <span class="px-2 py-0.5 bg-emerald-200 text-emerald-800 rounded">首尾呼應</span>
+          </div>
+          <p class="text-slate-600 leading-relaxed">
+            讚美叫賣聲如「時鐘、日曆、月曆」，是城市人間不可或缺的色彩。末段呼應首段（多加一個「聽」字），加深讀者感受。
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Key Rhetoric & Sentence Explanations -->
+      <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3 text-xs">
+        <h4 class="font-bold text-slate-900 flex items-center gap-2">
+          <i class="fa-solid fa-pen-nib text-lilac-600"></i> 本課四大核心修辭彙整：
+        </h4>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-slate-700">
+          <div class="bg-white p-3 rounded-xl border border-slate-200">
+            <strong class="text-lilac-900">1. 譬喻修辭：</strong>
+            <p class="text-slate-600 mt-1">「日子安靜得像掛在壁上的月曆。」（明喻）<br>「那清脆的叫賣聲，是生活裡最動人的鐘擺。」</p>
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-slate-200">
+            <strong class="text-lilac-900">2. 轉化（擬人）修辭：</strong>
+            <p class="text-slate-600 mt-1">「叫賣聲就正好穿過你推開的窗戶，不客氣地進來。」<br>「他甚至跟你惡作劇。」<br>「美妙的叫賣聲在舞臺裡翻滾跳躍。」</p>
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-slate-200">
+            <strong class="text-lilac-900">3. 聽覺摹寫：</strong>
+            <p class="text-slate-600 mt-1">「豆奶哦！煎包哦！糯米飯哦！」<br>「鹹—芭樂，鹹—甜—脆，甘—的哦！」（拉長吟唱）</p>
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-slate-200">
+            <strong class="text-lilac-900">4. 狀聲詞（擬聲）：</strong>
+            <p class="text-slate-600 mt-1">敲著「噹、噹、噹」的聲音；伸出一隻小鳥，「布穀、布穀」地向你報時。</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- MODULE 6: 外來語大百科 (Loanwords Masterclass) -->
+    <!-- ========================================== -->
+    <section id="module-loanwords" class="bg-white rounded-3xl p-6 sm:p-8 textbook-shadow border border-lilac-200/80 space-y-6">
+      
+      <div class="flex items-center justify-between border-b border-lilac-100 pb-4">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-lg">
+            <i class="fa-solid fa-language"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-serif font-black text-slate-900">六、外來語大百科：梵語、英語與日語源流對照表</h3>
+            <p class="text-xs text-slate-500">音譯、意譯兼音譯、半音半意與日常生活常用外來語集錦</p>
+          </div>
+        </div>
+        <span class="text-xs bg-indigo-50 text-indigo-700 font-bold px-3 py-1 rounded-full border border-indigo-200">課後延伸 P17-5</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
+        
+        <!-- 1. 梵語來源 -->
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+          <div class="font-bold text-slate-900 border-b pb-1.5 flex items-center gap-1.5 text-indigo-900">
+            <i class="fa-solid fa-om"></i> 梵語（佛教經典音譯）
+          </div>
+          <div class="space-y-1.5 text-slate-700">
+            <div class="flex justify-between py-1 border-b border-slate-200/60"><span>剎那</span><span class="text-slate-500">極短的瞬間</span></div>
+            <div class="flex justify-between py-1 border-b border-slate-200/60"><span>浮屠 / 浮圖</span><span class="text-slate-500">佛塔 / 僧人</span></div>
+            <div class="flex justify-between py-1 border-b border-slate-200/60"><span>菩薩 / 佛陀</span><span class="text-slate-500">覺有情 / 覺者</span></div>
+            <div class="flex justify-between py-1 border-b border-slate-200/60"><span>涅槃 / 般若</span><span class="text-slate-500">圓寂 / 智慧</span></div>
+            <div class="flex justify-between py-1"><span>南無 / 劫</span><span class="text-slate-500">敬禮 / 極長時間</span></div>
+          </div>
+        </div>
+
+        <!-- 2. 英語來源 -->
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+          <div class="font-bold text-slate-900 border-b pb-1.5 flex items-center gap-1.5 text-blue-900">
+            <i class="fa-solid fa-earth-americas"></i> 英語（現代音譯與半音譯）
+          </div>
+          <div class="space-y-1.5 text-slate-700">
+            <div class="flex justify-between py-1 border-b border-slate-200/60"><span>三明治 / 沙發</span><span class="text-slate-500">Sandwich / Sofa</span></div>
+            <div class="flex justify-between py-1 border-b border-slate-200/60"><span>幽默 / 拷貝</span><span class="text-slate-500">Humor / Copy</span></div>
+            <div class="flex justify-between py-1 border-b border-slate-200/60"><span>可口可樂 / 基因</span><span class="text-slate-500">Coca-Cola / Gene</span></div>
+            <div class="flex justify-between py-1 border-b border-slate-200/60"><span>冰淇淋 / 迷你裙</span><span class="text-slate-500">半音半意譯</span></div>
+            <div class="flex justify-between py-1"><span>信用卡 / 摩托車</span><span class="text-slate-500">半音半意譯</span></div>
+          </div>
+        </div>
+
+        <!-- 3. 日語來源 -->
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+          <div class="font-bold text-slate-900 border-b pb-1.5 flex items-center gap-1.5 text-rose-900">
+            <i class="fa-solid fa-sun"></i> 日語（臺語日常借用語）
+          </div>
+          <div class="space-y-1.5 text-slate-700">
+            <div class="flex justify-between py-1 border-b border-slate-200/60"><span>阿奇毛（やきいも）</span><span class="text-slate-500">烤番薯</span></div>
+            <div class="flex justify-between py-1 border-b border-slate-200/60"><span>歐巴桑 / 歐吉桑</span><span class="text-slate-500">中年婦女 / 男子</span></div>
+            <div class="flex justify-between py-1 border-b border-slate-200/60"><span>沙西米 / 哇沙米</span><span class="text-slate-500">生魚片 / 芥末</span></div>
+            <div class="flex justify-between py-1 border-b border-slate-200/60"><span>宅急便 / 便當</span><span class="text-slate-500">快遞 / 飯盒</span></div>
+            <div class="flex justify-between py-1"><span>一級棒 / 運將</span><span class="text-slate-500">最好的 / 司機</span></div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- MODULE 7: 成語心法與歷屆會考題解 -->
+    <!-- ========================================== -->
+    <section id="module-idioms" class="bg-white rounded-3xl p-6 sm:p-8 textbook-shadow border border-lilac-200/80 space-y-6">
+      
+      <div class="flex items-center justify-between border-b border-lilac-100 pb-4">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-2xl bg-teal-100 text-teal-700 flex items-center justify-center font-bold text-lg">
+            <i class="fa-solid fa-quote-left"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-serif font-black text-slate-900">七、成語心法庫與歷屆會考真題精析</h3>
+            <p class="text-xs text-slate-500">聲音成語、做生意成語、生活名言佳句與 100 基測/103 會考題解</p>
+          </div>
+        </div>
+        <span class="text-xs bg-teal-50 text-teal-700 font-bold px-3 py-1 rounded-full border border-teal-200">寫作與試題 P17-2～4</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 text-xs">
+        
+        <!-- 成語專區 -->
+        <div class="space-y-4">
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
+            <h4 class="font-bold text-teal-950 flex items-center gap-1.5">
+              <i class="fa-solid fa-volume-high text-teal-600"></i> 與「聲音」相關之高頻成語（21 則精華）
+            </h4>
+            <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-700">
+              <div>• <strong>響遏行雲：</strong>聲音高昂激越</div>
+              <div>• <strong>新鶯出谷：</strong>歌聲宛轉動聽</div>
+              <div>• <strong>餘音繞梁：</strong>音樂美妙不絕</div>
+              <div>• <strong>萬籟俱寂：</strong>萬物安靜無聲</div>
+              <div>• <strong>聲嘶力竭：</strong>聲音破啞力氣用盡</div>
+              <div>• <strong>震耳欲聾：</strong>聲音極大震撼</div>
+              <div>• <strong>鶯聲燕語：</strong>女子語聲宛轉</div>
+              <div>• <strong>響徹雲霄：</strong>聲勢浩大直抵天際</div>
+            </div>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
+            <h4 class="font-bold text-amber-950 flex items-center gap-1.5">
+              <i class="fa-solid fa-shop text-amber-600"></i> 與「做生意」相關之成語諺語
+            </h4>
+            <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-700">
+              <div>• <strong>童叟無欺：</strong>待人公平誠信</div>
+              <div>• <strong>奇貨可居：</strong>待高價出售牟利</div>
+              <div>• <strong>貨真價實：</strong>貨品真確價格實在</div>
+              <div>• <strong>如假包換：</strong>保證絕對真實</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 歷屆會考真題精析 -->
+        <div class="bg-indigo-50/50 p-5 rounded-2xl border border-indigo-200 space-y-4">
+          <h4 class="font-bold text-indigo-950 flex items-center justify-between">
+            <span class="flex items-center gap-1.5"><i class="fa-solid fa-graduation-cap text-indigo-600"></i> 歷屆會考基測經典題</span>
+            <span class="text-[10px] bg-indigo-200 text-indigo-800 px-2 py-0.5 rounded font-bold">考點剖析</span>
+          </h4>
+
+          <div class="space-y-3 text-xs">
+            <div class="bg-white p-3.5 rounded-xl border border-indigo-100 space-y-2">
+              <div class="font-bold text-slate-800">【100 基測 I】作者比擬小販叫賣聲像「陽光、綠野、花」，用意為何？</div>
+              <p class="text-slate-600"><strong>(A) 呈現生命力與活力的意象</strong>（正解）<br>(B) 說明各種小吃四季供應如常<br>(C) 肯定叫賣聲精準報時的價值</p>
+              <div class="text-[11px] text-indigo-700 bg-indigo-50 p-1.5 rounded">
+                <strong>解析：</strong>陽光、綠野、花皆象徵生機盎然，比喻小販叫賣聲為城市帶來蓬勃生命力。
+              </div>
+            </div>
+
+            <div class="bg-white p-3.5 rounded-xl border border-indigo-100 space-y-2">
+              <div class="font-bold text-slate-800">【107 會考】下列字音何者前後相同？</div>
+              <p class="text-slate-600">
+                (A) 令人「咋」舌（ㄗㄜˊ）／「乍」看之下（ㄓㄚˋ）<br>
+                <strong>(B) 含「氟」牙膏（ㄈㄨˊ）／春風「拂」面（ㄈㄨˊ）</strong>（正解）<br>
+                (C) 「匍」伏前進（ㄆㄨˊ）／灌溉花「圃」（ㄆㄨˇ）
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- MODULE 8: 類文選讀與拓展延伸 -->
+    <!-- ========================================== -->
+    <section id="module-companion" class="bg-white rounded-3xl p-6 sm:p-8 textbook-shadow border border-lilac-200/80 space-y-6">
+      
+      <div class="flex items-center justify-between border-b border-lilac-100 pb-4">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-2xl bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-lg">
+            <i class="fa-solid fa-book-bookmark"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-serif font-black text-slate-900">八、類文選讀與課外閱讀拓展</h3>
+            <p class="text-xs text-slate-500">江文也《賣酸梅湯的來了》、陳黎《麻糬》、賴鈺婷《鐵馬豆腐伯》</p>
+          </div>
+        </div>
+        <span class="text-xs bg-orange-50 text-orange-700 font-bold px-3 py-1 rounded-full border border-orange-200">閱讀祕笈 P17-6～8</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
+        
+        <!-- 1. 江文也《賣酸梅湯的來了》 -->
+        <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3">
+          <div class="border-b pb-2">
+            <span class="text-[10px] bg-rose-600 text-white px-2 py-0.5 rounded font-bold">感官通感摹寫</span>
+            <h4 class="text-sm font-serif font-black text-slate-900 mt-1">江文也《賣酸梅湯的來了》</h4>
+          </div>
+          <p class="text-slate-600 font-serif italic leading-relaxed">
+            「多麼清脆的聲響啊<br>
+            簡直　剛從糖水中　取出來似地<br>
+            清脆而又奇妙地不絕如縷的<br>
+            宛如　也要把空氣變得酸甜似的」
+          </p>
+          <div class="bg-white p-2.5 rounded-xl border border-slate-200 text-slate-700">
+            <strong>【賞析重點】：</strong>將聽覺的鈴聲與味覺的酸甜巧妙結合（通感摹寫），營造出垂涎欲滴的盛夏聲景。
+          </div>
+        </div>
+
+        <!-- 2. 陳黎《麻糬》 -->
+        <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3">
+          <div class="border-b pb-2">
+            <span class="text-[10px] bg-amber-600 text-white px-2 py-0.5 rounded font-bold">花蓮鄉土記憶</span>
+            <h4 class="text-sm font-serif font-black text-slate-900 mt-1">陳黎《麻糬》（節選）</h4>
+          </div>
+          <p class="text-slate-600 font-serif leading-relaxed">
+            「推著腳踏車在街上急促地叫賣：『麻─糬，麻糬、麻糬哦！』三十多年來，百十年來物換星移，許多在課本裡被高呼萬歲的大人物都千古了，只有這卑微的麻糬，仍然鮮活、甜美地存在於這土地上人們的嘴裡、心裡。」
+          </p>
+          <div class="bg-white p-2.5 rounded-xl border border-slate-200 text-slate-700">
+            <strong>【賞析重點】：</strong>藉平凡庶民小吃對比歷史大人物，展現深沉溫厚的鄉土認同。
+          </div>
+        </div>
+
+        <!-- 3. 賴鈺婷《鐵馬豆腐伯》 -->
+        <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3">
+          <div class="border-b pb-2">
+            <span class="text-[10px] bg-emerald-600 text-white px-2 py-0.5 rounded font-bold">巷弄移動職人</span>
+            <h4 class="text-sm font-serif font-black text-slate-900 mt-1">賴鈺婷《鐵馬豆腐伯》</h4>
+          </div>
+          <p class="text-slate-600 font-serif leading-relaxed">
+            「踏著老鐵馬的腳踏板，『叮鈴叮鈴』緩緩從門前經過……連環喊著『豆腐、板豆腐，手工做的』。那鈴鐺聲在童年產生魔力。生命中無來由消失的事物豈止這一樁？我僅能銘記日日期待的早晨。」
+          </p>
+          <div class="bg-white p-2.5 rounded-xl border border-slate-200 text-slate-700">
+            <strong>【賞析重點】：</strong>描寫清晨移動職人溫厚的人情味與童年記憶的消逝與留戀。
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-lilac-950 text-lilac-300 py-8 border-t border-lilac-900 mt-12 no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+      <div class="flex items-center space-x-2">
+        <a href="index.html" class="text-white hover:text-sunlight-300 font-serif font-bold">🏠 國中文學教學入口</a>
+        <span>·</span>
+        <a href="lesson_sound_clock.html" class="hover:text-sunlight-300">🎧 《聲音鐘》課文教材</a>
+        <span>·</span>
+        <a href="修辭.html" class="hover:text-sunlight-300">✍️ 國語修辭學堂</a>
+      </div>
+      <div>
+        © 2026 國中國文數位美感教學資源網 · 教師專用備課手冊
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script for interactivity -->
+  <script>
+    let allAnswersVisible = false;
+
+    function toggleAllAnswers() {
+      const answers = document.querySelectorAll('.inquiry-answer');
+      const btn = document.getElementById('btn-toggle-all-answers');
+      allAnswersVisible = !allAnswersVisible;
+
+      answers.forEach(el => {
+        if (allAnswersVisible) {
+          el.classList.remove('hidden');
+        } else {
+          el.classList.add('hidden');
+        }
+      });
+
+      btn.innerHTML = allAnswersVisible 
+        ? '<i class="fa-solid fa-eye-slash"></i> <span>收合全部參考答案</span>'
+        : '<i class="fa-solid fa-eye"></i> <span>展開全部參考答案</span>';
+    }
+
+    // Toggle single inquiry answer on click
+    document.querySelectorAll('.inquiry-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const ans = item.querySelector('.inquiry-answer');
+        if (ans) ans.classList.toggle('hidden');
+      });
+      item.classList.add('cursor-pointer', 'hover:border-lilac-400', 'transition');
+    });
+
+    // Simple keyword filter in page
+    function filterPrepContent() {
+      const query = document.getElementById('prep-search').value.toLowerCase().trim();
+      const items = document.querySelectorAll('.inquiry-item');
+      if (!query) {
+        items.forEach(i => i.style.display = '');
+        return;
+      }
+      items.forEach(i => {
+        const text = i.innerText.toLowerCase();
+        i.style.display = text.includes(query) ? '' : 'none';
+      });
+    }
+  </script>
+
+</body>
+</html>
