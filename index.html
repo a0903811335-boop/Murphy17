@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>翰墨韶光 · 國中國文數位教學資源總覽入口網</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Noto Serif TC (宋體/明體) & Noto Sans TC (黑體) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;900&family=Noto+Serif+TC:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans TC"', 'system-ui', 'sans-serif'],
+            serif: ['"Noto Serif TC"', 'Georgia', 'serif'],
+          },
+          colors: {
+            lilac: {
+              50: '#f6f5fb',
+              100: '#ede9f8',
+              200: '#ded7f2',
+              300: '#c5b8e7',
+              400: '#a793d9',
+              500: '#8c70ca',
+              600: '#7655b6',
+              700: '#64439f',
+              800: '#533884',
+              900: '#46306c',
+              950: '#2a1a45',
+            },
+            sunlight: {
+              50: '#fffdf5',
+              100: '#fef9e7',
+              200: '#fef1c4',
+              300: '#fde392',
+              400: '#facf57',
+              500: '#f5b525',
+              600: '#d99214',
+              700: '#b46e12',
+              800: '#925516',
+            },
+            botanical: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+            }
+          },
+          boxShadow: {
+            'book': '0 20px 40px -15px rgba(83, 56, 132, 0.25), 0 0 0 1px rgba(140, 112, 202, 0.1)',
+            'glow': '0 0 35px -5px rgba(245, 181, 37, 0.35)',
+            'glass': '0 8px 32px 0 rgba(112, 100, 157, 0.12)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #f6f5fb; }
+    ::-webkit-scrollbar-thumb { background: #c5b8e7; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #8c70ca; }
+
+    /* Frosted glass */
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(222, 215, 242, 0.6);
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(222, 215, 242, 0.7);
+    }
+
+    /* Textbook Cover Art Texture & Gradients */
+    .cover-gradient {
+      background: linear-gradient(135deg, #e8e3f7 0%, #fbf9f5 45%, #fef3d6 100%);
+    }
+    .hero-glow {
+      background: radial-gradient(circle at 75% 30%, rgba(254, 241, 196, 0.75) 0%, rgba(222, 215, 242, 0.4) 45%, transparent 70%);
+    }
+
+    /* Falling Petals Canvas */
+    #petals-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* Card Hover Animations */
+    .book-card {
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .book-card:hover {
+      transform: translateY(-8px) scale(1.015);
+      box-shadow: 0 25px 45px -12px rgba(99, 67, 159, 0.22), 0 0 0 1px rgba(140, 112, 202, 0.35);
+    }
+
+    /* Shimmer effect for featured badge */
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    .shimmer-badge {
+      position: relative;
+      overflow: hidden;
+    }
+    .shimmer-badge::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      animation: shimmer 2.5s infinite;
+    }
+
+    /* Pulse slow for sound */
+    @keyframes wavePulse {
+      0%, 100% { height: 6px; }
+      50% { height: 18px; }
+    }
+    .audio-bar:nth-child(1) { animation: wavePulse 1s ease-in-out infinite; }
+    .audio-bar:nth-child(2) { animation: wavePulse 1.2s ease-in-out infinite 0.2s; }
+    .audio-bar:nth-child(3) { animation: wavePulse 0.9s ease-in-out infinite 0.4s; }
+    .audio-bar:nth-child(4) { animation: wavePulse 1.1s ease-in-out infinite 0.1s; }
+  </style>
+</head>
+
+<body class="bg-[#f8f6fc] text-slate-800 font-sans min-h-screen flex flex-col relative selection:bg-lilac-200 selection:text-lilac-900">
+
+  <!-- Falling Blossom Canvas (Toggleable) -->
+  <canvas id="petals-canvas"></canvas>
+
+  <!-- Top Announcement / Quote Marquee Bar -->
+  <aside aria-label="文學名句輪播" class="bg-gradient-to-r from-lilac-800 via-lilac-700 to-indigo-900 text-white text-xs py-2 px-4 relative z-30 shadow-sm">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div class="flex items-center space-x-2">
+        <span class="bg-sunlight-400 text-lilac-950 font-bold px-2 py-0.5 rounded text-[11px] flex items-center gap-1 shadow-sm">
+          <i class="fa-solid fa-feather-pointed"></i> 每日文青精選
+        </span>
+        <div id="daily-quote-text" class="font-serif italic tracking-wide text-lilac-100 transition-opacity duration-300">
+          「那清脆的叫賣聲，是生活裡最動人的鐘擺。」—— 陳黎《聲音鐘》
+        </div>
+      </div>
+      <div class="flex items-center space-x-3 text-xs text-lilac-200">
+        <button onclick="refreshQuote()" class="hover:text-sunlight-300 transition flex items-center gap-1" title="隨機切換名句">
+          <i class="fa-solid fa-rotate text-[11px]"></i> 換一句
+        </button>
+        <span class="text-lilac-400">|</span>
+        <button onclick="togglePetals()" id="btn-toggle-petals" class="hover:text-sunlight-300 transition flex items-center gap-1">
+          <i class="fa-solid fa-wand-magic-sparkles text-[11px]"></i> <span id="petal-text">花瓣動態：開</span>
+        </button>
+        <span class="text-lilac-400">|</span>
+        <button onclick="toggleSoundscape()" id="btn-toggle-bgm" class="hover:text-sunlight-300 transition flex items-center gap-1 text-sunlight-300">
+          <i id="bgm-icon" class="fa-solid fa-volume-high text-[11px]"></i> <span id="bgm-text">晨光聲景</span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Navigation Header -->
+  <header class="glass-panel sticky top-0 z-40 shadow-sm border-b border-lilac-200/70">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center space-x-3 group">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-lilac-700 via-lilac-600 to-sunlight-500 flex items-center justify-center text-white text-2xl shadow-lg shadow-lilac-600/30 group-hover:rotate-6 transition-transform">
+          <i class="fa-solid fa-book-open-reader"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-serif font-bold text-xl sm:text-2xl text-lilac-950 tracking-tight leading-none">翰墨韶光</span>
+            <span class="text-[10px] uppercase font-bold tracking-widest bg-lilac-100 text-lilac-800 px-2 py-0.5 rounded-full border border-lilac-300">Junior High</span>
+          </div>
+          <p class="text-xs text-slate-500 font-medium">國中國文 · 數位美感教學與備課總覽入口</p>
+        </div>
+      </a>
+
+      <!-- Quick Search Bar -->
+      <div class="hidden md:flex items-center flex-1 max-w-md mx-6">
+        <div class="relative w-full">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-lilac-400"></i>
+          <input 
+            type="text" 
+            id="search-input" 
+            oninput="handleSearch(this.value)" 
+            placeholder="搜尋課名、作者、修辭或文體（例如：聲音鐘、陳黎、文言文）..."
+            class="w-full pl-10 pr-9 py-2.5 bg-white/90 border border-lilac-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-lilac-500 focus:border-transparent placeholder:text-slate-400 shadow-inner"
+          >
+          <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+            <i class="fa-solid fa-circle-xmark text-sm"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Navigation & Action Buttons -->
+      <div class="flex items-center space-x-2 sm:space-x-3">
+        <!-- Teacher Toolkit Button -->
+        <button onclick="openToolkitModal()" class="flex items-center space-x-1.5 px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-lilac-600 to-lilac-700 hover:from-lilac-700 hover:to-lilac-800 text-white text-xs sm:text-sm font-semibold shadow-md shadow-lilac-600/20 hover:shadow-lg transition">
+          <i class="fa-solid fa-toolbox text-sunlight-300"></i>
+          <span>教師備課百寶箱</span>
+        </button>
+
+        <!-- Quick Jump to Lessons -->
+        <a href="#curriculum-section" class="hidden sm:flex items-center space-x-1.5 px-3.5 py-2.5 rounded-xl bg-white/90 hover:bg-lilac-50 border border-lilac-200 text-slate-700 text-xs sm:text-sm font-semibold transition">
+          <i class="fa-solid fa-compass text-lilac-600"></i>
+          <span>課文總覽</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Mobile Search Row -->
+    <div class="md:hidden px-4 pb-3">
+      <div class="relative w-full">
+        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-lilac-400 text-xs"></i>
+        <input 
+          type="text" 
+          id="mobile-search-input" 
+          oninput="handleSearch(this.value)" 
+          placeholder="搜尋課名、作者、關鍵字..."
+          class="w-full pl-9 pr-8 py-2 bg-white/90 border border-lilac-200 rounded-full text-xs focus:outline-none focus:ring-2 focus:ring-lilac-500 shadow-inner"
+        >
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section with Modern Aesthetic Textbook Art -->
+  <section class="relative cover-gradient hero-glow py-10 lg:py-16 overflow-hidden border-b border-lilac-200/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        
+        <!-- Left Column: Hero Content & Value Prop -->
+        <div class="lg:col-span-7 space-y-5 text-center lg:text-left">
+          
+          <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-white/80 border border-lilac-300/80 shadow-sm">
+            <span class="flex h-2 w-2 relative">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sunlight-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-sunlight-500"></span>
+            </span>
+            <span class="text-xs font-semibold text-lilac-900 tracking-wide">108 課綱 · 素養導向與多模態互動教材</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-serif font-black text-slate-900 leading-[1.25] tracking-tight">
+            遇見文學的晨光，<br>
+            開啟 <span class="text-transparent bg-clip-text bg-gradient-to-r from-lilac-700 via-lilac-600 to-sunlight-600">國中文學教學新視界</span>
+          </h1>
+
+          <p class="text-sm sm:text-base text-slate-600 max-w-2xl leading-relaxed font-sans mx-auto lg:mx-0">
+            融合現代台灣美感教科書的清新柔雅色彩，為國中師生打造沉浸式語文學習空間。匯集語音報讀、聲景模擬、修辭探究、素養提問與即時測驗，讓每堂國文課都如詩篇般動人。
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
+            <a href="#curriculum-section" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-lilac-700 to-indigo-800 hover:from-lilac-800 hover:to-indigo-900 text-white font-semibold text-sm shadow-lg shadow-lilac-700/25 hover:shadow-xl transition flex items-center gap-2">
+              <i class="fa-solid fa-book-open"></i> 探索精選課文
+            </a>
+            <a href="lesson_sound_clock.html" class="px-5 py-3.5 rounded-xl bg-white hover:bg-lilac-50 border border-lilac-300 text-lilac-900 font-semibold text-sm shadow-sm hover:shadow transition flex items-center gap-2">
+              <i class="fa-solid fa-bell text-sunlight-500"></i> 《聲音鐘》互動教材
+            </a>
+            <a href="lesson_paper_boat.html" class="px-5 py-3.5 rounded-xl bg-white hover:bg-lilac-50 border border-lilac-300 text-lilac-900 font-semibold text-sm shadow-sm hover:shadow transition flex items-center gap-2">
+              <i class="fa-solid fa-paper-plane text-cyan-600"></i> 《紙船印象》互動教材
+            </a>
+          </div>
+
+          <!-- Feature Highlights Badges -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-lilac-200/80">
+            <div class="bg-white/70 backdrop-blur-sm p-2.5 rounded-xl border border-lilac-100 flex items-center space-x-2.5">
+              <div class="w-8 h-8 rounded-lg bg-lilac-100 text-lilac-700 flex items-center justify-center text-sm">
+                <i class="fa-solid fa-headphones"></i>
+              </div>
+              <div class="text-left">
+                <div class="text-xs font-bold text-slate-800">聲景與報讀</div>
+                <div class="text-[10px] text-slate-500">課文多模態聆聽</div>
+              </div>
+            </div>
+            <div class="bg-white/70 backdrop-blur-sm p-2.5 rounded-xl border border-lilac-100 flex items-center space-x-2.5">
+              <div class="w-8 h-8 rounded-lg bg-sunlight-100 text-sunlight-700 flex items-center justify-center text-sm">
+                <i class="fa-solid fa-pen-nib"></i>
+              </div>
+              <div class="text-left">
+                <div class="text-xs font-bold text-slate-800">修辭大圖鑑</div>
+                <div class="text-[10px] text-slate-500">國中必考全解析</div>
+              </div>
+            </div>
+            <div class="bg-white/70 backdrop-blur-sm p-2.5 rounded-xl border border-lilac-100 flex items-center space-x-2.5">
+              <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm">
+                <i class="fa-solid fa-clipboard-check"></i>
+              </div>
+              <div class="text-left">
+                <div class="text-xs font-bold text-slate-800">素養導向題</div>
+                <div class="text-[10px] text-slate-500">PISA 三層次探究</div>
+              </div>
+            </div>
+            <div class="bg-white/70 backdrop-blur-sm p-2.5 rounded-xl border border-lilac-100 flex items-center space-x-2.5">
+              <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm">
+                <i class="fa-solid fa-dice"></i>
+              </div>
+              <div class="text-left">
+                <div class="text-xs font-bold text-slate-800">備課抽籤箱</div>
+                <div class="text-[10px] text-slate-500">隨堂互動小工具</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Aesthetic Textbook Book Mockup Card -->
+        <div class="lg:col-span-5 flex justify-center">
+          <div class="relative max-w-sm w-full group">
+            
+            <!-- Glow background -->
+            <div class="absolute -inset-1 bg-gradient-to-r from-lilac-400 via-sunlight-300 to-lilac-500 rounded-3xl blur-xl opacity-50 group-hover:opacity-75 transition duration-500"></div>
+
+            <!-- Book Card Frame -->
+            <div class="relative bg-white rounded-2xl overflow-hidden shadow-book border border-lilac-200/80">
+              
+              <!-- Textbook Header with Badge -->
+              <div class="relative h-80 sm:h-96 overflow-hidden">
+                <img 
+                  src="assets/textbook_cover.jpg" 
+                  alt="國文課本美感封面" 
+                  class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                >
+                <!-- Gradient Overlay -->
+                <div class="absolute inset-0 bg-gradient-to-t from-lilac-950/90 via-lilac-950/30 to-transparent"></div>
+
+                <!-- Floating Floral & Aesthetic Tags -->
+                <div class="absolute top-4 left-4 flex flex-col gap-1.5">
+                  <span class="shimmer-badge bg-white/90 backdrop-blur-md text-lilac-950 text-xs font-bold px-3 py-1 rounded-full shadow border border-white/50 flex items-center gap-1.5">
+                    <i class="fa-solid fa-award text-sunlight-500"></i> 美感教科書封面精選
+                  </span>
+                  <span class="bg-lilac-900/80 backdrop-blur-md text-lilac-100 text-[11px] font-medium px-2.5 py-0.5 rounded-full border border-lilac-400/30">
+                    油桐花落 · 晨光石階 · 少年文學旅程
+                  </span>
+                </div>
+
+                <!-- Bottom Title on Book -->
+                <div class="absolute bottom-4 left-4 right-4 text-white">
+                  <div class="text-[11px] uppercase tracking-widest text-sunlight-300 font-semibold mb-0.5">國民中學 國語文</div>
+                  <h3 class="text-2xl font-serif font-black tracking-wide text-white drop-shadow-md">
+                    韶光篇章 · 探索語文之美
+                  </h3>
+                  <p class="text-xs text-lilac-200 mt-1 line-clamp-1">
+                    走入巷弄的叫賣聲、航向母親的紙船、拾起月台邊的橘子
+                  </p>
+                </div>
+              </div>
+
+              <!-- Book Bottom Quick Info -->
+              <div class="p-4 bg-gradient-to-b from-white to-lilac-50/50 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                  <div class="flex -space-x-1.5">
+                    <span class="inline-block w-6 h-6 rounded-full bg-lilac-500 text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-white">7</span>
+                    <span class="inline-block w-6 h-6 rounded-full bg-sunlight-500 text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-white">8</span>
+                    <span class="inline-block w-6 h-6 rounded-full bg-indigo-500 text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-white">9</span>
+                  </div>
+                  <span class="text-xs text-slate-600 font-medium">全冊收錄 12+ 精選課文</span>
+                </div>
+                <a href="#curriculum-section" class="text-xs font-bold text-lilac-700 hover:text-lilac-900 flex items-center gap-1 group-hover:translate-x-1 transition">
+                  立即選課 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                </a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter & Tab Navigation Section -->
+  <section id="curriculum-section" class="py-8 bg-white/70 border-b border-lilac-100 sticky top-20 z-30 backdrop-blur-md shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+      
+      <!-- Grade Filter Tabs & Summary -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        
+        <!-- Grade Pills -->
+        <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+          <span class="text-xs font-bold text-slate-400 mr-1 hidden sm:inline">冊別年級：</span>
+          <button onclick="setGradeFilter('all')" id="grade-all" class="grade-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-lilac-700 text-white shadow-sm transition">
+            🌟 全部年級
+          </button>
+          <button onclick="setGradeFilter('grade7')" id="grade-grade7" class="grade-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white hover:bg-lilac-50 text-slate-600 border border-lilac-200 transition">
+            🎒 七年級 (國一)
+          </button>
+          <button onclick="setGradeFilter('grade8')" id="grade-grade8" class="grade-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white hover:bg-lilac-50 text-slate-600 border border-lilac-200 transition">
+            🌿 八年級 (國二)
+          </button>
+          <button onclick="setGradeFilter('grade9')" id="grade-grade9" class="grade-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white hover:bg-lilac-50 text-slate-600 border border-lilac-200 transition">
+            🏆 九年級 (國三)
+          </button>
+        </div>
+
+        <!-- Genre Dropdown / Pills Filter -->
+        <div class="flex items-center space-x-2">
+          <span class="text-xs font-bold text-slate-400 hidden lg:inline">文體分類：</span>
+          <div class="flex flex-wrap gap-1.5">
+            <button onclick="setGenreFilter('all')" id="genre-all" class="genre-tag active px-3 py-1.5 rounded-lg text-xs font-semibold bg-lilac-100 text-lilac-900 border border-lilac-300">
+              全體
+            </button>
+            <button onclick="setGenreFilter('prose')" id="genre-prose" class="genre-tag px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-lilac-50">
+              現代散文
+            </button>
+            <button onclick="setGenreFilter('classical')" id="genre-classical" class="genre-tag px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-lilac-50">
+              古典文言
+            </button>
+            <button onclick="setGenreFilter('poetry')" id="genre-poetry" class="genre-tag px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-lilac-50">
+              新詩與民歌
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Main Content: Lesson Cards Grid -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+    
+    <!-- Section Title & Results Count -->
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h2 class="text-2xl font-serif font-bold text-slate-900 flex items-center gap-2.5">
+          <span class="w-2.5 h-6 bg-lilac-600 rounded-full inline-block"></span>
+          國中文學精選教材庫
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-500 mt-1">點擊「進入互動課堂」開啟數位學習，或點擊「教學重點」檢視素養提問與教案</p>
+      </div>
+      <div id="results-count" class="text-xs font-bold text-lilac-800 bg-lilac-50 border border-lilac-200 px-3 py-1.5 rounded-full">
+        共顯示 8 篇經典教材
+      </div>
+    </div>
+
+    <!-- Empty search prompt (Hidden by default) -->
+    <div id="empty-state" class="hidden py-16 text-center bg-white rounded-3xl border border-dashed border-lilac-300 p-8">
+      <div class="w-16 h-16 rounded-full bg-lilac-100 text-lilac-600 flex items-center justify-center mx-auto text-2xl mb-4">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+      <h3 class="text-lg font-bold text-slate-800 mb-1">查無相符的國文課文教材</h3>
+      <p class="text-xs text-slate-500 max-w-md mx-auto mb-4">請嘗試更換關鍵字（如：作者名、課名、文言文、散文），或點擊下方按鈕重置篩選。</p>
+      <button onclick="resetAllFilters()" class="px-4 py-2 bg-lilac-600 text-white text-xs font-bold rounded-xl hover:bg-lilac-700 transition">
+        重置所有篩選條件
+      </button>
+    </div>
+
+    <!-- Cards Grid -->
+    <div id="lessons-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+
+      <!-- Card 1: 聲音鐘 (Live Online) -->
+      <article 
+        class="lesson-card book-card bg-white rounded-2xl overflow-hidden border border-amber-200 shadow-sm flex flex-col justify-between"
+        data-title="聲音鐘"
+        data-author="陳黎"
+        data-grade="grade7"
+        data-genre="prose"
+        data-keywords="聲音鐘 陳黎 散文 聲景 叫賣 報時 時間 外來語"
+      >
+        <div>
+          <!-- Card Header Banner -->
+          <div class="relative h-44 bg-gradient-to-tr from-amber-600 via-amber-500 to-sunlight-400 p-5 text-white overflow-hidden">
+            <!-- Background Decorative Icons -->
+            <i class="fa-solid fa-bell absolute -right-4 -bottom-6 text-8xl text-white/15"></i>
+            <i class="fa-solid fa-clock absolute right-20 top-2 text-6xl text-white/10"></i>
+
+            <div class="relative z-10 flex items-start justify-between">
+              <div class="flex items-center gap-1.5">
+                <span class="bg-white text-amber-900 text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-sm">七年級上冊</span>
+                <span class="bg-amber-950/40 text-amber-100 text-[11px] px-2 py-0.5 rounded-full">記敘散文</span>
+              </div>
+              <span class="bg-emerald-500 text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow flex items-center gap-1 animate-pulse">
+                <i class="fa-solid fa-circle-check text-[10px]"></i> 互動教材已上線
+              </span>
+            </div>
+
+            <div class="relative z-10 mt-6">
+              <span class="text-xs text-amber-100 font-serif">第 1 課 · 台灣當代名家</span>
+              <h3 class="text-2xl font-serif font-black tracking-wide text-white drop-shadow">聲音鐘</h3>
+              <p class="text-xs text-amber-100 mt-0.5">作者：陳黎</p>
+            </div>
+          </div>
+
+          <!-- Card Body Content -->
+          <div class="p-5 space-y-3.5">
+            <!-- Famous Quote Snippet -->
+            <div class="bg-amber-50/80 border-l-4 border-amber-500 p-2.5 rounded-r-lg">
+              <p class="text-xs text-amber-950 font-serif italic line-clamp-2">
+                「那清脆的叫賣聲，是生活裡最動人的鐘擺。它們熱鬧了寂寞的街道，也溫暖了人間的心靈。」
+              </p>
+            </div>
+
+            <p class="text-xs text-slate-600 leading-relaxed line-clamp-2">
+              以時間為經、叫賣聲為緯，生動刻劃台灣小鎮街巷商販的生命力與人文情懷，引導學生傾聽日常環境的聲音美學。
+            </p>
+
+            <!-- Feature Tags -->
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md flex items-center gap-1">
+                <i class="fa-solid fa-volume-high text-amber-600"></i> 全文語音報讀
+              </span>
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md flex items-center gap-1">
+                <i class="fa-solid fa-microphone-lines text-amber-600"></i> 叫賣聲景模擬
+              </span>
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md flex items-center gap-1">
+                <i class="fa-solid fa-clipboard-question text-amber-600"></i> 隨堂測驗評量
+              </span>
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md flex items-center gap-1">
+                <i class="fa-solid fa-language text-amber-600"></i> 外來語充電站
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card Actions Footer -->
+        <div class="p-5 pt-0 border-t border-slate-100 bg-slate-50/50 flex items-center gap-2 mt-2">
+          <a href="lesson_sound_clock.html" class="flex-1 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white text-xs font-bold rounded-xl text-center shadow-md shadow-amber-500/20 transition flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-play"></i> 進入互動課堂
+          </a>
+          <button onclick="openLessonModal('sound_clock')" class="px-3 py-2.5 bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition" title="檢視教學重點與大綱">
+            <i class="fa-solid fa-list-check"></i>
+          </button>
+        </div>
+      </article>
+
+      <!-- Card 2: 紙船印象 (Live Online) -->
+      <article 
+        class="lesson-card book-card bg-white rounded-2xl overflow-hidden border border-cyan-200 shadow-sm flex flex-col justify-between"
+        data-title="紙船印象"
+        data-author="洪醒夫"
+        data-grade="grade7"
+        data-genre="prose"
+        data-keywords="紙船印象 洪醒夫 散文 母親 童年 雨天 親情 鄉土 摺紙船"
+      >
+        <div>
+          <!-- Card Header Banner -->
+          <div class="relative h-44 bg-gradient-to-tr from-cyan-700 via-blue-600 to-teal-500 p-5 text-white overflow-hidden">
+            <!-- Background Decorative Icons -->
+            <i class="fa-solid fa-paper-plane absolute -right-2 -bottom-4 text-8xl text-white/15"></i>
+            <i class="fa-solid fa-cloud-rain absolute right-24 top-2 text-6xl text-white/10"></i>
+
+            <div class="relative z-10 flex items-start justify-between">
+              <div class="flex items-center gap-1.5">
+                <span class="bg-white text-cyan-950 text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-sm">七年級下冊</span>
+                <span class="bg-cyan-950/40 text-cyan-100 text-[11px] px-2 py-0.5 rounded-full">抒情散文</span>
+              </div>
+              <span class="bg-emerald-500 text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow flex items-center gap-1 animate-pulse">
+                <i class="fa-solid fa-circle-check text-[10px]"></i> 互動教材已上線
+              </span>
+            </div>
+
+            <div class="relative z-10 mt-6">
+              <span class="text-xs text-cyan-100 font-serif">第 3 課 · 台灣鄉土文學</span>
+              <h3 class="text-2xl font-serif font-black tracking-wide text-white drop-shadow">紙船印象</h3>
+              <p class="text-xs text-cyan-100 mt-0.5">作者：洪醒夫</p>
+            </div>
+          </div>
+
+          <!-- Card Body Content -->
+          <div class="p-5 space-y-3.5">
+            <!-- Famous Quote Snippet -->
+            <div class="bg-cyan-50/80 border-l-4 border-cyan-500 p-2.5 rounded-r-lg">
+              <p class="text-xs text-cyan-950 font-serif italic line-clamp-2">
+                「只盼望這些紙船能平平安安地航行到母親的心裡，也寄託著一個母親無盡的愛與關懷。」
+              </p>
+            </div>
+
+            <p class="text-xs text-slate-600 leading-relaxed line-clamp-2">
+              以童年雨天放紙船的記憶為出發點，細膩描繪母親在農忙之餘為子女摺船的慈愛，深化至親情傳承與感恩之情。
+            </p>
+
+            <!-- Feature Tags -->
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md flex items-center gap-1">
+                <i class="fa-solid fa-water text-cyan-600"></i> 雨天紙船情境
+              </span>
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md flex items-center gap-1">
+                <i class="fa-solid fa-heart text-cyan-600"></i> 母愛傳承意象
+              </span>
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md flex items-center gap-1">
+                <i class="fa-solid fa-wand-magic-sparkles text-cyan-600"></i> 難字修辭解析
+              </span>
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md flex items-center gap-1">
+                <i class="fa-solid fa-graduation-cap text-cyan-600"></i> 雙重評量系統
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card Actions Footer -->
+        <div class="p-5 pt-0 border-t border-slate-100 bg-slate-50/50 flex items-center gap-2 mt-2">
+          <a href="lesson_paper_boat.html" class="flex-1 py-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white text-xs font-bold rounded-xl text-center shadow-md shadow-cyan-600/20 transition flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-play"></i> 進入互動課堂
+          </a>
+          <button onclick="openLessonModal('paper_boat')" class="px-3 py-2.5 bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition" title="檢視教學重點與大綱">
+            <i class="fa-solid fa-list-check"></i>
+          </button>
+        </div>
+      </article>
+
+      <!-- Card 3: 背影 (Interactive Lesson Plan) -->
+      <article 
+        class="lesson-card book-card bg-white rounded-2xl overflow-hidden border border-lilac-200 shadow-sm flex flex-col justify-between"
+        data-title="背影"
+        data-author="朱自清"
+        data-grade="grade8"
+        data-genre="prose"
+        data-keywords="背影 朱自清 散文 父愛 橘子 火車站 鐵道 經典抒情"
+      >
+        <div>
+          <div class="relative h-44 bg-gradient-to-tr from-purple-800 via-lilac-700 to-pink-600 p-5 text-white overflow-hidden">
+            <i class="fa-solid fa-train absolute -right-2 -bottom-4 text-8xl text-white/15"></i>
+            <div class="relative z-10 flex items-start justify-between">
+              <div class="flex items-center gap-1.5">
+                <span class="bg-white text-lilac-950 text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-sm">八年級上冊</span>
+                <span class="bg-lilac-950/40 text-lilac-100 text-[11px] px-2 py-0.5 rounded-full">現代散文</span>
+              </div>
+              <span class="bg-lilac-100 text-lilac-900 text-[11px] font-bold px-2 py-0.5 rounded-full">
+                📑 備課教案
+              </span>
+            </div>
+            <div class="relative z-10 mt-6">
+              <span class="text-xs text-lilac-100 font-serif">經典抒情名篇</span>
+              <h3 class="text-2xl font-serif font-black tracking-wide text-white drop-shadow">背影</h3>
+              <p class="text-xs text-lilac-100 mt-0.5">作者：朱自清</p>
+            </div>
+          </div>
+
+          <div class="p-5 space-y-3.5">
+            <div class="bg-purple-50/80 border-l-4 border-purple-500 p-2.5 rounded-r-lg">
+              <p class="text-xs text-purple-950 font-serif italic line-clamp-2">
+                「我看見他戴著黑布小帽，穿著黑布大馬褂，深青布棉袍，蹣跚地走到鐵道邊……」
+              </p>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed line-clamp-2">
+              以月台送別、父親買橘子的蹣跚背影為主軸，以簡樸平實的文字刻劃深沉內斂的父愛與兒子的懊悔自責。
+            </p>
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md">🍊 橘子意象剖析</span>
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md">🚂 四次背影脈絡</span>
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md">👥 父子心理轉折</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-5 pt-0 border-t border-slate-100 bg-slate-50/50 flex items-center gap-2 mt-2">
+          <button onclick="openLessonModal('back_view')" class="flex-1 py-2.5 bg-lilac-700 hover:bg-lilac-800 text-white text-xs font-bold rounded-xl text-center shadow-md transition flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-chalkboard-user"></i> 查看教學重點與提問
+          </button>
+        </div>
+      </article>
+
+      <!-- Card 4: 兒時記趣 (Classical) -->
+      <article 
+        class="lesson-card book-card bg-white rounded-2xl overflow-hidden border border-emerald-200 shadow-sm flex flex-col justify-between"
+        data-title="兒時記趣"
+        data-author="沈復"
+        data-grade="grade7"
+        data-genre="classical"
+        data-keywords="兒時記趣 沈復 浮生六記 文言文 物外之趣 想像力 蚊 鶴 蝦蟆"
+      >
+        <div>
+          <div class="relative h-44 bg-gradient-to-tr from-emerald-800 via-teal-700 to-green-600 p-5 text-white overflow-hidden">
+            <i class="fa-solid fa-mosquito absolute -right-2 -bottom-4 text-8xl text-white/15"></i>
+            <div class="relative z-10 flex items-start justify-between">
+              <div class="flex items-center gap-1.5">
+                <span class="bg-white text-emerald-950 text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-sm">七年級上冊</span>
+                <span class="bg-emerald-950/40 text-emerald-100 text-[11px] px-2 py-0.5 rounded-full">古典文言</span>
+              </div>
+              <span class="bg-emerald-100 text-emerald-900 text-[11px] font-bold px-2.5 py-0.5 rounded-full">
+                📑 備課教案
+              </span>
+            </div>
+            <div class="relative z-10 mt-6">
+              <span class="text-xs text-emerald-100 font-serif">選自《浮生六記》</span>
+              <h3 class="text-2xl font-serif font-black tracking-wide text-white drop-shadow">兒時記趣</h3>
+              <p class="text-xs text-emerald-100 mt-0.5">作者：沈復</p>
+            </div>
+          </div>
+
+          <div class="p-5 space-y-3.5">
+            <div class="bg-emerald-50/80 border-l-4 border-emerald-500 p-2.5 rounded-r-lg">
+              <p class="text-xs text-emerald-950 font-serif italic line-clamp-2">
+                「余憶童稚時，能張目對日，明察秋毫，見藐小微物，必細察其紋理，故時有物外之趣。」
+              </p>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed line-clamp-2">
+              以赤子童心與觀察力，將夏蚊成雷幻化為群鶴舞空、以土牆花臺為叢林丘壑，展現古代文人的「物外之趣」。
+            </p>
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md">🦟 物外之趣心智圖</span>
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md">🔍 文言虛詞「之」字解</span>
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md">🎨 想像力寫作引導</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-5 pt-0 border-t border-slate-100 bg-slate-50/50 flex items-center gap-2 mt-2">
+          <button onclick="openLessonModal('childhood_fun')" class="flex-1 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold rounded-xl text-center shadow-md transition flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-chalkboard-user"></i> 查看教學重點與提問
+          </button>
+        </div>
+      </article>
+
+      <!-- Card 5: 負荷 (Poetry) -->
+      <article 
+        class="lesson-card book-card bg-white rounded-2xl overflow-hidden border border-amber-200 shadow-sm flex flex-col justify-between"
+        data-title="負荷"
+        data-author="吳晟"
+        data-grade="grade8"
+        data-genre="poetry"
+        data-keywords="負荷 吳晟 現代詩 新詩 父愛 鄉土 泥土 甜蜜的負荷"
+      >
+        <div>
+          <div class="relative h-44 bg-gradient-to-tr from-amber-800 via-orange-700 to-yellow-600 p-5 text-white overflow-hidden">
+            <i class="fa-solid fa-seedling absolute -right-2 -bottom-4 text-8xl text-white/15"></i>
+            <div class="relative z-10 flex items-start justify-between">
+              <div class="flex items-center gap-1.5">
+                <span class="bg-white text-amber-950 text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-sm">八年級下冊</span>
+                <span class="bg-amber-950/40 text-amber-100 text-[11px] px-2 py-0.5 rounded-full">現代詩歌</span>
+              </div>
+              <span class="bg-amber-100 text-amber-900 text-[11px] font-bold px-2.5 py-0.5 rounded-full">
+                📑 備課教案
+              </span>
+            </div>
+            <div class="relative z-10 mt-6">
+              <span class="text-xs text-amber-100 font-serif">台灣鄉土詩人名作</span>
+              <h3 class="text-2xl font-serif font-black tracking-wide text-white drop-shadow">負荷</h3>
+              <p class="text-xs text-amber-100 mt-0.5">作者：吳晟</p>
+            </div>
+          </div>
+
+          <div class="p-5 space-y-3.5">
+            <div class="bg-amber-50/80 border-l-4 border-amber-500 p-2.5 rounded-r-lg">
+              <p class="text-xs text-amber-950 font-serif italic line-clamp-2">
+                「阿爸每日每日的上下班，有如阿公和阿媽為阿爸每日每日的下田……只因為這是生命中，最沉重也最甜蜜的負荷。」
+              </p>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed line-clamp-2">
+              以質樸深情的詩句，將對子女的撫育責任比擬為農人對土地的耕耘，展現跨世代的親情傳承與生命韌性。
+            </p>
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md">🌾 甜蜜負荷映襯修辭</span>
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md">👨‍👧 父職形象古今對比</span>
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md">✍️ 現代詩節奏朗讀</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-5 pt-0 border-t border-slate-100 bg-slate-50/50 flex items-center gap-2 mt-2">
+          <button onclick="openLessonModal('burden')" class="flex-1 py-2.5 bg-amber-700 hover:bg-amber-800 text-white text-xs font-bold rounded-xl text-center shadow-md transition flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-chalkboard-user"></i> 查看教學重點與提問
+          </button>
+        </div>
+      </article>
+
+      <!-- Card 6: 木蘭詩 (Classical Poetry) -->
+      <article 
+        class="lesson-card book-card bg-white rounded-2xl overflow-hidden border border-rose-200 shadow-sm flex flex-col justify-between"
+        data-title="木蘭詩"
+        data-author="北朝民歌"
+        data-grade="grade7"
+        data-genre="poetry"
+        data-keywords="木蘭詩 北朝民歌 樂府詩 花木蘭 代父從軍 互文 唧唧復唧唧"
+      >
+        <div>
+          <div class="relative h-44 bg-gradient-to-tr from-rose-800 via-red-700 to-amber-600 p-5 text-white overflow-hidden">
+            <i class="fa-solid fa-horse absolute -right-2 -bottom-4 text-8xl text-white/15"></i>
+            <div class="relative z-10 flex items-start justify-between">
+              <div class="flex items-center gap-1.5">
+                <span class="bg-white text-rose-950 text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-sm">七年級下冊</span>
+                <span class="bg-rose-950/40 text-rose-100 text-[11px] px-2 py-0.5 rounded-full">樂府民歌</span>
+              </div>
+              <span class="bg-rose-100 text-rose-900 text-[11px] font-bold px-2 py-0.5 rounded-full">
+                📑 備課教案
+              </span>
+            </div>
+            <div class="relative z-10 mt-6">
+              <span class="text-xs text-rose-100 font-serif">北朝樂府雙璧之一</span>
+              <h3 class="text-2xl font-serif font-black tracking-wide text-white drop-shadow">木蘭詩</h3>
+              <p class="text-xs text-rose-100 mt-0.5">作者：北朝民歌</p>
+            </div>
+          </div>
+
+          <div class="p-5 space-y-3.5">
+            <div class="bg-rose-50/80 border-l-4 border-rose-500 p-2.5 rounded-r-lg">
+              <p class="text-xs text-rose-950 font-serif italic line-clamp-2">
+                「唧唧復唧唧，木蘭當戶織。不聞機杼聲，唯聞女嘆息……雄兔腳撲朔，雌兔眼迷離；雙兔傍地走，安能辨我是雄雌？」
+              </p>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed line-clamp-2">
+              敘述木蘭代父從軍、征戰沙場十二年凱旋、辭官還鄉的傳奇敘事詩，節奏明快、修辭瑰麗，塑造不朽女性形象。
+            </p>
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md">⚔️ 互文/頂真修辭特輯</span>
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md">🗺️ 出征與還鄉動線圖</span>
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md">👑 古今性別角色思辨</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-5 pt-0 border-t border-slate-100 bg-slate-50/50 flex items-center gap-2 mt-2">
+          <button onclick="openLessonModal('mulan')" class="flex-1 py-2.5 bg-rose-700 hover:bg-rose-800 text-white text-xs font-bold rounded-xl text-center shadow-md transition flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-chalkboard-user"></i> 查看教學重點與提問
+          </button>
+        </div>
+      </article>
+
+      <!-- Card 7: 陋室銘 (Classical) -->
+      <article 
+        class="lesson-card book-card bg-white rounded-2xl overflow-hidden border border-slate-300 shadow-sm flex flex-col justify-between"
+        data-title="陋室銘"
+        data-author="劉禹錫"
+        data-grade="grade8"
+        data-genre="classical"
+        data-keywords="陋室銘 劉禹錫 銘文 文言文 德馨 苔痕上階綠 駢散結合"
+      >
+        <div>
+          <div class="relative h-44 bg-gradient-to-tr from-slate-800 via-indigo-900 to-purple-800 p-5 text-white overflow-hidden">
+            <i class="fa-solid fa-monument absolute -right-2 -bottom-4 text-8xl text-white/15"></i>
+            <div class="relative z-10 flex items-start justify-between">
+              <div class="flex items-center gap-1.5">
+                <span class="bg-white text-slate-900 text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-sm">八年級下冊</span>
+                <span class="bg-slate-950/40 text-slate-200 text-[11px] px-2 py-0.5 rounded-full">古典銘文</span>
+              </div>
+              <span class="bg-slate-200 text-slate-800 text-[11px] font-bold px-2 py-0.5 rounded-full">
+                📑 備課教案
+              </span>
+            </div>
+            <div class="relative z-10 mt-6">
+              <span class="text-xs text-slate-200 font-serif">唐代文人志節之作</span>
+              <h3 class="text-2xl font-serif font-black tracking-wide text-white drop-shadow">陋室銘</h3>
+              <p class="text-xs text-slate-200 mt-0.5">作者：劉禹錫</p>
+            </div>
+          </div>
+
+          <div class="p-5 space-y-3.5">
+            <div class="bg-slate-100/90 border-l-4 border-slate-700 p-2.5 rounded-r-lg">
+              <p class="text-xs text-slate-900 font-serif italic line-clamp-2">
+                「山不在高，有仙則名；水不在深，有龍則靈。斯是陋室，惟吾德馨。」
+              </p>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed line-clamp-2">
+              以陋室不陋為引，抒發安貧樂道、不慕名利的高潔志向，全文駢散相間、音韻鏗鏘，乃古代銘文典範。
+            </p>
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md">🌿 「德馨」核心結構</span>
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md">🎶 對偶與押韻音律</span>
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md">🏛️ 逆境處世哲學探究</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-5 pt-0 border-t border-slate-100 bg-slate-50/50 flex items-center gap-2 mt-2">
+          <button onclick="openLessonModal('crude_room')" class="flex-1 py-2.5 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-xl text-center shadow-md transition flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-chalkboard-user"></i> 查看教學重點與提問
+          </button>
+        </div>
+      </article>
+
+      <!-- Card 8: 夏夜 (Poetry) -->
+      <article 
+        class="lesson-card book-card bg-white rounded-2xl overflow-hidden border border-indigo-200 shadow-sm flex flex-col justify-between"
+        data-title="夏夜"
+        data-author="楊喚"
+        data-grade="grade7"
+        data-genre="poetry"
+        data-keywords="夏夜 楊喚 現代詩 兒童詩 童詩 擬人法 螢火蟲"
+      >
+        <div>
+          <div class="relative h-44 bg-gradient-to-tr from-indigo-900 via-blue-800 to-indigo-600 p-5 text-white overflow-hidden">
+            <i class="fa-solid fa-moon absolute -right-2 -bottom-4 text-8xl text-white/15"></i>
+            <div class="relative z-10 flex items-start justify-between">
+              <div class="flex items-center gap-1.5">
+                <span class="bg-white text-indigo-950 text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-sm">七年級上冊</span>
+                <span class="bg-indigo-950/40 text-indigo-100 text-[11px] px-2 py-0.5 rounded-full">兒童現代詩</span>
+              </div>
+              <span class="bg-indigo-100 text-indigo-900 text-[11px] font-bold px-2 py-0.5 rounded-full">
+                📑 備課教案
+              </span>
+            </div>
+            <div class="relative z-10 mt-6">
+              <span class="text-xs text-indigo-100 font-serif">台灣兒童詩先驅</span>
+              <h3 class="text-2xl font-serif font-black tracking-wide text-white drop-shadow">夏夜</h3>
+              <p class="text-xs text-indigo-100 mt-0.5">作者：楊喚</p>
+            </div>
+          </div>
+
+          <div class="p-5 space-y-3.5">
+            <div class="bg-indigo-50/80 border-l-4 border-indigo-500 p-2.5 rounded-r-lg">
+              <p class="text-xs text-indigo-950 font-serif italic line-clamp-2">
+                「來了！來了！從山坡上輕輕地爬下來了。來了！來了！從椰子樹梢輕輕地跳下來了……」
+              </p>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed line-clamp-2">
+              以擬人手法描繪夏夜由喧鬧歸於寧靜的自然景象，充滿純真童趣、豐富想像與溫柔守護的安詳意境。
+            </p>
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md">✨ 擬人化修辭大拆解</span>
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md">🐛 動靜對比視覺圖</span>
+              <span class="text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md">🌌 兒童詩美感朗誦法</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-5 pt-0 border-t border-slate-100 bg-slate-50/50 flex items-center gap-2 mt-2">
+          <button onclick="openLessonModal('summer_night')" class="flex-1 py-2.5 bg-indigo-800 hover:bg-indigo-900 text-white text-xs font-bold rounded-xl text-center shadow-md transition flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-chalkboard-user"></i> 查看教學重點與提問
+          </button>
+        </div>
+      </article>
+
+    </div>
+
+  </main>
+
+  <!-- Teacher's Toolkit Modal (Drawer / Popup) -->
+  <div id="toolkit-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white w-full max-w-4xl max-h-[90vh] rounded-3xl shadow-2xl border border-lilac-200 overflow-hidden flex flex-col animate-in fade-in zoom-in duration-200">
+      
+      <!-- Modal Header -->
+      <div class="bg-gradient-to-r from-lilac-800 via-lilac-700 to-indigo-900 p-5 text-white flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-sunlight-400 text-lilac-950 flex items-center justify-center font-bold text-lg shadow-md">
+            <i class="fa-solid fa-toolbox"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold font-serif">教師隨堂備課百寶箱</h3>
+            <p class="text-xs text-lilac-200">即時抽籤、小組討論計時器、修辭圖鑑與 PISA 素養提問庫</p>
+          </div>
+        </div>
+        <button onclick="closeToolkitModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Toolkit Tabs -->
+      <div class="bg-lilac-50 border-b border-lilac-200 px-6 flex space-x-2 overflow-x-auto">
+        <button onclick="switchToolkitTab('picker')" id="tool-tab-picker" class="toolkit-tab-btn px-4 py-3 text-xs sm:text-sm font-bold text-lilac-900 border-b-2 border-lilac-700">
+          <i class="fa-solid fa-dice mr-1.5 text-sunlight-600"></i> 隨堂點名抽籤器
+        </button>
+        <button onclick="switchToolkitTab('timer')" id="tool-tab-timer" class="toolkit-tab-btn px-4 py-3 text-xs sm:text-sm font-medium text-slate-600 hover:text-lilac-900">
+          <i class="fa-solid fa-stopwatch mr-1.5 text-emerald-600"></i> 課堂討論計時器
+        </button>
+        <button onclick="switchToolkitTab('rhetoric')" id="tool-tab-rhetoric" class="toolkit-tab-btn px-4 py-3 text-xs sm:text-sm font-medium text-slate-600 hover:text-lilac-900">
+          <i class="fa-solid fa-wand-magic-sparkles mr-1.5 text-purple-600"></i> 常用修辭大圖鑑
+        </button>
+        <button onclick="switchToolkitTab('inquiry')" id="tool-tab-inquiry" class="toolkit-tab-btn px-4 py-3 text-xs sm:text-sm font-medium text-slate-600 hover:text-lilac-900">
+          <i class="fa-solid fa-lightbulb mr-1.5 text-amber-500"></i> PISA 素養提問指南
+        </button>
+      </div>
+
+      <!-- Toolkit Content Areas -->
+      <div class="p-6 overflow-y-auto flex-1 space-y-6">
+
+        <!-- 1. Random Picker Panel -->
+        <div id="tool-panel-picker" class="space-y-5">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+            
+            <!-- Left: Settings -->
+            <div class="space-y-4 bg-slate-50 p-5 rounded-2xl border border-slate-200">
+              <h4 class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                <i class="fa-solid fa-sliders text-lilac-600"></i> 抽籤設定
+              </h4>
+              <div>
+                <label class="text-xs font-semibold text-slate-600 mb-1 block">班級座號範圍 (1 ~ N 號)：</label>
+                <div class="flex items-center space-x-2">
+                  <input type="number" id="picker-max-seat" value="35" min="2" max="60" class="w-24 px-3 py-2 border border-slate-300 rounded-xl text-sm font-bold text-center focus:ring-2 focus:ring-lilac-500">
+                  <span class="text-xs text-slate-500">號（預設 1~35 號）</span>
+                </div>
+              </div>
+
+              <div>
+                <label class="text-xs font-semibold text-slate-600 mb-1 block">或直接自訂學生名單（每行一位）：</label>
+                <textarea id="picker-custom-names" placeholder="例如：
+王小明
+李大華
+陳怡君" class="w-full h-20 px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-lilac-500"></textarea>
+              </div>
+
+              <div class="flex items-center justify-between pt-2">
+                <button onclick="triggerDraw()" class="w-full py-3 bg-gradient-to-r from-lilac-600 to-indigo-700 hover:from-lilac-700 hover:to-indigo-800 text-white font-bold text-sm rounded-xl shadow-lg shadow-lilac-600/25 transition flex items-center justify-center gap-2">
+                  <i class="fa-solid fa-shuffle"></i> 立即隨機抽籤
+                </button>
+              </div>
+            </div>
+
+            <!-- Right: Display Area -->
+            <div class="text-center p-8 bg-gradient-to-tr from-lilac-100 via-white to-sunlight-50 rounded-2xl border border-lilac-200 flex flex-col items-center justify-center min-h-[260px]">
+              <div class="text-xs uppercase tracking-widest text-lilac-800 font-bold mb-2">🎉 抽中幸運同學</div>
+              <div id="picker-result" class="text-5xl sm:text-6xl font-serif font-black text-lilac-950 py-4 my-2 transition-all duration-300">
+                ？
+              </div>
+              <div id="picker-subtext" class="text-xs text-slate-500">
+                點擊左側「立即隨機抽籤」開始點名發言！
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 2. Countdown Timer Panel -->
+        <div id="tool-panel-timer" class="hidden space-y-6 text-center">
+          <div class="max-w-md mx-auto bg-slate-50 p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+            
+            <!-- Quick Preset Buttons -->
+            <div class="flex justify-center gap-2">
+              <button onclick="setTimerSeconds(60)" class="px-3 py-1.5 bg-white border border-slate-200 hover:border-lilac-400 rounded-lg text-xs font-bold text-slate-700">1 分鐘 (快答)</button>
+              <button onclick="setTimerSeconds(180)" class="px-3 py-1.5 bg-white border border-slate-200 hover:border-lilac-400 rounded-lg text-xs font-bold text-slate-700">3 分鐘 (討論)</button>
+              <button onclick="setTimerSeconds(300)" class="px-3 py-1.5 bg-white border border-slate-200 hover:border-lilac-400 rounded-lg text-xs font-bold text-slate-700">5 分鐘 (書寫)</button>
+              <button onclick="setTimerSeconds(600)" class="px-3 py-1.5 bg-white border border-slate-200 hover:border-lilac-400 rounded-lg text-xs font-bold text-slate-700">10 分鐘 (評量)</button>
+            </div>
+
+            <!-- Big Digital Timer Display -->
+            <div id="timer-display" class="text-6xl sm:text-7xl font-mono font-bold text-slate-900 tracking-wider">
+              03:00
+            </div>
+
+            <!-- Controls -->
+            <div class="flex items-center justify-center space-x-3">
+              <button id="btn-timer-start" onclick="toggleTimer()" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-md transition flex items-center gap-2">
+                <i class="fa-solid fa-play"></i> 開始計時
+              </button>
+              <button onclick="resetTimer()" class="px-5 py-3 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-sm rounded-xl transition flex items-center gap-2">
+                <i class="fa-solid fa-rotate-left"></i> 重設
+              </button>
+            </div>
+
+            <p class="text-[11px] text-slate-400">計時結束時將自動發出清脆提示鐘聲 🔔</p>
+          </div>
+        </div>
+
+        <!-- 3. Rhetoric Glossary Panel -->
+        <div id="tool-panel-rhetoric" class="hidden space-y-4">
+          <p class="text-xs text-slate-500">國中三年必備修辭判斷與經典課文實例速查表：</p>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            
+            <div class="bg-white p-4 rounded-xl border border-lilac-200 shadow-sm space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-bold text-lilac-900 font-serif">1. 譬喻修辭（明喻/隱喻/借喻）</span>
+                <span class="text-[10px] bg-lilac-100 text-lilac-800 px-2 py-0.5 rounded font-bold">高頻考點</span>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                利用事物間的相似點作比擬。分為喻體、喻詞、喻依三要素。
+              </p>
+              <div class="bg-slate-50 p-2 rounded text-xs text-slate-700 border border-slate-100">
+                <strong>例句：</strong>「那清脆的叫賣聲，是生活裡最動人的鐘擺。」（陳黎《聲音鐘》—— 隱喻）
+              </div>
+            </div>
+
+            <div class="bg-white p-4 rounded-xl border border-lilac-200 shadow-sm space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-bold text-lilac-900 font-serif">2. 轉化修辭（人性化/物性化）</span>
+                <span class="text-[10px] bg-sunlight-100 text-sunlight-800 px-2 py-0.5 rounded font-bold">形象描寫</span>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                描述事物時，轉變其原來的性質，化無情為有情、化抽象為具體。
+              </p>
+              <div class="bg-slate-50 p-2 rounded text-xs text-slate-700 border border-slate-100">
+                <strong>例句：</strong>「從山坡上輕輕地爬下來了……」（楊喚《夏夜》—— 擬人）
+              </div>
+            </div>
+
+            <div class="bg-white p-4 rounded-xl border border-lilac-200 shadow-sm space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-bold text-lilac-900 font-serif">3. 映襯修辭（對襯/雙襯）</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">對比張力</span>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                把兩種相反或相對的事物或道理放在一起相互對照，使意義更鮮明。
+              </p>
+              <div class="bg-slate-50 p-2 rounded text-xs text-slate-700 border border-slate-100">
+                <strong>例句：</strong>「只因為這是生命中，最沉重也最甜蜜的負荷。」（吳晟《負荷》）
+              </div>
+            </div>
+
+            <div class="bg-white p-4 rounded-xl border border-lilac-200 shadow-sm space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-bold text-lilac-900 font-serif">4. 互文修辭（合敘見意）</span>
+                <span class="text-[10px] bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-bold">文言經典</span>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                上下兩句意思互相補充、滲透，必須合起來看才能得到完整的意義。
+              </p>
+              <div class="bg-slate-50 p-2 rounded text-xs text-slate-700 border border-slate-100">
+                <strong>例句：</strong>「將軍百戰死，壯士十年歸。」（《木蘭詩》—— 將士們經過百戰有人戰死、有人征戰多年歸來）
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 4. PISA Inquiry Guide Panel -->
+        <div id="tool-panel-inquiry" class="hidden space-y-4">
+          <p class="text-xs text-slate-500">課堂深度對話與提問設計框架（PISA 三層次提問法）：</p>
+          
+          <div class="space-y-3">
+            <div class="bg-blue-50/80 p-4 rounded-2xl border border-blue-200">
+              <h5 class="text-sm font-bold text-blue-900 font-serif flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center">1</span>
+                第一層次：擷取與檢索訊息（文本事實）
+              </h5>
+              <p class="text-xs text-slate-600 mt-1">引導學生從文章中直接找到特定資訊、時間線或具體細節。</p>
+              <div class="text-xs text-blue-800 mt-2 bg-white/70 p-2 rounded">
+                💡 <strong>引導提問：</strong>「在《聲音鐘》中，作者列舉了哪些時間出現的攤販叫賣聲？」「《背影》中父親穿著什麼樣的衣著？」
+              </div>
+            </div>
+
+            <div class="bg-amber-50/80 p-4 rounded-2xl border border-amber-200">
+              <h5 class="text-sm font-bold text-amber-900 font-serif flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-amber-600 text-white text-xs flex items-center justify-center">2</span>
+                第二層次：統整與解釋文本（歸納推論）
+              </h5>
+              <p class="text-xs text-slate-600 mt-1">引導學生連結上下文，推論人物動機、象徵意涵或主題精神。</p>
+              <div class="text-xs text-amber-800 mt-2 bg-white/70 p-2 rounded">
+                💡 <strong>引導提問：</strong>「為什麼作者說那些叫賣聲是『聲音鐘』，比起一般的時鐘它多了什麼特質？」「紙船在文中象徵了什麼？」
+              </div>
+            </div>
+
+            <div class="bg-purple-50/80 p-4 rounded-2xl border border-purple-200">
+              <h5 class="text-sm font-bold text-purple-900 font-serif flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-purple-600 text-white text-xs flex items-center justify-center">3</span>
+                第三層次：省思與評鑑意涵（連結生活與價值）
+              </h5>
+              <p class="text-xs text-slate-600 mt-1">引導學生將文本與自身經驗結合，進行批判性思考與價值判斷。</p>
+              <div class="text-xs text-purple-800 mt-2 bg-white/70 p-2 rounded">
+                💡 <strong>引導提問：</strong>「現代都市中傳統叫賣聲逐漸消失，你認為生活因此失去了什麼？如果是你，會如何記錄生活周遭的聲音？」
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="bg-slate-50 p-4 px-6 border-t border-slate-200 flex justify-end">
+        <button onclick="closeToolkitModal()" class="px-5 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold rounded-xl transition">
+          關閉百寶箱
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Lesson Detail / Preview Modal -->
+  <div id="lesson-detail-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white w-full max-w-3xl max-h-[90vh] rounded-3xl shadow-2xl border border-lilac-200 overflow-hidden flex flex-col animate-in fade-in zoom-in duration-200">
+      
+      <!-- Modal Dynamic Banner -->
+      <div id="modal-header-bg" class="p-6 text-white flex items-start justify-between relative overflow-hidden bg-gradient-to-r from-lilac-800 to-indigo-900">
+        <div class="relative z-10 space-y-1">
+          <div class="flex items-center gap-2">
+            <span id="modal-grade-tag" class="bg-white/20 text-white text-xs px-2.5 py-0.5 rounded-full font-semibold">七年級</span>
+            <span id="modal-genre-tag" class="bg-white/20 text-white text-xs px-2.5 py-0.5 rounded-full font-semibold">散文</span>
+          </div>
+          <h3 id="modal-lesson-title" class="text-2xl sm:text-3xl font-serif font-black">聲音鐘</h3>
+          <p id="modal-lesson-author" class="text-xs text-lilac-100">作者：陳黎</p>
+        </div>
+        <button onclick="closeLessonModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition relative z-10">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Modal Dynamic Content -->
+      <div class="p-6 overflow-y-auto flex-1 space-y-6 text-slate-800">
+        
+        <!-- Objective -->
+        <div class="space-y-2">
+          <h4 class="text-sm font-bold text-slate-900 flex items-center gap-2 font-serif">
+            <i class="fa-solid fa-bullseye text-lilac-600"></i> 單元核心教學目標
+          </h4>
+          <ul id="modal-objectives" class="text-xs text-slate-600 space-y-1.5 list-disc list-inside bg-slate-50 p-3.5 rounded-xl border border-slate-100">
+            <!-- Populated via JS -->
+          </ul>
+        </div>
+
+        <!-- Highlights & Rhetoric -->
+        <div class="space-y-2">
+          <h4 class="text-sm font-bold text-slate-900 flex items-center gap-2 font-serif">
+            <i class="fa-solid fa-wand-magic-sparkles text-sunlight-600"></i> 課文結構與重點修辭
+          </h4>
+          <div id="modal-structure" class="text-xs text-slate-600 leading-relaxed bg-lilac-50/50 p-3.5 rounded-xl border border-lilac-100">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+        <!-- In-class questions -->
+        <div class="space-y-2">
+          <h4 class="text-sm font-bold text-slate-900 flex items-center gap-2 font-serif">
+            <i class="fa-solid fa-comments text-emerald-600"></i> 素養導向課堂引導提問
+          </h4>
+          <div id="modal-questions" class="space-y-2">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Action Footer -->
+      <div class="bg-slate-50 p-4 px-6 border-t border-slate-200 flex items-center justify-between">
+        <button onclick="closeLessonModal()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold rounded-xl transition">
+          關閉
+        </button>
+        <div id="modal-action-btn-container">
+          <!-- Dynamic Button (Direct Link or Prepare notification) -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Page Footer -->
+  <footer class="bg-lilac-950 text-lilac-300 py-12 mt-16 border-t border-lilac-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+        
+        <div class="md:col-span-6 space-y-3">
+          <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-lilac-600 to-sunlight-500 flex items-center justify-center text-white text-lg">
+              <i class="fa-solid fa-book-open-reader"></i>
+            </div>
+            <span class="text-xl font-serif font-black text-white">翰墨韶光 · 國中國文教學入口</span>
+          </div>
+          <p class="text-xs text-lilac-300/80 leading-relaxed max-w-md">
+            為國中教師與學子打造的數位互動備課與學習總覽平台。汲取台灣當代美感教科書之雅緻視覺，融入多模態素養導向教材，陪伴每一個探索語文的晨光。
+          </p>
+        </div>
+
+        <div class="md:col-span-3 space-y-2">
+          <h5 class="text-xs font-bold text-white uppercase tracking-wider">精選線上教材單元</h5>
+          <ul class="text-xs space-y-1.5 text-lilac-300">
+            <li><a href="lesson_sound_clock.html" class="hover:text-sunlight-300 transition flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-[10px]"></i> 《聲音鐘》陳黎</a></li>
+            <li><a href="lesson_paper_boat.html" class="hover:text-sunlight-300 transition flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-[10px]"></i> 《紙船印象》洪醒夫</a></li>
+            <li><a href="javascript:void(0)" onclick="openLessonModal('back_view')" class="hover:text-sunlight-300 transition flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-[10px]"></i> 《背影》朱自清</a></li>
+            <li><a href="javascript:void(0)" onclick="openLessonModal('childhood_fun')" class="hover:text-sunlight-300 transition flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-[10px]"></i> 《兒時記趣》沈復</a></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-3 space-y-2">
+          <h5 class="text-xs font-bold text-white uppercase tracking-wider">教師教學工具</h5>
+          <ul class="text-xs space-y-1.5 text-lilac-300">
+            <li><button onclick="openToolkitModal(); switchToolkitTab('picker');" class="hover:text-sunlight-300 transition">🎲 課堂隨堂點名抽籤器</button></li>
+            <li><button onclick="openToolkitModal(); switchToolkitTab('timer');" class="hover:text-sunlight-300 transition">⏱️ 小組討論與寫作計時器</button></li>
+            <li><button onclick="openToolkitModal(); switchToolkitTab('rhetoric');" class="hover:text-sunlight-300 transition">📖 國中必考修辭大圖鑑</button></li>
+            <li><button onclick="openToolkitModal(); switchToolkitTab('inquiry');" class="hover:text-sunlight-300 transition">💬 PISA 素養導向提問指南</button></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="pt-8 border-t border-lilac-900/60 flex flex-col sm:flex-row items-center justify-between text-[11px] text-lilac-400 gap-4">
+        <div>© 2026 國中國文數位美感教學資源網 · 教學研究與素養學習專用</div>
+        <div class="flex items-center space-x-4">
+          <span>支援跨平台電腦、平板與電子白板</span>
+          <span>·</span>
+          <span>高解析度美感教科書封面設計</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // --- Data of Daily Literary Quotes ---
+    const quotes = [
+      { text: "「那清脆的叫賣聲，是生活裡最動人的鐘擺。」", source: "陳黎《聲音鐘》" },
+      { text: "「只盼望這些紙船能平平安安地航行到母親的心裡。」", source: "洪醒夫《紙船印象》" },
+      { text: "「我看見他的背影，我的淚很快地流下來了。」", source: "朱自清《背影》" },
+      { text: "「余憶童稚時，能張目對日，明察秋毫，故時有物外之趣。」", source: "沈復《兒時記趣》" },
+      { text: "「只因為這是生命中，最沉重也最甜蜜的負荷。」", source: "吳晟《負荷》" },
+      { text: "「雄兔腳撲朔，雌兔眼迷離；雙兔傍地走，安能辨我是雄雌？」", source: "北朝民歌《木蘭詩》" },
+      { text: "「斯是陋室，惟吾德馨。苔痕上階綠，草色入簾青。」", source: "劉禹錫《陋室銘》" },
+      { text: "「來了！來了！從椰子樹梢輕輕地跳下來了。」", source: "楊喚《夏夜》" },
+      { text: "「何夜無月？何處無竹柏？但少閑人如吾兩人者耳。」", source: "蘇軾《記承天寺夜遊》" }
+    ];
+
+    let currentQuoteIndex = 0;
+    function refreshQuote() {
+      currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+      const quoteElement = document.getElementById('daily-quote-text');
+      quoteElement.style.opacity = '0';
+      setTimeout(() => {
+        quoteElement.innerHTML = `${quotes[currentQuoteIndex].text} —— ${quotes[currentQuoteIndex].source}`;
+        quoteElement.style.opacity = '1';
+      }, 200);
+    }
+
+    // --- Petals Canvas Animation ---
+    let petalsActive = true;
+    const canvas = document.getElementById('petals-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let petals = [];
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Petal {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * width;
+        this.y = -20 - Math.random() * 50;
+        this.size = 8 + Math.random() * 12;
+        this.speedX = -1 + Math.random() * 2;
+        this.speedY = 1 + Math.random() * 1.8;
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotationSpeed = (Math.random() - 0.5) * 0.02;
+        this.opacity = 0.4 + Math.random() * 0.45;
+        this.colorType = Math.random() > 0.4 ? 'white' : 'lavender';
+      }
+      update() {
+        this.x += this.speedX + Math.sin(this.y * 0.01) * 0.5;
+        this.y += this.speedY;
+        this.rotation += this.rotationSpeed;
+        if (this.y > height + 20 || this.x < -20 || this.x > width + 20) {
+          this.reset();
+        }
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.beginPath();
+        ctx.ellipse(0, 0, this.size, this.size * 0.6, 0, 0, Math.PI * 2);
+        if (this.colorType === 'white') {
+          ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+          ctx.shadowColor = 'rgba(238, 233, 248, 0.5)';
+          ctx.shadowBlur = 4;
+        } else {
+          ctx.fillStyle = `rgba(222, 215, 242, ${this.opacity})`;
+        }
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    for (let i = 0; i < 28; i++) {
+      petals.push(new Petal());
+    }
+
+    function animatePetals() {
+      if (petalsActive) {
+        ctx.clearRect(0, 0, width, height);
+        petals.forEach(p => {
+          p.update();
+          p.draw();
+        });
+      }
+      requestAnimationFrame(animatePetals);
+    }
+    animatePetals();
+
+    function togglePetals() {
+      petalsActive = !petalsActive;
+      const text = document.getElementById('petal-text');
+      if (petalsActive) {
+        text.innerText = "花瓣動態：開";
+      } else {
+        ctx.clearRect(0, 0, width, height);
+        text.innerText = "花瓣動態：關";
+      }
+    }
+
+    // --- Web Audio Synthesized Morning Soundscape ---
+    let audioCtx = null;
+    let isBgmPlaying = false;
+    let bgmOscillators = [];
+
+    function toggleSoundscape() {
+      const bgmIcon = document.getElementById('bgm-icon');
+      const bgmText = document.getElementById('bgm-text');
+
+      if (!isBgmPlaying) {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+
+        // Gentle wind / chord chime synth
+        playChimeChord();
+        isBgmPlaying = true;
+        bgmIcon.className = "fa-solid fa-volume-high text-[11px] animate-bounce text-sunlight-400";
+        bgmText.innerText = "聲景播放中";
+      } else {
+        stopChimeChord();
+        isBgmPlaying = false;
+        bgmIcon.className = "fa-solid fa-volume-xmark text-[11px]";
+        bgmText.innerText = "聲景靜音";
+      }
+    }
+
+    function playChimeChord() {
+      if (!audioCtx) return;
+      const freqs = [261.63, 329.63, 392.00, 523.25]; // C4, E4, G4, C5 gentle harmony
+      freqs.forEach((freq, idx) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.015 / (idx + 1), audioCtx.currentTime);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        bgmOscillators.push({ osc, gain });
+      });
+    }
+
+    function stopChimeChord() {
+      bgmOscillators.forEach(({ osc, gain }) => {
+        try {
+          gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
+          setTimeout(() => osc.stop(), 500);
+        } catch(e) {}
+      });
+      bgmOscillators = [];
+    }
+
+    // Play Bell Chime for Timer
+    function playDingSound() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, ctx.currentTime); // A5
+        osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.8);
+        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.2);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 1.2);
+      } catch(e) {}
+    }
+
+    // --- Search & Filtering Logic ---
+    let currentGrade = 'all';
+    let currentGenre = 'all';
+    let searchQuery = '';
+
+    function handleSearch(val) {
+      searchQuery = val.trim().toLowerCase();
+      const clearBtn = document.getElementById('clear-search-btn');
+      if (searchQuery.length > 0) {
+        clearBtn.classList.remove('hidden');
+      } else {
+        clearBtn.classList.add('hidden');
+      }
+      applyFilters();
+    }
+
+    function clearSearch() {
+      document.getElementById('search-input').value = '';
+      document.getElementById('mobile-search-input').value = '';
+      searchQuery = '';
+      document.getElementById('clear-search-btn').classList.add('hidden');
+      applyFilters();
+    }
+
+    function setGradeFilter(grade) {
+      currentGrade = grade;
+      document.querySelectorAll('.grade-tab-btn').forEach(btn => {
+        btn.className = "grade-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white hover:bg-lilac-50 text-slate-600 border border-lilac-200 transition";
+      });
+      const activeBtn = document.getElementById(`grade-${grade}`);
+      if (activeBtn) {
+        activeBtn.className = "grade-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-lilac-700 text-white shadow-sm transition";
+      }
+      applyFilters();
+    }
+
+    function setGenreFilter(genre) {
+      currentGenre = genre;
+      document.querySelectorAll('.genre-tag').forEach(tag => {
+        tag.className = "genre-tag px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-lilac-50 transition";
+      });
+      const activeTag = document.getElementById(`genre-${genre}`);
+      if (activeTag) {
+        activeTag.className = "genre-tag active px-3 py-1.5 rounded-lg text-xs font-semibold bg-lilac-100 text-lilac-900 border border-lilac-300";
+      }
+      applyFilters();
+    }
+
+    function resetAllFilters() {
+      setGradeFilter('all');
+      setGenreFilter('all');
+      clearSearch();
+    }
+
+    function applyFilters() {
+      const cards = document.querySelectorAll('.lesson-card');
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const title = card.getAttribute('data-title') || '';
+        const author = card.getAttribute('data-author') || '';
+        const grade = card.getAttribute('data-grade') || '';
+        const genre = card.getAttribute('data-genre') || '';
+        const keywords = card.getAttribute('data-keywords') || '';
+
+        const matchesGrade = (currentGrade === 'all' || grade === currentGrade);
+        const matchesGenre = (currentGenre === 'all' || genre === currentGenre);
+        
+        let matchesSearch = true;
+        if (searchQuery) {
+          const combined = `${title} ${author} ${keywords} ${grade} ${genre}`.toLowerCase();
+          matchesSearch = combined.includes(searchQuery);
+        }
+
+        if (matchesGrade && matchesGenre && matchesSearch) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      const countEl = document.getElementById('results-count');
+      const emptyEl = document.getElementById('empty-state');
+      countEl.innerText = `共顯示 ${visibleCount} 篇經典教材`;
+
+      if (visibleCount === 0) {
+        emptyEl.classList.remove('hidden');
+      } else {
+        emptyEl.classList.add('hidden');
+      }
+    }
+
+    // --- Teacher Toolkit Modal Logic ---
+    function openToolkitModal() {
+      document.getElementById('toolkit-modal').classList.remove('hidden');
+      document.getElementById('toolkit-modal').classList.add('flex');
+    }
+    function closeToolkitModal() {
+      document.getElementById('toolkit-modal').classList.add('hidden');
+      document.getElementById('toolkit-modal').classList.remove('flex');
+    }
+
+    function switchToolkitTab(tabKey) {
+      const tabs = ['picker', 'timer', 'rhetoric', 'inquiry'];
+      tabs.forEach(k => {
+        const btn = document.getElementById(`tool-tab-${k}`);
+        const panel = document.getElementById(`tool-panel-${k}`);
+        if (k === tabKey) {
+          btn.className = "toolkit-tab-btn px-4 py-3 text-xs sm:text-sm font-bold text-lilac-900 border-b-2 border-lilac-700";
+          panel.classList.remove('hidden');
+        } else {
+          btn.className = "toolkit-tab-btn px-4 py-3 text-xs sm:text-sm font-medium text-slate-600 hover:text-lilac-900";
+          panel.classList.add('hidden');
+        }
+      });
+    }
+
+    // Random Picker Execution
+    function triggerDraw() {
+      const customNames = document.getElementById('picker-custom-names').value.trim();
+      let candidates = [];
+      if (customNames) {
+        candidates = customNames.split('\n').map(n => n.trim()).filter(n => n.length > 0);
+      } else {
+        const maxSeat = parseInt(document.getElementById('picker-max-seat').value) || 35;
+        for (let i = 1; i <= maxSeat; i++) {
+          candidates.push(`${i} 號同學`);
+        }
+      }
+
+      if (candidates.length === 0) return;
+
+      const resultEl = document.getElementById('picker-result');
+      const subtextEl = document.getElementById('picker-subtext');
+
+      let rollCount = 0;
+      const maxRolls = 15;
+      const interval = setInterval(() => {
+        const randIndex = Math.floor(Math.random() * candidates.length);
+        resultEl.innerText = candidates[randIndex];
+        resultEl.style.transform = `scale(${1 + (rollCount % 2) * 0.1})`;
+        rollCount++;
+
+        if (rollCount >= maxRolls) {
+          clearInterval(interval);
+          const finalIndex = Math.floor(Math.random() * candidates.length);
+          resultEl.innerText = candidates[finalIndex];
+          resultEl.style.transform = 'scale(1.15)';
+          subtextEl.innerHTML = `<span class="text-lilac-700 font-bold">✨ 請 ${candidates[finalIndex]} 發表想法或朗讀課文！</span>`;
+          playDingSound();
+        }
+      }, 80);
+    }
+
+    // Timer Execution
+    let timerTotalSeconds = 180;
+    let timerRemaining = 180;
+    let timerInterval = null;
+
+    function setTimerSeconds(sec) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      document.getElementById('btn-timer-start').innerHTML = '<i class="fa-solid fa-play"></i> 開始計時';
+      document.getElementById('btn-timer-start').className = "px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-md transition flex items-center gap-2";
+      timerTotalSeconds = sec;
+      timerRemaining = sec;
+      updateTimerDisplay();
+    }
+
+    function updateTimerDisplay() {
+      const min = Math.floor(timerRemaining / 60).toString().padStart(2, '0');
+      const sec = (timerRemaining % 60).toString().padStart(2, '0');
+      document.getElementById('timer-display').innerText = `${min}:${sec}`;
+    }
+
+    function toggleTimer() {
+      const btn = document.getElementById('btn-timer-start');
+      if (!timerInterval) {
+        // Start
+        btn.innerHTML = '<i class="fa-solid fa-pause"></i> 暫停計時';
+        btn.className = "px-6 py-3 bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm rounded-xl shadow-md transition flex items-center gap-2";
+        timerInterval = setInterval(() => {
+          if (timerRemaining > 0) {
+            timerRemaining--;
+            updateTimerDisplay();
+          } else {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> 時間到！';
+            btn.className = "px-6 py-3 bg-rose-600 text-white font-bold text-sm rounded-xl shadow-md transition flex items-center gap-2";
+            playDingSound();
+          }
+        }, 1000);
+      } else {
+        // Pause
+        clearInterval(timerInterval);
+        timerInterval = null;
+        btn.innerHTML = '<i class="fa-solid fa-play"></i> 繼續計時';
+        btn.className = "px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-md transition flex items-center gap-2";
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      timerRemaining = timerTotalSeconds;
+      updateTimerDisplay();
+      const btn = document.getElementById('btn-timer-start');
+      btn.innerHTML = '<i class="fa-solid fa-play"></i> 開始計時';
+      btn.className = "px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-md transition flex items-center gap-2";
+    }
+
+    // --- Lesson Detail Modal Preview Data ---
+    const lessonData = {
+      sound_clock: {
+        title: "第一課 聲音鐘",
+        author: "陳黎",
+        grade: "七年級上冊",
+        genre: "現代記敘散文",
+        bannerBg: "bg-gradient-to-r from-amber-600 to-sunlight-600",
+        objectives: [
+          "學會細緻聆聽生活環境中的聲景，培養對鄉土與日常生活的審美感知。",
+          "掌握「以時間為軸線」的記敘結構與條理分明的寫作手法。",
+          "辨識並運用譬喻、轉化（擬人）及外來語等修辭與語言特色。"
+        ],
+        structure: "文章以作者在花蓮居所聽見的各類流動攤販叫賣聲為主軸，將尋常叫賣比擬為活潑有生命力的「聲音鐘」，層層展現鄉土人情與生活情調。",
+        questions: [
+          "【擷取】作者在清晨、午後與深夜分別聽到了哪些小販的叫賣聲？",
+          "【統整】為什麼作者說這些小販的叫賣聲比一般的時鐘更準確、更有情味？",
+          "【省思】現代都市生活多被超商與外送取代，你認為傳統叫賣聲的消失對生活文化有何影響？"
+        ],
+        link: "lesson_sound_clock.html"
+      },
+      paper_boat: {
+        title: "第三課 紙船印象",
+        author: "洪醒夫",
+        grade: "七年級下冊",
+        genre: "現代抒情散文",
+        bannerBg: "bg-gradient-to-r from-cyan-700 to-blue-700",
+        objectives: [
+          "體會作者從童年摺紙船遊戲中，所感悟到的深沉母愛與家庭親情。",
+          "學習「由事入理、借物抒情」的散文寫作技巧。",
+          "體悟代代相傳的情感價值，培養感恩與傳承的生命態度。"
+        ],
+        structure: "起筆由記憶的沉澱寫起，引出雨天玩紙船的生動回憶，細緻描寫各式紙船的形態與航行姿態，終結於對母愛無私奉獻的深情體悟。",
+        questions: [
+          "【擷取】作者在文中提到了哪些形狀與氣勢的紙船？",
+          "【統整】母親在極其忙碌的農務與家事中，為何仍願意為孩子摺紙船？",
+          "【省思】你的童年回憶中，是否也有一件承載著長輩深情的小物件或活動？"
+        ],
+        link: "lesson_paper_boat.html"
+      },
+      back_view: {
+        title: "經典課文 背影",
+        author: "朱自清",
+        grade: "八年級上冊",
+        genre: "現代抒情散文",
+        bannerBg: "bg-gradient-to-r from-purple-800 to-lilac-700",
+        objectives: [
+          "體會父親在逆境中對兒子的深摯關愛，以及作者從不解到感動的心境轉變。",
+          "學習「聚焦特定特寫鏡頭（買橘子背影）」的白描刻劃手法。",
+          "探討傳統華人家庭中內斂、含蓄的親情表達模式。"
+        ],
+        structure: "開篇破題「最不能忘記的是他的背影」，中段詳述徐州奔喪與南京浦口送別過程，高潮於攀爬鐵道買橘子的背影特寫，末段以讀父信落淚作結呼應。",
+        questions: [
+          "【擷取】文中一共出現了幾次「背影」？每次出現時作者的情感有何不同？",
+          "【統整】朱自清年輕時為何覺得父親「說話不大漂亮」？後來又為何落淚？",
+          "【省思】在日常生活裡，你曾在哪個不經意的瞬間體會到父母親的愛？"
+        ],
+        link: null
+      },
+      childhood_fun: {
+        title: "文言精選 兒時記趣",
+        author: "沈復",
+        grade: "七年級上冊",
+        genre: "古典文言小品",
+        bannerBg: "bg-gradient-to-r from-emerald-800 to-teal-700",
+        objectives: [
+          "理解文言虛詞「之、其、故」與倒裝句型用法。",
+          "領會作者善用觀察力與想像力發現「物外之趣」的童真情懷。",
+          "培養在平凡日常生活中觀察微小事物的美感與想像力。"
+        ],
+        structure: "首段總領「物外之趣」之因；二段寫「夏蚊成雷」想像為群鶴舞空；三段寫土牆花臺的微觀叢林冒險；四段寫觀二蟲鬥草間與龐然大物癩蝦蟆之趣。",
+        questions: [
+          "【擷取】作者將「夏蚊」想像成了什麼？將「癩蝦蟆」當作了什麼？",
+          "【統整】沈復能得到「物外之趣」的關鍵條件是什麼？",
+          "【省思】如果換作是你觀察書桌上的一隻小螞蟻，你會如何發揮想像力？"
+        ],
+        link: null
+      },
+      burden: {
+        title: "現代詩 負荷",
+        author: "吳晟",
+        grade: "八年級下冊",
+        genre: "現代抒情詩歌",
+        bannerBg: "bg-gradient-to-r from-amber-800 to-orange-700",
+        objectives: [
+          "體會台灣鄉土詩歌中質樸真摯的情感與田園泥土芬芳。",
+          "理解「甜蜜的負荷」之修辭手法（映襯）與人生哲理。",
+          "賞析現代詩的重疊句法、節奏韻律與意象經營。"
+        ],
+        structure: "以父親每天上下班的辛勞比擬為祖輩的耕耘下田，將子女的吵鬧撒嬌化作心頭的印記，歸結於生命中最沉重也最甘願承受的甜蜜承擔。",
+        questions: [
+          "【擷取】詩中出現了哪些重複的詞彙？這樣的重複產生了什麼節奏效果？",
+          "【統整】為什麼詩人會用「最沉重」與「最甜蜜」兩個看似矛盾的詞來形容孩子？",
+          "【省思】回想成長過程中家人為你的付出，你如何看待這份「負荷」？"
+        ],
+        link: null
+      },
+      mulan: {
+        title: "樂府名篇 木蘭詩",
+        author: "北朝民歌",
+        grade: "七年級下冊",
+        genre: "古典樂府敘事詩",
+        bannerBg: "bg-gradient-to-r from-rose-800 to-red-700",
+        objectives: [
+          "掌握北朝樂府民歌語言質樸、節奏明快、敘事生動的特徵。",
+          "精熟互文、頂真、排比、對偶等古文經典修辭手法。",
+          "探討花木蘭兼具孝悌、忠勇與平淡歸真的人生情操與女性自覺。"
+        ],
+        structure: "停機嘆息代父從軍 ➔ 奔赴戰場馳騁征途 ➔ 沙場百戰立功受賞 ➔ 辭官還鄉換回女兒裝 ➔ 雄雌兔喻作結讚賞。",
+        questions: [
+          "【擷取】「東市買駿馬，西市買鞍韉，南市買轡頭，北市買長鞭」運用了什麼修辭？",
+          "【統整】木蘭征戰凱旋歸來後，為何不願受封高官厚祿，只願「借駝還故鄉」？",
+          "【省思】木蘭的形象在現代文學與影視作品中持續被改編，反映了人們對性別角色的何種期待？"
+        ],
+        link: null
+      },
+      crude_room: {
+        title: "古典銘文 陋室銘",
+        author: "劉禹錫",
+        grade: "八年級下冊",
+        genre: "古典銘文駢散結合",
+        bannerBg: "bg-gradient-to-r from-slate-800 to-indigo-900",
+        objectives: [
+          "理解「銘」文體的性質與音韻押韻特點。",
+          "體會劉禹錫身處貶謫逆境，仍堅守高潔情操與安貧樂道的豁達胸襟。",
+          "賞析駢散交錯、借景託物、層層烘托的寫作手法。"
+        ],
+        structure: "仙龍起興引出「德馨」 ➔ 描繪陋室清雅環境與高雅交往 ➔ 抒發彈琴閱經之樂 ➔ 引孔子「何陋之有」作結點題。",
+        questions: [
+          "【擷取】作者從哪三個角度說明「陋室不陋」？",
+          "【統整】「苔痕上階綠，草色入簾青」寫出了陋室周圍怎樣的氛圍？",
+          "【省思】身處物質充裕的現代社會，我們該如何培養屬於自己的「精神德馨」？"
+        ],
+        link: null
+      },
+      summer_night: {
+        title: "兒童童詩 夏夜",
+        author: "楊喚",
+        grade: "七年級上冊",
+        genre: "兒童現代抒情詩",
+        bannerBg: "bg-gradient-to-r from-indigo-900 to-blue-800",
+        objectives: [
+          "感受兒童詩充滿生機、想像力豐富且溫柔親切的美感世界。",
+          "學習擬人法的運用，體會以動態生機襯托夜之靜謐的筆法。",
+          "培養對大自然晨昏晝夜變化的觀察與熱愛。"
+        ],
+        structure: "夏夜降臨大地 ➔ 田野動物植物入睡休息（由動入靜） ➔ 螢火蟲與小河仍在夜裡巡邏陪伴（靜中有動） ➔ 安詳甜美的入夢祝福。",
+        questions: [
+          "【擷取】詩中描寫了哪些動植物「睡了」？又有哪些依然在夜裡活躍？",
+          "【統整】詩人如何透過「提著燈籠的螢火蟲」與「唱著歌的夜風」營造出溫暖安全的夜晚氛圍？",
+          "【省思】試嘗試運用擬人手法，寫下兩句你眼中的校園黃昏或清晨景色。"
+        ],
+        link: null
+      }
+    };
+
+    function openLessonModal(lessonKey) {
+      const data = lessonData[lessonKey];
+      if (!data) return;
+
+      document.getElementById('modal-header-bg').className = `p-6 text-white flex items-start justify-between relative overflow-hidden ${data.bannerBg}`;
+      document.getElementById('modal-lesson-title').innerText = data.title;
+      document.getElementById('modal-lesson-author').innerText = `作者：${data.author}`;
+      document.getElementById('modal-grade-tag').innerText = data.grade;
+      document.getElementById('modal-genre-tag').innerText = data.genre;
+
+      // Objectives list
+      const objList = document.getElementById('modal-objectives');
+      objList.innerHTML = data.objectives.map(item => `<li>${item}</li>`).join('');
+
+      // Structure
+      document.getElementById('modal-structure').innerHTML = `<p>${data.structure}</p>`;
+
+      // Questions
+      const qList = document.getElementById('modal-questions');
+      qList.innerHTML = data.questions.map(q => `<div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-medium">${q}</div>`).join('');
+
+      // Action container
+      const actionContainer = document.getElementById('modal-action-btn-container');
+      if (data.link) {
+        actionContainer.innerHTML = `
+          <a href="${data.link}" class="px-5 py-2.5 bg-gradient-to-r from-lilac-600 to-indigo-700 hover:from-lilac-700 hover:to-indigo-800 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center gap-1.5">
+            <i class="fa-solid fa-play"></i> 立即進入互動教材
+          </a>
+        `;
+      } else {
+        actionContainer.innerHTML = `
+          <button onclick="alert('本篇教案已建立教學架構！您可依此教案於課堂中引導學生討論。')" class="px-4 py-2 bg-lilac-100 hover:bg-lilac-200 text-lilac-800 font-bold text-xs rounded-xl transition flex items-center gap-1.5">
+            <i class="fa-solid fa-file-lines"></i> 備課要點確認完畢
+          </button>
+        `;
+      }
+
+      document.getElementById('lesson-detail-modal').classList.remove('hidden');
+      document.getElementById('lesson-detail-modal').classList.add('flex');
+    }
+
+    function closeLessonModal() {
+      document.getElementById('lesson-detail-modal').classList.add('hidden');
+      document.getElementById('lesson-detail-modal').classList.remove('flex');
+    }
+
+    // Close modals on Escape
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeToolkitModal();
+        closeLessonModal();
+      }
+    });
+  </script>
+</body>
+</html>
