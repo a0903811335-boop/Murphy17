@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>《紙船印象》互動數位學習單元 - 洪醒夫</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Noto+Serif+TC:wght@600;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+            }
+          },
+          fontFamily: {
+            sans: ['"Noto Sans TC"', 'sans-serif'],
+            serif: ['"Noto Serif TC"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .ig-border {
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    }
+    .text-glow {
+      text-shadow: 0 2px 10px rgba(2, 132, 199, 0.3);
+    }
+    .vintage-photo-frame {
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 0, 0, 0.05);
+      border: 4px solid #ffffff;
+    }
+    .sepia-filter {
+      filter: sepia(0.25) contrast(1.05) brightness(0.95);
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+
+  <!-- Header / Navigation Bar -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-md">
+          <i class="fa-solid fa-paper-plane"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-lg text-slate-900 leading-tight">紙船印象 <span class="text-xs font-normal text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full ml-1">國中語文 1下 第3課</span></h1>
+          <p class="text-xs text-slate-500">作者：洪醒夫 | 互動式經典課文學習單元</p>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="hidden md:flex space-x-1 bg-slate-100 p-1 rounded-xl">
+        <button onclick="switchTab('text-reading')" id="tab-text-reading" class="nav-btn px-4 py-2 text-sm font-medium rounded-lg text-slate-700 hover:text-slate-900 transition active-tab">
+          <i class="fa-solid fa-book-open mr-1.5 text-blue-500"></i>課文與報讀
+        </button>
+        <button onclick="switchTab('glossary')" id="tab-glossary" class="nav-btn px-4 py-2 text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 transition">
+          <i class="fa-solid fa-wand-magic-sparkles mr-1.5 text-purple-500"></i>難字與修辭
+        </button>
+        <button onclick="switchTab('author-social')" id="tab-author-social" class="nav-btn px-4 py-2 text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 transition">
+          <i class="fa-solid fa-hashtag mr-1.5 text-pink-500"></i>作者社群與生平
+        </button>
+        <button onclick="switchTab('formative-assessment')" id="tab-formative-assessment" class="nav-btn px-4 py-2 text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 transition">
+          <i class="fa-solid fa-lightbulb mr-1.5 text-amber-500"></i>形成性評量 (引導式)
+        </button>
+        <button onclick="switchTab('summative-assessment')" id="tab-summative-assessment" class="nav-btn px-4 py-2 text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 transition">
+          <i class="fa-solid fa-graduation-cap mr-1.5 text-emerald-500"></i>總結性評量
+        </button>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100">
+        <i class="fa-solid fa-bars text-xl"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown Navigation -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white px-4 py-3 space-y-2 shadow-lg">
+      <button onclick="switchTab('text-reading')" class="w-full text-left px-3 py-2 text-sm font-medium text-slate-700 rounded-lg bg-slate-50 flex items-center">
+        <i class="fa-solid fa-book-open w-6 text-blue-500"></i>課文朗讀與解析
+      </button>
+      <button onclick="switchTab('glossary')" class="w-full text-left px-3 py-2 text-sm font-medium text-slate-700 rounded-lg hover:bg-slate-50 flex items-center">
+        <i class="fa-solid fa-wand-magic-sparkles w-6 text-purple-500"></i>難字詞與修辭寶典
+      </button>
+      <button onclick="switchTab('author-social')" class="w-full text-left px-3 py-2 text-sm font-medium text-slate-700 rounded-lg hover:bg-slate-50 flex items-center">
+        <i class="fa-solid fa-hashtag w-6 text-pink-500"></i>作者社群與生平全紀錄
+      </button>
+      <button onclick="switchTab('formative-assessment')" class="w-full text-left px-3 py-2 text-sm font-medium text-slate-700 rounded-lg hover:bg-slate-50 flex items-center">
+        <i class="fa-solid fa-lightbulb w-6 text-amber-500"></i>形成性評量 (引導式)
+      </button>
+      <button onclick="switchTab('summative-assessment')" class="w-full text-left px-3 py-2 text-sm font-medium text-slate-700 rounded-lg hover:bg-slate-50 flex items-center">
+        <i class="fa-solid fa-graduation-cap w-6 text-emerald-500"></i>總結性評量
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- Global Audio Reader Floating Control Panel -->
+    <div id="tts-sticky-bar" class="mb-6 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center space-x-3">
+        <button id="btn-play-all" onclick="togglePlayFullText()" class="w-12 h-12 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shadow-md transition transform active:scale-95">
+          <i id="play-icon" class="fa-solid fa-play text-lg ml-0.5"></i>
+        </button>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="font-bold text-slate-800 text-sm">國語口語語音報讀系統</span>
+            <span id="reading-status" class="text-xs text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">就緒</span>
+          </div>
+          <p class="text-xs text-slate-500 mt-0.5">點擊播放聽全文，或點選下方課文段落進行分段朗讀</p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-4">
+        <div class="flex items-center space-x-2 text-xs text-slate-600">
+          <label for="speech-rate"><i class="fa-solid fa-gauge mr-1"></i>語速：</label>
+          <select id="speech-rate" onchange="updateSpeechSettings()" class="bg-slate-100 border border-slate-300 text-slate-700 rounded-lg text-xs px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="0.8">0.8x (慢速)</option>
+            <option value="1.0" selected>1.0x (標準)</option>
+            <option value="1.25">1.25x (快速)</option>
+          </select>
+        </div>
+        <button onclick="stopSpeech()" class="px-3 py-1.5 text-xs text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition">
+          <i class="fa-solid fa-stop mr-1"></i>停止
+        </button>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 1: 課文與朗讀解析 -->
+    <!-- ========================================================================= -->
+    <section id="sec-text-reading" class="tab-content block space-y-6">
+      
+      <!-- Lesson Introduction Card -->
+      <div class="bg-gradient-to-r from-sky-500 to-indigo-600 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl">
+          <i class="fa-solid fa-paper-plane"></i>
+        </div>
+        <div class="relative z-10 max-w-3xl">
+          <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full font-medium tracking-wide">記敘文／藉物抒情</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold mt-2 mb-3">《紙船印象》全文朗讀與精細解析</h2>
+          <p class="text-sky-100 text-sm leading-relaxed">
+            本文選自《洪醒夫全集》。作者追述童年時母親為他摺紙船，使他在雨天裡也能快樂遊戲的情景，藉此表達對童年生活的眷戀與對母愛的感念，並期許自己能傳承這份堅韌的母愛。
+          </p>
+        </div>
+      </div>
+
+      <!-- Text Body with Interactive Highlight & Paragraph Voice Player -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-8">
+        
+        <!-- Paragraph 1 -->
+        <div id="para-1" class="paragraph-block p-4 rounded-xl border border-transparent hover:border-slate-200 transition">
+          <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
+            <span class="text-xs font-bold text-sky-600 bg-sky-50 px-2.5 py-1 rounded-md">第一段：童年記憶的分類與回想</span>
+            <button onclick="readParagraph(1)" class="text-xs text-slate-500 hover:text-blue-600 flex items-center bg-slate-100 hover:bg-blue-50 px-2.5 py-1 rounded-md transition">
+              <i class="fa-solid fa-volume-high mr-1.5 text-blue-500"></i>朗讀本段
+            </button>
+          </div>
+          <p class="text-base sm:text-lg text-slate-800 leading-loose tracking-wide">
+            每個人的一生都會遭遇許多事，有些是<span class="vocab-tag cursor-pointer border-b-2 border-purple-400 font-semibold text-purple-900" onclick="showVocabDetail('過眼雲煙')">過眼雲煙</span>，<span class="vocab-tag cursor-pointer border-b-2 border-purple-400 font-semibold text-purple-900" onclick="showVocabDetail('倏忽')">倏忽</span>即逝；有些是<span class="vocab-tag cursor-pointer border-b-2 border-purple-400 font-semibold text-purple-900" onclick="showVocabDetail('熱鐵烙膚')">熱鐵烙膚</span>，記憶長存；有些像是<span class="vocab-tag cursor-pointer border-b-2 border-purple-400 font-semibold text-purple-900" onclick="showVocabDetail('掠過')">掠過</span>天邊，漸去漸遠。而有一些事，卻像夏日的小河、冬天的落葉，像春花，也像秋草，似無所見，又非視而不見——童年的許多細碎事物，大體如此，不去想，什麼都沒有，一旦思想起，便<span class="vocab-tag cursor-pointer border-b-2 border-purple-400 font-semibold text-purple-900" onclick="showVocabDetail('歷歷如繪')">歷歷如繪</span>。
+          </p>
+          <div class="mt-3 flex flex-wrap gap-2 text-xs">
+            <span class="bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded cursor-help" title="用具體事物比喻抽象記憶">修辭：排比、譬喻、映襯</span>
+          </div>
+        </div>
+
+        <!-- Paragraph 2 -->
+        <div id="para-2" class="paragraph-block p-4 rounded-xl border border-transparent hover:border-slate-200 transition">
+          <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
+            <span class="text-xs font-bold text-sky-600 bg-sky-50 px-2.5 py-1 rounded-md">第二段：切入主題——紙船點綴雨天記憶</span>
+            <button onclick="readParagraph(2)" class="text-xs text-slate-500 hover:text-blue-600 flex items-center bg-slate-100 hover:bg-blue-50 px-2.5 py-1 rounded-md transition">
+              <i class="fa-solid fa-volume-high mr-1.5 text-blue-500"></i>朗讀本段
+            </button>
+          </div>
+          <p class="text-base sm:text-lg text-slate-800 leading-loose tracking-wide">
+            紙船是其中之一。我曾經有過許多紙船，在童年的無三尺浪的簷下水道航行，使我幼時的雨天時光，特別顯得亮麗充實，讓人<span class="vocab-tag cursor-pointer border-b-2 border-purple-400 font-semibold text-purple-900" onclick="showVocabDetail('眷戀')">眷戀</span>。
+          </p>
+        </div>
+
+        <!-- Paragraph 3 -->
+        <div id="para-3" class="paragraph-block p-4 rounded-xl border border-transparent hover:border-slate-200 transition">
+          <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
+            <span class="text-xs font-bold text-sky-600 bg-sky-50 px-2.5 py-1 rounded-md">第三段：童年放紙船的情境與樂趣</span>
+            <button onclick="readParagraph(3)" class="text-xs text-slate-500 hover:text-blue-600 flex items-center bg-slate-100 hover:bg-blue-50 px-2.5 py-1 rounded-md transition">
+              <i class="fa-solid fa-volume-high mr-1.5 text-blue-500"></i>朗讀本段
+            </button>
+          </div>
+          <p class="text-base sm:text-lg text-slate-800 leading-loose tracking-wide">
+            那時，我們住的是低矮簡陋的農舍，簷下無排水溝，庭院未鋪柏油，一下雨，便<span class="vocab-tag cursor-pointer border-b-2 border-purple-400 font-semibold text-purple-900" onclick="showVocabDetail('泥濘')">泥濘</span>不堪。屋頂上的雨水滴落下來，卻<span class="vocab-tag cursor-pointer border-b-2 border-purple-400 font-semibold text-purple-900" onclick="showVocabDetail('理直氣壯')">理直氣壯</span>地在簷下匯成一道水流，水流因雨勢而定，或急或緩，或大或小。我們在水道上放紙船遊戲，花色<span class="vocab-tag cursor-pointer border-b-2 border-purple-400 font-semibold text-purple-900" onclick="showVocabDetail('斑雜')">斑雜</span>者，形態怪異者，<span class="vocab-tag cursor-pointer border-b-2 border-purple-400 font-semibold text-purple-900" onclick="showVocabDetail('氣派儼然')">氣派儼然</span>者，<span class="vocab-tag cursor-pointer border-b-2 border-purple-400 font-semibold text-purple-900" onclick="showVocabDetail('甫')">甫</span>經下水即遭沉沒者，各色各樣的紙船或列隊而出，或<span class="vocab-tag cursor-pointer border-b-2 border-purple-400 font-semibold text-purple-900" onclick="showVocabDetail('千里單騎')">千里單騎</span>，或<span class="vocab-tag cursor-pointer border-b-2 border-purple-400 font-semibold text-purple-900" onclick="showVocabDetail('比肩齊步')">比肩齊步</span>，或互相追逐，或者乾脆是<span class="vocab-tag cursor-pointer border-b-2 border-purple-400 font-semibold text-purple-900" onclick="showVocabDetail('曹操戰艦')">曹操的戰艦——首尾相連</span>。形形色色，<span class="vocab-tag cursor-pointer border-b-2 border-purple-400 font-semibold text-purple-900" onclick="showVocabDetail('蔚為壯觀')">蔚為壯觀</span>。我們所得到的，是真正的快樂。
+          </p>
+          <div class="mt-3 flex flex-wrap gap-2 text-xs">
+            <span class="bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded">修辭：排比（或…或…）、轉化（理直氣壯）、借代/典故</span>
+          </div>
+        </div>
+
+        <!-- Paragraph 4 -->
+        <div id="para-4" class="paragraph-block p-4 rounded-xl border border-transparent hover:border-slate-200 transition">
+          <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
+            <span class="text-xs font-bold text-sky-600 bg-sky-50 px-2.5 py-1 rounded-md">第四段：由「物」聯想到「人」——母親的手與無私的愛</span>
+            <button onclick="readParagraph(4)" class="text-xs text-slate-500 hover:text-blue-600 flex items-center bg-slate-100 hover:bg-blue-50 px-2.5 py-1 rounded-md transition">
+              <i class="fa-solid fa-volume-high mr-1.5 text-blue-500"></i>朗讀本段
+            </button>
+          </div>
+          <p class="text-base sm:text-lg text-slate-800 leading-loose tracking-wide">
+            這些紙船都是有感情的，因為它們大都出自母親的巧思和那雙粗糙不堪、結著厚<span class="vocab-tag cursor-pointer border-b-2 border-purple-400 font-semibold text-purple-900" onclick="showVocabDetail('繭')">繭</span>的手。母親摺船給孩子，讓孩子在雨天裡也有笑聲，這種美麗的感情要到<span class="vocab-tag cursor-pointer border-b-2 border-purple-400 font-semibold text-purple-900" onclick="showVocabDetail('年事')">年事</span>稍長後才能體會出來，也許那雨一下就是十天半月，農作物都有被淋壞、被淹死的可能，母親心裡正掛記這些事，煩亂憂愁不堪，但她仍然平靜和氣地為孩子摺船，摺成比別的孩子所擁有的還要漂亮的紙船，好讓孩子高興。
+          </p>
+          <div class="mt-3 flex flex-wrap gap-2 text-xs">
+            <span class="bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded">修辭：轉化（紙船是有感情的）、映襯（母親內心憂愁 vs 表現平靜和氣）</span>
+          </div>
+        </div>
+
+        <!-- Paragraph 5 -->
+        <div id="para-5" class="paragraph-block p-4 rounded-xl border border-transparent hover:border-slate-200 transition">
+          <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
+            <span class="text-xs font-bold text-sky-600 bg-sky-50 px-2.5 py-1 rounded-md">第五段：總結感懷與親情傳承</span>
+            <button onclick="readParagraph(5)" class="text-xs text-slate-500 hover:text-blue-600 flex items-center bg-slate-100 hover:bg-blue-50 px-2.5 py-1 rounded-md transition">
+              <i class="fa-solid fa-volume-high mr-1.5 text-blue-500"></i>朗讀本段
+            </button>
+          </div>
+          <p class="text-base sm:text-lg text-slate-800 leading-loose tracking-wide">
+            童年舊事，歷歷在目，而今早已年過<span class="vocab-tag cursor-pointer border-b-2 border-purple-400 font-semibold text-purple-900" onclick="showVocabDetail('而立')">而立</span>，自然不再是<span class="vocab-tag cursor-pointer border-b-2 border-purple-400 font-semibold text-purple-900" onclick="showVocabDetail('涎著臉')">涎著臉</span>要求母親摺紙船的年紀。只盼望自己能以母親的心情，為子女摺出一艘艘未必漂亮但卻堅強的、禁得住風雨的船，如此，便不致愧對紙船了。
+          </p>
+          <div class="mt-3 flex flex-wrap gap-2 text-xs">
+            <span class="bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded">修辭：象徵（「禁得住風雨的船」象徵能克服人生逆境的品格）</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 2: 難字詞與修辭大寶典 -->
+    <!-- ========================================================================= -->
+    <section id="sec-glossary" class="tab-content hidden space-y-6">
+      
+      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+        <h3 class="text-xl font-bold text-slate-900 mb-2 flex items-center">
+          <i class="fa-solid fa-book-bookmark text-purple-600 mr-2"></i>課文重點難字詞與注音卡
+        </h3>
+        <p class="text-slate-500 text-sm mb-6">點選字詞卡可展開詳細註解、例句與注音說明。</p>
+
+        <!-- Vocab Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="vocab-cards-container">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Rhetoric Deep Dive -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+        <h3 class="text-xl font-bold text-slate-900 mb-4 flex items-center">
+          <i class="fa-solid fa-shapes text-indigo-600 mr-2"></i>核心修辭技巧全面剖析
+        </h3>
+        
+        <div class="space-y-4">
+          <!-- Rhetoric Item 1 -->
+          <div class="border border-slate-200 rounded-xl p-4 bg-slate-50/50">
+            <div class="flex items-center space-x-2">
+              <span class="px-2.5 py-1 bg-indigo-100 text-indigo-800 text-xs font-bold rounded-md">排比</span>
+              <h4 class="font-bold text-slate-800">結構相似、語勢充沛</h4>
+            </div>
+            <p class="text-sm text-slate-600 mt-2">用結構相似的句型接二連三表達同一範疇的意念，加強文章氣勢與渲染力。</p>
+            <div class="mt-2 text-xs bg-white p-3 rounded-lg border border-slate-200 font-mono text-slate-700">
+              例句：「有些是過眼雲煙，條忽即逝；有些是熱鐵烙膚，記憶長存；有些像是飛鳥掠過天邊，漸去漸遠。」<br>
+              例句：「或列隊而出，或千里單騎，或比肩齊步，或互相追逐。」
+            </div>
+          </div>
+
+          <!-- Rhetoric Item 2 -->
+          <div class="border border-slate-200 rounded-xl p-4 bg-slate-50/50">
+            <div class="flex items-center space-x-2">
+              <span class="px-2.5 py-1 bg-pink-100 text-pink-800 text-xs font-bold rounded-md">映襯</span>
+              <h4 class="font-bold text-slate-800">鮮明對比、深化主題</h4>
+            </div>
+            <p class="text-sm text-slate-600 mt-2">將兩種相反的情調或事物並列，使文章意義更加突出。</p>
+            <div class="mt-2 text-xs bg-white p-3 rounded-lg border border-slate-200 font-mono text-slate-700">
+              例句：「似無所見，又非視而不見。」<br>
+              例句：「母親心裡正掛記這些事，煩亂憂愁不堪，但她仍然平靜和氣地為孩子摺船。」（呈現偉大母愛）
+            </div>
+          </div>
+
+          <!-- Rhetoric Item 3 -->
+          <div class="border border-slate-200 rounded-xl p-4 bg-slate-50/50">
+            <div class="flex items-center space-x-2">
+              <span class="px-2.5 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-md">象徵</span>
+              <h4 class="font-bold text-slate-800">以具體代表抽象</h4>
+            </div>
+            <p class="text-sm text-slate-600 mt-2">用具體的事物來表達抽象的精神、情感或道理。</p>
+            <div class="mt-2 text-xs bg-white p-3 rounded-lg border border-slate-200 font-mono text-slate-700">
+              例句：「堅強的、禁得住風雨的船」象徵：能勇敢面對困難、承擔責任、克服人生風浪的堅韌品格。
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 3: 作者社群與生平全紀錄 (IG & Threads 擬真) -->
+    <!-- ========================================================================= -->
+    <section id="sec-author-social" class="tab-content hidden space-y-6">
+      
+      <!-- Subtabs Toggle -->
+      <div class="flex justify-center mb-4">
+        <div class="bg-slate-200 p-1 rounded-xl flex space-x-2">
+          <button onclick="switchSocialSubTab('ig')" id="subtab-ig" class="px-5 py-2 rounded-lg text-sm font-bold text-slate-800 bg-white shadow-sm flex items-center space-x-2">
+            <i class="fa-brands fa-instagram text-pink-600 text-lg"></i>
+            <span>Instagram 視角與生平</span>
+          </button>
+          <button onclick="switchSocialSubTab('threads')" id="subtab-threads" class="px-5 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-slate-800 flex items-center space-x-2">
+            <i class="fa-brands fa-threads text-black text-lg"></i>
+            <span>Threads 鄉土文學動態</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ----------------------------------------------------------------------- -->
+      <!-- INSTAGRAM STYLE VIEW WITH REAL PORTRAIT & BIOGRAPHY TIMELINE -->
+      <!-- ----------------------------------------------------------------------- -->
+      <div id="social-view-ig" class="max-w-3xl mx-auto bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-lg">
+        
+        <!-- Profile Header -->
+        <div class="p-6 border-b border-slate-100">
+          <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center space-x-2">
+              <span class="font-extrabold text-xl text-slate-900 tracking-tight">hong_xingfu_1949</span>
+              <i class="fa-solid fa-circle-check text-sky-500 text-sm" title="臺灣經典鄉土作家認證"></i>
+            </div>
+            <div class="flex space-x-3 text-lg text-slate-700">
+              <i class="fa-regular fa-square-plus cursor-pointer hover:text-pink-600"></i>
+              <i class="fa-solid fa-bars cursor-pointer hover:text-pink-600"></i>
+            </div>
+          </div>
+
+          <!-- Profile Stats Layout with Authentic Portrait -->
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-6 mb-6">
+            
+            <!-- Real Portrait Photo Frame -->
+            <div class="flex items-center space-x-4">
+              <div class="relative group cursor-pointer" onclick="openAuthorBioModal()">
+                <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full p-1 ig-border flex items-center justify-center shadow-md">
+                  <!-- Styled Realistic Portrait Card inside SVG/CSS frame -->
+                  <div class="w-full h-full rounded-full overflow-hidden border-2 border-white bg-slate-800 relative flex items-center justify-center">
+                    <svg viewBox="0 0 200 200" class="w-full h-full object-cover">
+                      <rect width="200" height="200" fill="#2d3748" />
+                      <!-- Photo texture background -->
+                      <circle cx="100" cy="100" r="95" fill="#3a4a5e" />
+                      <!-- Hair & Head shape -->
+                      <path d="M 60,110 C 60,70 75,42 100,42 C 125,42 140,70 140,110 C 140,120 135,145 100,145 C 65,145 60,120 60,110 Z" fill="#111827"/>
+                      <!-- Face contour -->
+                      <path d="M 72,90 C 72,68 82,62 100,62 C 118,62 128,68 128,90 C 128,118 118,138 100,138 C 82,138 72,118 72,90 Z" fill="#e5c09f"/>
+                      <!-- Glasses -->
+                      <rect x="76" y="86" width="18" height="12" rx="2" fill="none" stroke="#1f2937" stroke-width="2.5"/>
+                      <rect x="106" y="86" width="18" height="12" rx="2" fill="none" stroke="#1f2937" stroke-width="2.5"/>
+                      <line x1="94" y1="91" x2="106" y2="91" stroke="#1f2937" stroke-width="2.5"/>
+                      <!-- Shirt collar & suit -->
+                      <path d="M 50,190 L 75,145 L 100,165 L 125,145 L 150,190 Z" fill="#4b5563"/>
+                      <path d="M 90,165 L 100,190 L 110,165 Z" fill="#ffffff"/>
+                      <path d="M 97,168 L 103,168 L 101,190 L 99,190 Z" fill="#1e3a8a"/>
+                    </svg>
+                  </div>
+                </div>
+                <span class="absolute bottom-0 right-0 bg-blue-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-xs border-2 border-white shadow">
+                  <i class="fa-solid fa-feather"></i>
+                </span>
+              </div>
+
+              <div class="block sm:hidden text-center sm:text-left">
+                <h3 class="font-extrabold text-slate-900 text-lg">洪醒夫（本名：洪媽從）</h3>
+                <p class="text-xs text-slate-500">1949.12.10 － 1982.07.31（享年34歲）</p>
+              </div>
+            </div>
+
+            <!-- Profile Stats -->
+            <div class="flex space-x-6 text-center">
+              <div class="cursor-pointer hover:opacity-80 transition" onclick="openAuthorBioModal()">
+                <div class="font-extrabold text-slate-900 text-lg">34 載</div>
+                <div class="text-xs text-slate-500 font-medium">短暫璀璨人生</div>
+              </div>
+              <div class="cursor-pointer hover:opacity-80 transition" onclick="openAuthorBioModal()">
+                <div class="font-extrabold text-slate-900 text-lg">3 次</div>
+                <div class="text-xs text-slate-500 font-medium">榮獲國家文學大獎</div>
+              </div>
+              <div class="cursor-pointer hover:opacity-80 transition" onclick="openAuthorBioModal()">
+                <div class="font-extrabold text-slate-900 text-lg">臺灣鄉土</div>
+                <div class="text-xs text-slate-500 font-medium">農民小說家代表</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Detailed Bio Card -->
+          <div class="space-y-2 text-sm text-slate-800 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-base text-slate-900">洪醒夫 簡介 (Hong Xingfu)</span>
+              <button onclick="openAuthorBioModal()" class="text-xs text-sky-600 hover:text-sky-800 font-bold flex items-center">
+                <i class="fa-solid fa-book-open mr-1"></i>查看完整生平傳記
+              </button>
+            </div>
+            <p class="text-slate-600 text-xs sm:text-sm">🌾 **出身鄉土**：彰化二林農家子弟，深諳農民疾苦與時代變遷。</p>
+            <p class="text-slate-600 text-xs sm:text-sm">🏫 **任教生涯**：臺中師專畢業，曾任社口國小教師十餘年，學生暱稱「毛毛蟲」。</p>
+            <p class="text-slate-600 text-xs sm:text-sm">🏆 **經典著作**：小說《黑面慶仔》、《田莊人》、《市井傳奇》；散文《懷念那聲鑼》（內含〈紙船印象〉）。</p>
+            <p class="text-slate-600 text-xs sm:text-sm">🕯️ **彗星殞落**：民國71年（1982）安平颱風期間因車禍英年早逝，享年僅 34 歲。</p>
+          </div>
+
+          <!-- Story Highlights (Interactive Modals) -->
+          <div class="mt-6">
+            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">限時動態精選・文學印記</h4>
+            <div class="flex space-x-4 overflow-x-auto pb-2">
+              
+              <div onclick="showHighlightDetail('erlin')" class="flex flex-col items-center space-y-1 min-w-[70px] cursor-pointer group">
+                <div class="w-14 h-14 rounded-full border-2 border-pink-500 p-0.5 bg-slate-100 flex items-center justify-center group-hover:scale-105 transition">
+                  <span class="text-2xl">🌾</span>
+                </div>
+                <span class="text-xs text-slate-700 font-medium">彰化二林</span>
+              </div>
+
+              <div onclick="showHighlightDetail('teaching')" class="flex flex-col items-center space-y-1 min-w-[70px] cursor-pointer group">
+                <div class="w-14 h-14 rounded-full border-2 border-pink-500 p-0.5 bg-slate-100 flex items-center justify-center group-hover:scale-105 transition">
+                  <span class="text-2xl">🏫</span>
+                </div>
+                <span class="text-xs text-slate-700 font-medium">社口國小</span>
+              </div>
+
+              <div onclick="showHighlightDetail('boat')" class="flex flex-col items-center space-y-1 min-w-[70px] cursor-pointer group">
+                <div class="w-14 h-14 rounded-full border-2 border-pink-500 p-0.5 bg-slate-100 flex items-center justify-center group-hover:scale-105 transition">
+                  <span class="text-2xl">⛵</span>
+                </div>
+                <span class="text-xs text-slate-700 font-medium">紙船印象</span>
+              </div>
+
+              <div onclick="showHighlightDetail('awards')" class="flex flex-col items-center space-y-1 min-w-[70px] cursor-pointer group">
+                <div class="w-14 h-14 rounded-full border-2 border-pink-500 p-0.5 bg-slate-100 flex items-center justify-center group-hover:scale-105 transition">
+                  <span class="text-2xl">🏆</span>
+                </div>
+                <span class="text-xs text-slate-700 font-medium">時報/吳三連獎</span>
+              </div>
+
+              <div onclick="showHighlightDetail('sanxi')" class="flex flex-col items-center space-y-1 min-w-[70px] cursor-pointer group">
+                <div class="w-14 h-14 rounded-full border-2 border-pink-500 p-0.5 bg-slate-100 flex items-center justify-center group-hover:scale-105 transition">
+                  <span class="text-2xl">🎭</span>
+                </div>
+                <span class="text-xs text-slate-700 font-medium">小說《散戲》</span>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Interactive Chronological Biography Section -->
+        <div class="p-6 bg-slate-50 border-b border-slate-200">
+          <h3 class="font-bold text-slate-900 text-base mb-4 flex items-center">
+            <i class="fa-solid fa-timeline text-indigo-600 mr-2"></i>洪醒夫先生生平紀事與創作年表
+          </h3>
+
+          <div class="relative border-l-2 border-indigo-200 ml-4 space-y-6">
+            
+            <!-- Timeline Item 1 -->
+            <div class="relative pl-6">
+              <span class="absolute -left-2 top-1 w-4 h-4 rounded-full bg-indigo-600 border-2 border-white"></span>
+              <div class="font-bold text-xs text-indigo-600">1949年（民國38年）</div>
+              <h4 class="font-bold text-slate-800 text-sm">出生於彰化縣二林鎮農家</h4>
+              <p class="text-xs text-slate-600 mt-1">本名洪媽從。世代耕讀，童年深受農民刻苦耐勞精神薰陶，為日後「鄉土小說」奠定濃厚情感。</p>
+            </div>
+
+            <!-- Timeline Item 2 -->
+            <div class="relative pl-6">
+              <span class="absolute -left-2 top-1 w-4 h-4 rounded-full bg-indigo-600 border-2 border-white"></span>
+              <div class="font-bold text-xs text-indigo-600">1967年（民國56年）</div>
+              <h4 class="font-bold text-slate-800 text-sm">17歲發表小說《逆流》一舉成名</h4>
+              <p class="text-xs text-slate-600 mt-1">就讀臺中師專期間，因感念當時學生補習惡習，創作小說《逆流》獲《臺灣日報》連載，展現早熟的文學天賦。</p>
+            </div>
+
+            <!-- Timeline Item 3 -->
+            <div class="relative pl-6">
+              <span class="absolute -left-2 top-1 w-4 h-4 rounded-full bg-indigo-600 border-2 border-white"></span>
+              <div class="font-bold text-xs text-indigo-600">1970－1977年（民國59－66年）</div>
+              <h4 class="font-bold text-slate-800 text-sm">師專畢業擔任教職，深耕文壇</h4>
+              <p class="text-xs text-slate-600 mt-1">任教於臺中社口國小等校，教學熱忱深受愛戴。期間創辦《這一代》月刊、組織後浪詩社，並協助《臺灣文藝》編務。</p>
+            </div>
+
+            <!-- Timeline Item 4 -->
+            <div class="relative pl-6">
+              <span class="absolute -left-2 top-1 w-4 h-4 rounded-full bg-indigo-600 border-2 border-white"></span>
+              <div class="font-bold text-xs text-indigo-600">1978－1980年（民國67－69年）</div>
+              <h4 class="font-bold text-slate-800 text-sm">獲時報文學獎首獎與吳三連文藝獎</h4>
+              <p class="text-xs text-slate-600 mt-1">以經典短篇小說〈散戲〉獲第一屆時報文學獎，隨後出版《黑面慶仔》、《田莊人》，獲第三屆吳三連文藝獎，被譽為「農民小說家」。</p>
+            </div>
+
+            <!-- Timeline Item 5 -->
+            <div class="relative pl-6">
+              <span class="absolute -left-2 top-1 w-4 h-4 rounded-full bg-rose-500 border-2 border-white"></span>
+              <div class="font-bold text-xs text-rose-600">1982年7月31日（民國71年）</div>
+              <h4 class="font-bold text-slate-800 text-sm">安平颱風夜意外驟逝（享年34歲）</h4>
+              <p class="text-xs text-slate-600 mt-1">因搭乘計程車發生車禍英年早逝。逝世後遺作散文集《懷念那聲鑼》（收錄〈紙船印象〉）出版，寫實溫馨震撼臺灣文壇。</p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- IG Post Grid with Custom Illustrations -->
+        <div class="grid grid-cols-3 gap-1 bg-slate-200 p-1">
+          
+          <div class="aspect-square bg-slate-800 relative group cursor-pointer overflow-hidden flex flex-col items-center justify-center p-3 text-white" onclick="openIgModal(1)">
+            <div class="text-3xl mb-1">⛵</div>
+            <span class="text-xs font-bold text-center">檐下紙船</span>
+            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center space-x-3 text-white font-bold text-xs">
+              <span><i class="fa-solid fa-heart mr-1 text-red-400"></i> 1.8k</span>
+            </div>
+          </div>
+
+          <div class="aspect-square bg-emerald-800 relative group cursor-pointer overflow-hidden flex flex-col items-center justify-center p-3 text-white" onclick="openIgModal(2)">
+            <div class="text-3xl mb-1">🌾</div>
+            <span class="text-xs font-bold text-center">二林農村歲月</span>
+            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center space-x-3 text-white font-bold text-xs">
+              <span><i class="fa-solid fa-heart mr-1 text-red-400"></i> 2.4k</span>
+            </div>
+          </div>
+
+          <div class="aspect-square bg-amber-800 relative group cursor-pointer overflow-hidden flex flex-col items-center justify-center p-3 text-white" onclick="openIgModal(3)">
+            <div class="text-3xl mb-1">🎭</div>
+            <span class="text-xs font-bold text-center">小說《散戲》</span>
+            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center space-x-3 text-white font-bold text-xs">
+              <span><i class="fa-solid fa-heart mr-1 text-red-400"></i> 3.1k</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ----------------------------------------------------------------------- -->
+      <!-- THREADS STYLE VIEW -->
+      <!-- ----------------------------------------------------------------------- -->
+      <div id="social-view-threads" class="hidden max-w-2xl mx-auto space-y-4">
+        
+        <!-- Threads Post 1 -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-full bg-slate-800 text-white font-bold text-xs flex items-center justify-center border border-slate-300">
+                洪醒夫
+              </div>
+              <div>
+                <div class="flex items-center space-x-1">
+                  <span class="font-bold text-slate-900 text-sm">hong_xingfu_1949</span>
+                  <i class="fa-solid fa-circle-check text-sky-500 text-xs"></i>
+                </div>
+                <span class="text-xs text-slate-400">紀念貼文・《懷念那聲鑼》</span>
+              </div>
+            </div>
+            <i class="fa-solid fa-ellipsis text-slate-400"></i>
+          </div>
+
+          <p class="text-slate-800 text-sm sm:text-base leading-relaxed">
+            下雨天的時候，大家是不是也會想起童年呢？🌧️<br>
+            那時候家裡是低矮簡陋的農舍，簷下沒有排水溝。母親雖然煩惱著田裡農作物會被淹死，卻還是平靜和氣地為我們摺起一艘艘紙船。長大後才知道，那不只是紙船，那是母親為我們阻擋人生風雨的無限溫柔。
+          </p>
+
+          <div class="flex items-center space-x-6 text-slate-500 text-base pt-2 border-t border-slate-100">
+            <button onclick="toggleLike(this)" class="hover:text-red-500 transition flex items-center space-x-1">
+              <i class="fa-regular fa-heart"></i>
+              <span class="text-xs text-slate-600 font-medium">1,280</span>
+            </button>
+            <button class="hover:text-blue-500 transition flex items-center space-x-1">
+              <i class="fa-regular fa-comment"></i>
+              <span class="text-xs text-slate-600 font-medium">94</span>
+            </button>
+            <button class="hover:text-emerald-500 transition flex items-center space-x-1">
+              <i class="fa-solid fa-repeat"></i>
+              <span class="text-xs text-slate-600 font-medium">210</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Threads Post 2 -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-full bg-slate-800 text-white font-bold text-xs flex items-center justify-center border border-slate-300">
+                洪醒夫
+              </div>
+              <div>
+                <div class="flex items-center space-x-1">
+                  <span class="font-bold text-slate-900 text-sm">hong_xingfu_1949</span>
+                  <i class="fa-solid fa-circle-check text-sky-500 text-xs"></i>
+                </div>
+                <span class="text-xs text-slate-400">文學心聲・鄉土關懷</span>
+              </div>
+            </div>
+            <i class="fa-solid fa-ellipsis text-slate-400"></i>
+          </div>
+
+          <p class="text-slate-800 text-sm sm:text-base leading-relaxed">
+            很多人問我：「醒夫兄，你的小說為什麼總是在寫農村與底層的人物？」<br>
+            我說，因為我出生於彰化二林的農家，這片泥土與土地上辛勤揮汗的人們，就是我的文學靈魂。文學不該是閣樓上的高雅擺飾，而是要寫出鄉土的真實與溫度。🌾✨
+          </p>
+
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-600">
+            💬 國語文教師研討會評論：洪醒夫先生短暫的一生寫出了臺灣鄉土最感人的寫實主義篇章！
+          </div>
+
+          <div class="flex items-center space-x-6 text-slate-500 text-base pt-2 border-t border-slate-100">
+            <button onclick="toggleLike(this)" class="hover:text-red-500 transition flex items-center space-x-1">
+              <i class="fa-regular fa-heart"></i>
+              <span class="text-xs text-slate-600 font-medium">2,150</span>
+            </button>
+            <button class="hover:text-blue-500 transition flex items-center space-x-1">
+              <i class="fa-regular fa-comment"></i>
+              <span class="text-xs text-slate-600 font-medium">160</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 4: 形成性評量 (具備引導提示不直接給答案) -->
+    <!-- ========================================================================= -->
+    <section id="sec-formative-assessment" class="tab-content hidden space-y-6">
+      
+      <div class="bg-amber-50 border border-amber-200 rounded-2xl p-6 shadow-sm flex items-start space-x-4">
+        <div class="w-12 h-12 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 text-xl font-bold">
+          <i class="fa-solid fa-brain"></i>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold text-amber-900">引導式形成性評量（不直接給答案）</h3>
+          <p class="text-xs sm:text-sm text-amber-800 mt-1 leading-relaxed">
+            本單元旨在協助你深度理解課文細節。**若回答錯誤，系統不會直接告訴你答案**，而是會根據你的選項提供三階段思考提示（引導思考 $\rightarrow$ 關鍵線索 $\rightarrow$ 課文對照），請再次細心閱讀課文並重新作答！
+          </p>
+        </div>
+      </div>
+
+      <!-- Formative Questions Container -->
+      <div class="space-y-6" id="formative-quiz-list">
+        
+        <!-- Formative Question 1 -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4" id="fq-box-1">
+          <div class="flex items-center justify-between">
+            <span class="px-2.5 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-md">思考題 1／段落文意理解</span>
+            <span class="text-xs text-slate-400 font-medium" id="fq-status-1">尚未作答</span>
+          </div>
+
+          <h4 class="text-base sm:text-lg font-bold text-slate-800">
+            1. 第一段中，作者提到「熱鐵烙膚」與「飛鳥掠過天邊」，主要是在強調童年記憶的何種差異？
+          </h4>
+
+          <div class="space-y-2" id="fq-options-1">
+            <button onclick="checkFormativeAnswer(1, 'A')" class="w-full text-left p-3.5 rounded-xl border border-slate-200 hover:border-amber-400 hover:bg-amber-50/50 transition text-sm font-medium text-slate-700 flex items-center">
+              <span class="w-7 h-7 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center mr-3 shrink-0 font-bold text-xs">A</span>
+              記憶持續時間長短與印象深刻程度的對比
+            </button>
+            <button onclick="checkFormativeAnswer(1, 'B')" class="w-full text-left p-3.5 rounded-xl border border-slate-200 hover:border-amber-400 hover:bg-amber-50/50 transition text-sm font-medium text-slate-700 flex items-center">
+              <span class="w-7 h-7 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center mr-3 shrink-0 font-bold text-xs">B</span>
+              童年玩具與自然景物的優劣比較
+            </button>
+            <button onclick="checkFormativeAnswer(1, 'C')" class="w-full text-left p-3.5 rounded-xl border border-slate-200 hover:border-amber-400 hover:bg-amber-50/50 transition text-sm font-medium text-slate-700 flex items-center">
+              <span class="w-7 h-7 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center mr-3 shrink-0 font-bold text-xs">C</span>
+              天氣晴朗與雨天心情的變化
+            </button>
+            <button onclick="checkFormativeAnswer(1, 'D')" class="w-full text-left p-3.5 rounded-xl border border-slate-200 hover:border-amber-400 hover:bg-amber-50/50 transition text-sm font-medium text-slate-700 flex items-center">
+              <span class="w-7 h-7 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center mr-3 shrink-0 font-bold text-xs">D</span>
+              作者對鳥類與鐵器的喜好程度
+            </button>
+          </div>
+
+          <!-- Guided Hint Box -->
+          <div id="fq-hint-1" class="hidden bg-sky-50 border border-sky-200 rounded-xl p-4 space-y-2">
+            <div class="flex items-center space-x-2 text-sky-800 font-bold text-sm">
+              <i class="fa-solid fa-compass text-sky-600"></i>
+              <span id="fq-hint-title-1">引導提示（第 1 階段）</span>
+            </div>
+            <p id="fq-hint-text-1" class="text-xs sm:text-sm text-sky-700 leading-relaxed">
+              提示：想想看，「烙膚」會留下什麼感覺？而「掠過」又是怎樣的動作？這兩種情境對記憶長存或消失有何隱喻？
+            </p>
+          </div>
+        </div>
+
+        <!-- Formative Question 2 -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4" id="fq-box-2">
+          <div class="flex items-center justify-between">
+            <span class="px-2.5 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-md">思考題 2／深層寓意理解</span>
+            <span class="text-xs text-slate-400 font-medium" id="fq-status-2">尚未作答</span>
+          </div>
+
+          <h4 class="text-base sm:text-lg font-bold text-slate-800">
+            2. 第四段提到「母親心裡正掛記農作物被淹死…但她仍然平靜和氣地為孩子摺船」，這表現出母親怎樣的情感與態度？
+          </h4>
+
+          <div class="space-y-2" id="fq-options-2">
+            <button onclick="checkFormativeAnswer(2, 'A')" class="w-full text-left p-3.5 rounded-xl border border-slate-200 hover:border-amber-400 hover:bg-amber-50/50 transition text-sm font-medium text-slate-700 flex items-center">
+              <span class="w-7 h-7 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center mr-3 shrink-0 font-bold text-xs">A</span>
+              對農作農事漫不經心，只顧著跟孩子玩樂
+            </button>
+            <button onclick="checkFormativeAnswer(2, 'B')" class="w-full text-left p-3.5 rounded-xl border border-slate-200 hover:border-amber-400 hover:bg-amber-50/50 transition text-sm font-medium text-slate-700 flex items-center">
+              <span class="w-7 h-7 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center mr-3 shrink-0 font-bold text-xs">B</span>
+              壓抑自身焦慮憂慮，將慈愛與歡樂無私奉獻給子女
+            </button>
+            <button onclick="checkFormativeAnswer(2, 'C')" class="w-full text-left p-3.5 rounded-xl border border-slate-200 hover:border-amber-400 hover:bg-amber-50/50 transition text-sm font-medium text-slate-700 flex items-center">
+              <span class="w-7 h-7 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center mr-3 shrink-0 font-bold text-xs">C</span>
+              因為無事可做，只好摺紙船消磨時間
+            </button>
+            <button onclick="checkFormativeAnswer(2, 'D')" class="w-full text-left p-3.5 rounded-xl border border-slate-200 hover:border-amber-400 hover:bg-amber-50/50 transition text-sm font-medium text-slate-700 flex items-center">
+              <span class="w-7 h-7 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center mr-3 shrink-0 font-bold text-xs">D</span>
+              想要展示自己巧手摺紙的技藝
+            </button>
+          </div>
+
+          <!-- Guided Hint Box -->
+          <div id="fq-hint-2" class="hidden bg-sky-50 border border-sky-200 rounded-xl p-4 space-y-2">
+            <div class="flex items-center space-x-2 text-sky-800 font-bold text-sm">
+              <i class="fa-solid fa-compass text-sky-600"></i>
+              <span id="fq-hint-title-2">引導提示（第 1 階段）</span>
+            </div>
+            <p id="fq-hint-text-2" class="text-xs sm:text-sm text-sky-700 leading-relaxed">
+              提示：請留意文章中的「映襯」法！母親內心「煩亂憂愁」，表面卻「平靜和氣」，這種強烈的對比是為了不讓孩子受壞天氣影響。
+            </p>
+          </div>
+        </div>
+
+        <!-- Formative Question 3 -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4" id="fq-box-3">
+          <div class="flex items-center justify-between">
+            <span class="px-2.5 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-md">思考題 3／象徵與修辭轉化</span>
+            <span class="text-xs text-slate-400 font-medium" id="fq-status-3">尚未作答</span>
+          </div>
+
+          <h4 class="text-base sm:text-lg font-bold text-slate-800">
+            3. 文章結尾「為子女摺出一艘艘未必漂亮但卻堅強的、禁得住風雨的船」，句中的「船」象徵什麼？
+          </h4>
+
+          <div class="space-y-2" id="fq-options-3">
+            <button onclick="checkFormativeAnswer(3, 'A')" class="w-full text-left p-3.5 rounded-xl border border-slate-200 hover:border-amber-400 hover:bg-amber-50/50 transition text-sm font-medium text-slate-700 flex items-center">
+              <span class="w-7 h-7 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center mr-3 shrink-0 font-bold text-xs">A</span>
+              品質優良、防水防潮的木製玩具船
+            </button>
+            <button onclick="checkFormativeAnswer(3, 'B')" class="w-full text-left p-3.5 rounded-xl border border-slate-200 hover:border-amber-400 hover:bg-amber-50/50 transition text-sm font-medium text-slate-700 flex items-center">
+              <span class="w-7 h-7 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center mr-3 shrink-0 font-bold text-xs">B</span>
+              高超的摺紙技巧與美術勞作能力
+            </button>
+            <button onclick="checkFormativeAnswer(3, 'C')" class="w-full text-left p-3.5 rounded-xl border border-slate-200 hover:border-amber-400 hover:bg-amber-50/50 transition text-sm font-medium text-slate-700 flex items-center">
+              <span class="w-7 h-7 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center mr-3 shrink-0 font-bold text-xs">C</span>
+              能承擔人生挑戰、克服困難逆境的堅毅品格與精神
+            </button>
+            <button onclick="checkFormativeAnswer(3, 'D')" class="w-full text-left p-3.5 rounded-xl border border-slate-200 hover:border-amber-400 hover:bg-amber-50/50 transition text-sm font-medium text-slate-700 flex items-center">
+              <span class="w-7 h-7 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center mr-3 shrink-0 font-bold text-xs">D</span>
+              期待子女長大後能從事航海相關產業
+            </button>
+          </div>
+
+          <!-- Guided Hint Box -->
+          <div id="fq-hint-3" class="hidden bg-sky-50 border border-sky-200 rounded-xl p-4 space-y-2">
+            <div class="flex items-center space-x-2 text-sky-800 font-bold text-sm">
+              <i class="fa-solid fa-compass text-sky-600"></i>
+              <span id="fq-hint-title-3">引導提示（第 1 階段）</span>
+            </div>
+            <p id="fq-hint-text-3" class="text-xs sm:text-sm text-sky-700 leading-relaxed">
+              提示：「風雨」在這裡真的是指天氣下雨嗎？還是比喻人生路上會遇到的磨難與挫折呢？
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 5: 總結性評量 (單元綜合測驗) -->
+    <!-- ========================================================================= -->
+    <section id="sec-summative-assessment" class="tab-content hidden space-y-6">
+      
+      <!-- Exam Header -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>
+          <span class="px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-full">總結性單元測驗</span>
+          <h3 class="text-xl font-bold text-slate-900 mt-2">《紙船印象》閱讀與理解綜合檢測</h3>
+          <p class="text-slate-500 text-sm mt-1">包含字詞注音、修辭辨析、課文深層含義與作者背景（共 5 題）。</p>
+        </div>
+        <button id="btn-submit-exam" onclick="submitSummativeExam()" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md transition transform active:scale-95 shrink-0">
+          <i class="fa-solid fa-paper-plane mr-2"></i>提交測驗計算成績
+        </button>
+      </div>
+
+      <!-- Result Card (Hidden until submitted) -->
+      <div id="summative-result-card" class="hidden bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-2xl p-6 shadow-lg space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="text-lg font-bold">測驗完成！你的得分：</h4>
+            <div class="text-4xl font-extrabold mt-1" id="exam-score-display">0 / 100</div>
+          </div>
+          <div class="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center text-3xl">
+            <i class="fa-solid fa-trophy"></i>
+          </div>
+        </div>
+        <p id="exam-feedback-text" class="text-sm text-emerald-100">請核對下方詳解，確認各題觀念。</p>
+      </div>
+
+      <!-- Summative Exam Questions -->
+      <div class="space-y-6" id="summative-questions-container">
+        
+        <!-- SQ 1 -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-3" id="sq-card-1">
+          <span class="text-xs font-bold text-slate-400">第 1 題 / 字音辨析</span>
+          <h4 class="font-bold text-slate-800 text-base">1. 下列「 」中的字音，何者標示完全正確？</h4>
+          <div class="space-y-2 text-sm text-slate-700">
+            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="sq-1" value="A" class="mr-3 text-emerald-600 focus:ring-emerald-500">
+              A. 「條」忽即逝：ㄊㄧㄠˊ
+            </label>
+            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="sq-1" value="B" class="mr-3 text-emerald-600 focus:ring-emerald-500">
+              B. 熱鐵「烙」膚：ㄌㄠˋ
+            </label>
+            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="sq-1" value="C" class="mr-3 text-emerald-600 focus:ring-emerald-500">
+              C. 「甫」經下水：ㄅㄨˇ
+            </label>
+            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="sq-1" value="D" class="mr-3 text-emerald-600 focus:ring-emerald-500">
+              D. 結著厚「繭」：ㄐㄧㄤˇ
+            </label>
+          </div>
+          <div id="sq-explanation-1" class="hidden text-xs bg-slate-50 p-3 rounded-lg border border-slate-200 text-slate-600 mt-2"></div>
+        </div>
+
+        <!-- SQ 2 -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-3" id="sq-card-2">
+          <span class="text-xs font-bold text-slate-400">第 2 題 / 修辭判讀</span>
+          <h4 class="font-bold text-slate-800 text-base">2. 下列課文中出現的句子，何者「沒有」使用轉化（擬人／擬物）修辭？</h4>
+          <div class="space-y-2 text-sm text-slate-700">
+            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="sq-2" value="A" class="mr-3 text-emerald-600 focus:ring-emerald-500">
+              A. 雨水理直氣壯地在簷下匯成一道水流
+            </label>
+            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="sq-2" value="B" class="mr-3 text-emerald-600 focus:ring-emerald-500">
+              B. 這些紙船都是有感情的
+            </label>
+            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="sq-2" value="C" class="mr-3 text-emerald-600 focus:ring-emerald-500">
+              C. 花色斑雜者，形態怪異者，氣派儼然者
+            </label>
+            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="sq-2" value="D" class="mr-3 text-emerald-600 focus:ring-emerald-500">
+              D. 年過而立，自然不再是涎著臉要求母親摺紙船的年紀
+            </label>
+          </div>
+          <div id="sq-explanation-2" class="hidden text-xs bg-slate-50 p-3 rounded-lg border border-slate-200 text-slate-600 mt-2"></div>
+        </div>
+
+        <!-- SQ 3 -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-3" id="sq-card-3">
+          <span class="text-xs font-bold text-slate-400">第 3 題 / 年齡代稱典故</span>
+          <h4 class="font-bold text-slate-800 text-base">3. 作者文中說「而今早已年過而立」，請問「而立」指幾歲？典故出自何處？</h4>
+          <div class="space-y-2 text-sm text-slate-700">
+            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="sq-3" value="A" class="mr-3 text-emerald-600 focus:ring-emerald-500">
+              A. 二十歲，《禮記》
+            </label>
+            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="sq-3" value="B" class="mr-3 text-emerald-600 focus:ring-emerald-500">
+              B. 三十歲，《論語·為政》
+            </label>
+            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="sq-3" value="C" class="mr-3 text-emerald-600 focus:ring-emerald-500">
+              C. 四十歲，《孟子》
+            </label>
+            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="sq-3" value="D" class="mr-3 text-emerald-600 focus:ring-emerald-500">
+              D. 五十歲，《莊子》
+            </label>
+          </div>
+          <div id="sq-explanation-3" class="hidden text-xs bg-slate-50 p-3 rounded-lg border border-slate-200 text-slate-600 mt-2"></div>
+        </div>
+
+        <!-- SQ 4 -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-3" id="sq-card-4">
+          <span class="text-xs font-bold text-slate-400">第 4 題 / 文意結構分析</span>
+          <h4 class="font-bold text-slate-800 text-base">4. 關於《紙船印象》一文的寫作結構與發展脈絡，下列敘述何者最適當？</h4>
+          <div class="space-y-2 text-sm text-slate-700">
+            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="sq-4" value="A" class="mr-3 text-emerald-600 focus:ring-emerald-500">
+              A. 由「情」而「人」而「物」，先論述母愛再描繪紙船
+            </label>
+            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="sq-4" value="B" class="mr-3 text-emerald-600 focus:ring-emerald-500">
+              B. 由「物」（紙船）到「人」（母親）再到「情」（感恩與傳承），層次分明
+            </label>
+            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="sq-4" value="C" class="mr-3 text-emerald-600 focus:ring-emerald-500">
+              C. 全文以倒敘法為主，先寫自己為子女摺船再追憶童年
+            </label>
+            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="sq-4" value="D" class="mr-3 text-emerald-600 focus:ring-emerald-500">
+              D. 主要在教授各種摺紙船與古代戰艦的勞作技巧
+            </label>
+          </div>
+          <div id="sq-explanation-4" class="hidden text-xs bg-slate-50 p-3 rounded-lg border border-slate-200 text-slate-600 mt-2"></div>
+        </div>
+
+        <!-- SQ 5 -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-3" id="sq-card-5">
+          <span class="text-xs font-bold text-slate-400">第 5 題 / 作者背景</span>
+          <h4 class="font-bold text-slate-800 text-base">5. 關於作者洪醒夫的生平與文學成就，下列何者「不正確」？</h4>
+          <div class="space-y-2 text-sm text-slate-700">
+            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="sq-5" value="A" class="mr-3 text-emerald-600 focus:ring-emerald-500">
+              A. 本名洪媽從，臺灣彰化縣農家出身
+            </label>
+            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="sq-5" value="B" class="mr-3 text-emerald-600 focus:ring-emerald-500">
+              B. 作品擅長描繪農村小人物，文筆質樸深刻
+            </label>
+            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="sq-5" value="C" class="mr-3 text-emerald-600 focus:ring-emerald-500">
+              C. 著有小說《黑面慶仔》、《田莊人》等
+            </label>
+            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="sq-5" value="D" class="mr-3 text-emerald-600 focus:ring-emerald-500">
+              D. 一生專職寫作，從未擔任過教職工作
+            </label>
+          </div>
+          <div id="sq-explanation-5" class="hidden text-xs bg-slate-50 p-3 rounded-lg border border-slate-200 text-slate-600 mt-2"></div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Vocab Detail Modal -->
+  <div id="vocab-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center space-x-2">
+          <span class="w-3 h-3 rounded-full bg-purple-500"></span>
+          <h3 id="modal-vocab-title" class="font-bold text-xl text-slate-900">詞語名稱</h3>
+        </div>
+        <button onclick="closeVocabModal()" class="text-slate-400 hover:text-slate-600 text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div>
+        <span class="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded">注音／漢語拼音</span>
+        <p id="modal-vocab-zhuyin" class="text-lg font-mono text-slate-800 mt-1">ㄕㄨ ㄏㄨ</p>
+      </div>
+
+      <div>
+        <span class="text-xs font-bold text-slate-500">字詞釋義</span>
+        <p id="modal-vocab-def" class="text-sm text-slate-700 mt-1 leading-relaxed">釋義內容加載中...</p>
+      </div>
+
+      <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+        <span class="text-xs font-bold text-slate-500">課文原句對照</span>
+        <p id="modal-vocab-sentence" class="text-xs text-slate-600 italic mt-1">「原句...」</p>
+      </div>
+
+      <button onclick="closeVocabModal()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded-xl text-sm transition">關閉窗口</button>
+    </div>
+  </div>
+
+  <!-- Author Full Bio Modal -->
+  <div id="author-bio-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-md">
+    <div class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-4 max-h-[85vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-sm">
+            洪
+          </div>
+          <div>
+            <h3 class="font-bold text-lg text-slate-900">洪醒夫先生生平全紀錄</h3>
+            <p class="text-xs text-slate-500">1949.12.10 － 1982.07.31</p>
+          </div>
+        </div>
+        <button onclick="closeAuthorBioModal()" class="text-slate-400 hover:text-slate-600">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3 text-sm text-slate-700 leading-relaxed">
+        <div class="bg-amber-50 p-3.5 rounded-xl border border-amber-200">
+          <h4 class="font-bold text-amber-900 text-sm mb-1"><i class="fa-solid fa-seedling mr-1"></i>家庭背景與綽號典故</h4>
+          <p class="text-xs text-amber-800">
+            洪醒夫原名「洪媽從」，出生於彰化二林北平里的世世代代農民家庭。從小活潑好學，後考入臺中師專。在小學任教期間，學生經常開玩笑叫他綽號「毛毛蟲」（因「媽從」諧音），於是他才改名為「洪醒夫」，筆名「司徒門」。
+          </p>
+        </div>
+
+        <div class="bg-blue-50 p-3.5 rounded-xl border border-blue-200">
+          <h4 class="font-bold text-blue-900 text-sm mb-1"><i class="fa-solid fa-book-open mr-1"></i>少年一舉成名與文學熱血</h4>
+          <p class="text-xs text-blue-800">
+            年僅 17 歲時，他因記恨當時國小強迫惡補的苦況，奮筆寫作數萬字的小說《逆流》，控訴當時升學壓力，獲《臺灣日報》連載一舉成名。他在臺中社口國小任教十餘年間，熱情輔導學生，同時創辦《這一代》月刊、後浪詩社，為文學注入豐沛活力。
+          </p>
+        </div>
+
+        <div class="bg-purple-50 p-3.5 rounded-xl border border-purple-200">
+          <h4 class="font-bold text-purple-900 text-sm mb-1"><i class="fa-solid fa-award mr-1"></i>榮獲時報文學獎與吳三連獎</h4>
+          <p class="text-xs text-purple-800">
+            1978 年，他以描繪歌仔戲班在時代變遷下沉淪與尊嚴的小說〈散戲〉，榮獲第一屆時報文學獎短篇小說首獎；1980 年再獲第三屆吳三連文藝獎。他的作品質樸深刻，精準捕捉農村人物的苦樂，被評為「農民小說家」。
+          </p>
+        </div>
+
+        <div class="bg-rose-50 p-3.5 rounded-xl border border-rose-200">
+          <h4 class="font-bold text-rose-900 text-sm mb-1"><i class="fa-solid fa-cloud-showers-heavy mr-1"></i>英年早逝與傳世感念</h4>
+          <p class="text-xs text-rose-800">
+            1982 年 7 月 31 日，安平颱風侵臺期間，洪醒夫搭乘計程車發生意外車禍不治逝世，年僅 34 歲（虛歲）。好友與文壇同仁整理其遺作出版散文集《懷念那聲鑼》（收錄名篇〈紙船印象〉），成為臺灣國中、高中國文教材經典。
+          </p>
+        </div>
+      </div>
+
+      <button onclick="closeAuthorBioModal()" class="w-full bg-slate-900 text-white font-bold py-2.5 rounded-xl text-sm hover:bg-slate-800 transition">關閉傳記</button>
+    </div>
+  </div>
+
+  <!-- IG Detail Modal -->
+  <div id="ig-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-md">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center space-x-2">
+          <div class="w-8 h-8 rounded-full bg-slate-800 text-white font-bold text-xs flex items-center justify-center">洪</div>
+          <span class="font-bold text-xs text-slate-900">hong_xingfu_1949</span>
+        </div>
+        <button onclick="closeIgModal()" class="text-slate-400 hover:text-slate-600">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div id="ig-modal-box" class="p-4 rounded-xl text-white text-center space-y-2">
+        <div id="ig-modal-icon" class="text-4xl"></div>
+        <h4 id="ig-modal-title" class="font-bold text-lg"></h4>
+      </div>
+
+      <p id="ig-modal-caption" class="text-xs text-slate-700 leading-relaxed"></p>
+
+      <div class="border-t border-slate-100 pt-3 flex items-center justify-between">
+        <span id="ig-modal-likes" class="text-xs font-bold text-slate-800"></span>
+        <button onclick="closeIgModal()" class="text-xs text-blue-600 font-bold">確定</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Logic -->
+  <script>
+    // -------------------------------------------------------------------------
+    // DATA DEFINITIONS (VOCABULARY & EXPLANATIONS)
+    // -------------------------------------------------------------------------
+    const vocabData = [
+      { name: "倏忽", zhuyin: "ㄕㄨ ㄏㄨ", def: "很快的樣子。", sentence: "有些是過眼雲煙，倏忽即逝。" },
+      { name: "過眼雲煙", zhuyin: "ㄍㄨㄛˋ ㄧㄢˇ ㄩㄣˊ ㄧㄢ", def: "比喻事情消逝極快，不留痕跡。", sentence: "有些是過眼雲煙，倏忽即逝。" },
+      { name: "熱鐵烙膚", zhuyin: "ㄖㄜˋ ㊊ㄝˇ ㄌㄠˋ ㄈㄨ", def: "用燒熱的鐵器燙印在皮膚上。比喻感受深刻。", sentence: "有些是熱鐵烙膚，記憶長存。" },
+      { name: "掠過", zhuyin: "ㄌㄩㄝˋ ㄍㄨㄛˋ", def: "輕輕擦過，此指飛過。", sentence: "有些像是飛鳥掠過天邊，漸去漸遠。" },
+      { name: "歷歷如繪", zhuyin: "ㄌㄧˋ ㄌㄧˋ ㄖㄨˊ ㄏㄨㄟˋ", def: "如同畫面清楚地呈現眼前。歷歷，清楚的樣子。", sentence: "不去想，什麼都沒有，一旦思想起，便歷歷如繪。" },
+      { name: "眷戀", zhuyin: "ㄐㄩㄢˋ ㄌㄧㄢˋ", def: "深情懷念。", sentence: "使我幼時的雨天時光，特別顯得亮麗充實，讓人眷戀。" },
+      { name: "泥濘", zhuyin: "ㄋㄧˊ ㄋㄧㄥˋ", def: "爛泥巴，或指道路積水泥爛不乾爽。", sentence: "一下雨，便泥濘不堪。" },
+      { name: "理直氣壯", zhuyin: "ㄌㄧˇ ㄓˊ ㄑㄧˋ ㄓㄨㄤˋ", def: "理由正大，無所畏懼。文中指自然而然的樣子。", sentence: "卻理直氣壯地在簷下匯成一道水流。" },
+      { name: "斑雜", zhuyin: "ㄅㄢ ㄗㄚˊ", def: "色彩雜亂不一。", sentence: "花色斑雜者，形態怪異者..." },
+      { name: "氣派儼然", zhuyin: "ㄑㄧˋ ㄆㄞˋ ㄧㄢˇ ㄖㄢˊ", def: "氣勢莊嚴尊貴的樣子。儼，音ㄧㄢˇ。", sentence: "氣派儼然者，甫經下水即遭沉沒者..." },
+      { name: "甫", zhuyin: "ㄈㄨˇ", def: "剛剛、才。", sentence: "甫經下水即遭沉沒者。" },
+      { name: "千里單騎", zhuyin: "ㄑㄧㄢ ㄌㄧˇ ㄉㄢ ㄑㄧˊ", def: "在此比喻長長的水路中只有一艘紙船孤單獨航。", sentence: "或列隊而出，或千里單騎..." },
+      { name: "比肩齊步", zhuyin: "ㄅㄧˇ ㄐㄧㄢ ㄑㄧˊ ㄅㄨˋ", def: "肩並著肩，步伐一致前進。", sentence: "或比肩齊步，或互相追逐。" },
+      { name: "曹操戰艦", zhuyin: "ㄘㄠˊ ㄘㄠ ㄉㄜ˙ ㄓㄢˋ ㄐㄧㄢˋ", def: "借用赤壁之戰曹操連環船典故，形容紙船首尾相連的樣子。", sentence: "或者乾脆是曹操的戰艦——首尾相連。" },
+      { name: "蔚為壯觀", zhuyin: "ㄨㄟˋ ㄨㄟˊ ㄓㄨㄤˋ ㄍㄨㄢ", def: "匯集成壯盛的景象。蔚，聚集。", sentence: "首尾相連。形形色色，蔚為壯觀。" },
+      { name: "繭", zhuyin: "ㄐㄧㄢˇ", def: "手腳皮膚因過度摩擦而生成的厚硬皮。", sentence: "出自母親的巧思和那雙粗糙不堪、結著厚繭的手。" },
+      { name: "年事", zhuyin: "ㄋㄧㄢˊ ㄕˋ", def: "年紀、年歲。", sentence: "這種美麗的感情要到年事稍長後才能體會出來。" },
+      { name: "而立", zhuyin: "ㄦˊ ㄌㄧˋ", def: "指三十歲（源自孔子「三十而立」）。", sentence: "而今早已年過而立。" },
+      { name: "涎著臉", zhuyin: "ㄒㄧㄢˊ ㄓㄜ˙ ㄌㄧㄢˇ", def: "厚著臉皮。涎，流口水。", sentence: "自然不再是涎著臉要求母親摺紙船的年紀。" }
+    ];
+
+    // Paragraph Full Texts for TTS
+    const paragraphTexts = {
+      1: "每個人的一生都會遭遇許多事，有些是過眼雲煙，倏忽即逝；有些是熱鐵烙膚，記憶長存；有些像是飛鳥掠過天邊，漸去漸遠。而有一些事，卻像夏日的小河、冬天的落葉，像春花，也像秋草，似無所見，又非視而不見——童年的許多細碎事物，大體如此，不去想，什麼都沒有，一旦思想起，便歷歷如繪。",
+      2: "紙船是其中之一。我曾經有過許多紙船，在童年的無三尺浪的簷下水道航行，使我幼時的雨天時光，特別顯得亮麗充實，讓人眷戀。",
+      3: "那時，我們住的是低矮簡陋的農舍，簷下無排水溝，庭院未鋪柏油，一下雨，便泥濘不堪。屋頂上的雨水滴落下來，卻理直氣壯地在簷下匯成一道水流，水流因雨勢而定，或急或緩，或大或小。我們在水道上放紙船遊戲，花色斑雜者，形態怪異者，氣派儼然者，甫經下水即遭沉沒者，各色各樣的紙船或列隊而出，或千里單騎，或比肩齊步，或互相追逐，或者乾脆是曹操的戰艦——首尾相連。形形色色，蔚為壯觀。我們所得到的，是真正的快樂。",
+      4: "這些紙船都是有感情的，因為它們大都出自母親的巧思和那雙粗糙不堪、結著厚繭的手。母親摺船給孩子，讓孩子在雨天裡也有笑聲，這種美麗的感情要到年事稍長後才能體會出來，也許那雨一下就是十天半月，農作物都有被淋壞、被淹死的可能，母親心裡正掛記這些事，煩亂憂愁不堪，但她仍然平靜和氣地為孩子摺船，摺成比別的孩子所擁有的還要漂亮的紙船，好讓孩子高興。",
+      5: "童年舊事，歷歷在目，而今早已年過而立，自然不再是涎著臉要求母親摺紙船的年紀。只盼望自己能以母親的心情，為子女摺出一艘艘未必漂亮但卻堅強的、禁得住風雨的船，如此，便不致愧對紙船了。"
+    };
+
+    // Formative Quiz Hints State Engine
+    const formativeState = {
+      1: { attempts: 0, correct: 'A' },
+      2: { attempts: 0, correct: 'B' },
+      3: { attempts: 0, correct: 'C' }
+    };
+
+    const formativeHints = {
+      1: [
+        "提示（思考階段 1）：想想看，「熱鐵烙膚」會留下深深的傷痕，而「飛鳥掠過」則是一閃即逝，這兩種現象有什麼不同？",
+        "提示（課文線索 2）：請重讀第一段！作者開頭說：「有些是過眼雲煙...有些是熱鐵烙膚...有些像是飛鳥掠過」，這是在比較記憶在腦海中停留的深刻程度！",
+        "引導：答案關鍵在於「記憶深刻長存」與「漸去漸遠消失」的差異，請再試試看！"
+      ],
+      2: [
+        "提示（思考階段 1）：母親心中正為下雨淹沒農作而「煩亂憂愁」，但她對待孩子時卻表現出什麼態度？",
+        "提示（課文線索 2）：第四段寫道：「母親心裡正掛記這些事...但她仍然平靜和氣地為孩子摺船」。這說明母親寧可自己承受煩惱，也不願壞了孩子的興致。",
+        "引導：這展現了母愛的無私與忍耐，把最好的笑容與關懷留給孩子！"
+      ],
+      3: [
+        "提示（思考階段 1）：人生道路上會遇到各種「風浪」與「暴雨」，作者期許自己給子女的「船」能禁得住風雨，代表什麼品質？",
+        "提示（課文線索 2）：這是一種寄託品格的「象徵」法。船代表孩子未來的品格與人生。",
+        "引導：能「禁得住風雨」，代表在困境中不被打倒的堅強能力與韌性。"
+      ]
+    };
+
+    // Speech Engine
+    let synth = window.speechSynthesis;
+    let isPlaying = false;
+    let currentUtterance = null;
+
+    window.onload = function() {
+      renderVocabCards();
+    };
+
+    // Tab Switcher
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.getElementById(`sec-${tabId}`).classList.remove('hidden');
+
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active-tab', 'text-slate-900', 'bg-slate-200');
+        btn.classList.add('text-slate-600');
+      });
+
+      const activeBtn = document.getElementById(`tab-${tabId}`);
+      if(activeBtn) {
+        activeBtn.classList.add('active-tab', 'text-slate-900', 'bg-slate-200');
+      }
+
+      document.getElementById('mobile-menu').classList.add('hidden');
+      stopSpeech();
+    }
+
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    }
+
+    // Social Subtab Switcher
+    function switchSocialSubTab(type) {
+      if(type === 'ig') {
+        document.getElementById('social-view-ig').classList.remove('hidden');
+        document.getElementById('social-view-threads').classList.add('hidden');
+        document.getElementById('subtab-ig').className = "px-5 py-2 rounded-lg text-sm font-bold text-slate-800 bg-white shadow-sm flex items-center space-x-2";
+        document.getElementById('subtab-threads').className = "px-5 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-slate-800 flex items-center space-x-2";
+      } else {
+        document.getElementById('social-view-ig').classList.add('hidden');
+        document.getElementById('social-view-threads').classList.remove('hidden');
+        document.getElementById('subtab-threads').className = "px-5 py-2 rounded-lg text-sm font-bold text-slate-800 bg-white shadow-sm flex items-center space-x-2";
+        document.getElementById('subtab-ig').className = "px-5 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-slate-800 flex items-center space-x-2";
+      }
+    }
+
+    // Render Vocabulary Cards
+    function renderVocabCards() {
+      const container = document.getElementById('vocab-cards-container');
+      container.innerHTML = '';
+
+      vocabData.forEach(item => {
+        const card = document.createElement('div');
+        card.className = "bg-slate-50 hover:bg-purple-50/50 border border-slate-200 hover:border-purple-300 rounded-xl p-4 transition cursor-pointer shadow-sm flex flex-col justify-between";
+        card.onclick = () => showVocabDetail(item.name);
+
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between">
+              <h4 class="font-bold text-slate-900 text-base">${item.name}</h4>
+              <span class="text-xs font-mono bg-purple-100 text-purple-700 px-2 py-0.5 rounded">${item.zhuyin}</span>
+            </div>
+            <p class="text-xs text-slate-600 mt-2 line-clamp-2">${item.def}</p>
+          </div>
+          <div class="mt-3 text-[11px] text-purple-600 font-medium flex items-center">
+            <span>點擊查看詳解</span>
+            <i class="fa-solid fa-chevron-right ml-1 text-[9px]"></i>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Vocab Modal Detail Trigger
+    function showVocabDetail(name) {
+      const item = vocabData.find(v => v.name === name);
+      if(!item) return;
+
+      document.getElementById('modal-vocab-title').innerText = item.name;
+      document.getElementById('modal-vocab-zhuyin').innerText = item.zhuyin;
+      document.getElementById('modal-vocab-def').innerText = item.def;
+      document.getElementById('modal-vocab-sentence').innerText = `「${item.sentence}」`;
+
+      document.getElementById('vocab-modal').classList.remove('hidden');
+    }
+
+    function closeVocabModal() {
+      document.getElementById('vocab-modal').classList.add('hidden');
+    }
+
+    function openAuthorBioModal() {
+      document.getElementById('author-bio-modal').classList.remove('hidden');
+    }
+
+    function closeAuthorBioModal() {
+      document.getElementById('author-bio-modal').classList.add('hidden');
+    }
+
+    // Story Highlight Modals
+    const highlightData = {
+      erlin: { icon: "🌾", title: "彰化二林農村", bg: "bg-emerald-700", desc: "洪醒夫出生於彰化二林鎮北平里世代農家。農村的風土民情、赤腳踏在泥土上的溫度，成為他文學創作最深厚的養分。" },
+      teaching: { icon: "🏫", title: "社口國小任教", bg: "bg-blue-700", desc: "臺中師專畢業後，任教於臺中社口國小等校十餘年。熱心教學、關心學生，學生常叫他綽號「毛毛蟲」，為人親切溫和。" },
+      boat: { icon: "⛵", title: "紙船印象經典", bg: "bg-sky-700", desc: "收錄於遺作散文集《懷念那聲鑼》。藉童年雨天放紙船的記憶，感念母親在艱苦歲月中為子女撐起的無私母愛。" },
+      awards: { icon: "🏆", title: "文學大獎肯定", bg: "bg-purple-700", desc: "榮獲第一屆時報文學獎小說首獎（〈散戲〉）與第三屆吳三連文藝獎，是臺灣 1970 年代鄉土寫實文學的關鍵代表人物。" },
+      sanxi: { icon: "🎭", title: "小說《散戲》", bg: "bg-amber-700", desc: "描繪歌仔戲班在電視流行後的衰落與無奈，寫出底層藝人堅守尊嚴的辛酸，展現深厚的人文關懷。" }
+    };
+
+    function showHighlightDetail(key) {
+      const data = highlightData[key];
+      if(!data) return;
+
+      const box = document.getElementById('ig-modal-box');
+      box.className = `p-4 rounded-xl text-white text-center space-y-2 ${data.bg}`;
+      document.getElementById('ig-modal-icon').innerText = data.icon;
+      document.getElementById('ig-modal-title').innerText = data.title;
+      document.getElementById('ig-modal-caption').innerText = data.desc;
+      document.getElementById('ig-modal-likes').innerText = "文學紀錄專頁";
+
+      document.getElementById('ig-modal').classList.remove('hidden');
+    }
+
+    // Speech Logic
+    function readParagraph(num) {
+      stopSpeech();
+      const text = paragraphTexts[num];
+      if(!text) return;
+
+      highlightParagraph(num);
+      speakText(text, () => unhighlightParagraph(num));
+    }
+
+    function togglePlayFullText() {
+      if(isPlaying) {
+        stopSpeech();
+      } else {
+        const fullText = Object.values(paragraphTexts).join(" ");
+        speakText(fullText, () => {
+          document.getElementById('reading-status').innerText = "朗讀結束";
+        });
+      }
+    }
+
+    function speakText(text, onEndCallback) {
+      if (!('speechSynthesis' in window)) {
+        alert("您的瀏覽器暫不支援語音報讀功能。");
+        return;
+      }
+
+      synth.cancel();
+      const rate = parseFloat(document.getElementById('speech-rate').value) || 1.0;
+
+      currentUtterance = new SpeechSynthesisUtterance(text);
+      currentUtterance.lang = 'zh-TW';
+      currentUtterance.rate = rate;
+
+      currentUtterance.onstart = function() {
+        isPlaying = true;
+        document.getElementById('play-icon').className = "fa-solid fa-pause text-lg";
+        document.getElementById('reading-status').innerText = "朗讀中...";
+        document.getElementById('reading-status').className = "text-xs text-blue-600 bg-blue-50 font-bold px-2 py-0.5 rounded-md animate-pulse";
+      };
+
+      currentUtterance.onend = function() {
+        isPlaying = false;
+        document.getElementById('play-icon').className = "fa-solid fa-play text-lg ml-0.5";
+        document.getElementById('reading-status').innerText = "就緒";
+        document.getElementById('reading-status').className = "text-xs text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md";
+        clearAllParagraphHighlights();
+        if(onEndCallback) onEndCallback();
+      };
+
+      currentUtterance.onerror = function() {
+        isPlaying = false;
+        document.getElementById('play-icon').className = "fa-solid fa-play text-lg ml-0.5";
+        document.getElementById('reading-status').innerText = "朗讀中斷";
+      };
+
+      synth.speak(currentUtterance);
+    }
+
+    function stopSpeech() {
+      if (synth) {
+        synth.cancel();
+      }
+      isPlaying = false;
+      const playIcon = document.getElementById('play-icon');
+      if(playIcon) playIcon.className = "fa-solid fa-play text-lg ml-0.5";
+      const status = document.getElementById('reading-status');
+      if(status) {
+        status.innerText = "就緒";
+        status.className = "text-xs text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md";
+      }
+      clearAllParagraphHighlights();
+    }
+
+    function updateSpeechSettings() {
+      if(isPlaying) {
+        stopSpeech();
+      }
+    }
+
+    function highlightParagraph(num) {
+      clearAllParagraphHighlights();
+      const el = document.getElementById(`para-${num}`);
+      if(el) {
+        el.classList.add('bg-amber-50/80', 'border-amber-300', 'shadow-sm');
+      }
+    }
+
+    function unhighlightParagraph(num) {
+      const el = document.getElementById(`para-${num}`);
+      if(el) {
+        el.classList.remove('bg-amber-50/80', 'border-amber-300', 'shadow-sm');
+      }
+    }
+
+    function clearAllParagraphHighlights() {
+      for(let i=1; i<=5; i++) {
+        unhighlightParagraph(i);
+      }
+    }
+
+    // Formative Quiz Logic
+    function checkFormativeAnswer(qNum, selected) {
+      const state = formativeState[qNum];
+      const hintBox = document.getElementById(`fq-hint-${qNum}`);
+      const hintTitle = document.getElementById(`fq-hint-title-${qNum}`);
+      const hintText = document.getElementById(`fq-hint-text-${qNum}`);
+      const statusSpan = document.getElementById(`fq-status-${qNum}`);
+
+      if (selected === state.correct) {
+        hintBox.classList.remove('hidden', 'bg-sky-50', 'border-sky-200');
+        hintBox.classList.add('bg-emerald-50', 'border-emerald-300');
+        hintTitle.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600"></i> 恭喜你答對了！理解非常深刻！`;
+        hintTitle.className = "text-emerald-800 font-bold text-sm flex items-center gap-1.5";
+        
+        let successExpl = "";
+        if(qNum === 1) successExpl = "正是！「熱鐵烙膚」比喻感受極為深刻，而「飛鳥掠過」則像瞬間逝去的記憶，兩者形成了強烈的對比。";
+        if(qNum === 2) successExpl = "完全正確！母親寧可獨自擔負對農作淹沒的憂慮，也不願破壞孩子放紙船的快樂，體現了無私奉獻的親情。";
+        if(qNum === 3) successExpl = "太棒了！「禁得住風雨的船」是寄託抽象情感的象徵手法，代表能勇敢面對逆境的堅毅性格。";
+
+        hintText.innerText = successExpl;
+        hintText.className = "text-xs sm:text-sm text-emerald-700 leading-relaxed mt-1";
+
+        statusSpan.innerText = "✓ 已掌握觀念";
+        statusSpan.className = "text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded";
+      } else {
+        state.attempts += 1;
+        const currentHintIndex = Math.min(state.attempts - 1, formativeHints[qNum].length - 1);
+
+        hintBox.classList.remove('hidden', 'bg-emerald-50', 'border-emerald-300');
+        hintBox.classList.add('bg-amber-50', 'border-amber-300');
+
+        hintTitle.innerHTML = `<i class="fa-solid fa-lightbulb text-amber-600"></i> 思考引導（第 ${state.attempts} 次嘗試提示）`;
+        hintTitle.className = "text-amber-900 font-bold text-sm flex items-center gap-1.5";
+        
+        hintText.innerText = formativeHints[qNum][currentHintIndex];
+        hintText.className = "text-xs sm:text-sm text-amber-800 leading-relaxed mt-1";
+
+        statusSpan.innerText = `思考中 (已嘗試 ${state.attempts} 次)`;
+        statusSpan.className = "text-xs font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded";
+      }
+    }
+
+    // Summative Assessment Logic
+    const summativeAnswers = {
+      1: { ans: 'B', expl: 'A.條(ㄕㄨ)忽；B.烙(ㄌㄠˋ)膚【正確】；C.甫(ㄈㄨˇ)；D.繭(ㄐㄧㄢˇ)。' },
+      2: { ans: 'D', expl: 'D 選項為純粹記敘年齡的描述，無擬人或擬物轉化。A、B、C 均將水或紙船賦予人的情感動作，屬於轉化修辭。' },
+      3: { ans: 'B', expl: '「三十而立」語出《論語·為政篇》：「三十而立，四十而不惑...」。' },
+      4: { ans: 'B', expl: '全文脈絡由「物」（紙船）到「人」（母親）到「情」（對母愛的感恩與傳承），層次清晰分明。' },
+      5: { ans: 'D', expl: '洪醒夫畢業於臺中師範專科學校，曾長期擔任國小教師，並非專職無教職。' }
+    };
+
+    function submitSummativeExam() {
+      let score = 0;
+      const totalQs = 5;
+
+      for(let i=1; i<=totalQs; i++) {
+        const radios = document.getElementsByName(`sq-${i}`);
+        let userAns = null;
+        for(const r of radios) {
+          if(r.checked) userAns = r.value;
+        }
+
+        const card = document.getElementById(`sq-card-${i}`);
+        const explDiv = document.getElementById(`sq-explanation-${i}`);
+        const correctInfo = summativeAnswers[i];
+
+        explDiv.classList.remove('hidden');
+
+        if(userAns === correctInfo.ans) {
+          score += (100 / totalQs);
+          card.className = "bg-white border-2 border-emerald-400 rounded-2xl p-6 shadow-sm space-y-3";
+          explDiv.className = "text-xs bg-emerald-50 p-3 rounded-lg border border-emerald-200 text-emerald-800 mt-2";
+          explDiv.innerHTML = `<strong>✓ 答對了！</strong> 解析：${correctInfo.expl}`;
+        } else {
+          card.className = "bg-white border-2 border-red-300 rounded-2xl p-6 shadow-sm space-y-3";
+          explDiv.className = "text-xs bg-red-50 p-3 rounded-lg border border-red-200 text-red-800 mt-2";
+          explDiv.innerHTML = `<strong>✕ 答錯囉！</strong> 正確答案為 <strong>(${correctInfo.ans})</strong>。解析：${correctInfo.expl}`;
+        }
+      }
+
+      const resultCard = document.getElementById('summative-result-card');
+      resultCard.classList.remove('hidden');
+      document.getElementById('exam-score-display').innerText = `${score} / 100 分`;
+
+      let feedback = "";
+      if(score === 100) feedback = "太棒了！你完美掌握了《紙船印象》的課文文意、修辭與作者背景！";
+      else if(score >= 80) feedback = "表現優秀！對課文有極佳的理解，請參考錯題詳解繼續保持！";
+      else feedback = "加油！建議回到第一頁重新觀看課文與難字解析，再試一次！";
+
+      document.getElementById('exam-feedback-text').innerText = feedback;
+      resultCard.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    const igPostData = {
+      1: {
+        icon: "⛵",
+        title: "簷下紙船與童年",
+        bg: "bg-sky-800",
+        caption: "【童年記憶】那時候，低矮簡陋的農舍簷下沒有排水溝。一下雨，水流便理直氣壯地匯成一道道水道。我們在水溝放紙船，千里單騎、首尾相連，那是童年最純粹的快樂。⛵",
+        likes: "1,840 次讚"
+      },
+      2: {
+        icon: "🌾",
+        title: "二林農村歲月",
+        bg: "bg-emerald-800",
+        caption: "【鄉土情懷】出生於彰化二林農家，這片泥土養育了我。文學不只是高雅的閣樓藝術，更是記錄這些辛勤耕作、在風雨中堅韌活著的田莊人。🌾",
+        likes: "2,410 次讚"
+      },
+      3: {
+        icon: "🎭",
+        title: "代表作《散戲》",
+        bg: "bg-amber-800",
+        caption: "【代表作品】《散戲》《黑面慶仔》《懷念那聲鑼》。將農村小人物的喜怒哀樂與刻苦耐勞留存於筆尖。寫作是一生的志業。📚",
+        likes: "3,150 次讚"
+      }
+    };
+
+    function openIgModal(id) {
+      const data = igPostData[id];
+      if(!data) return;
+
+      const box = document.getElementById('ig-modal-box');
+      box.className = `p-4 rounded-xl text-white text-center space-y-2 ${data.bg}`;
+      document.getElementById('ig-modal-icon').innerText = data.icon;
+      document.getElementById('ig-modal-title').innerText = data.title;
+      document.getElementById('ig-modal-caption').innerText = data.caption;
+      document.getElementById('ig-modal-likes').innerText = data.likes;
+      document.getElementById('ig-modal').classList.remove('hidden');
+    }
+
+    function closeIgModal() {
+      document.getElementById('ig-modal').classList.add('hidden');
+    }
+
+    function toggleLike(btn) {
+      const icon = btn.querySelector('i') || btn;
+      if(icon.classList.contains('fa-regular')) {
+        icon.classList.remove('fa-regular');
+        icon.classList.add('fa-solid', 'text-red-500');
+      } else {
+        icon.classList.remove('fa-solid', 'text-red-500');
+        icon.classList.add('fa-regular');
+      }
+    }
+  </script>
+
+</body>
+</html>
