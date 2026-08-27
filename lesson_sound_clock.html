@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聲音鐘 - 互動式國文課文教學數位教材</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Noto Serif TC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif+TC:wght@500;600;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['"Noto Serif TC"', 'serif'],
+                    },
+                    colors: {
+                        amber: { 50: '#fffbeb', 100: '#fef3c7', 500: '#f59e0b', 600: '#d97706', 700: '#b45309', 800: '#92400e' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .highlight-speech { background-color: #fef08a; transition: background-color 0.3s ease; border-radius: 4px; padding: 0 2px; }
+        .tab-btn.active { border-bottom: 3px solid #d97706; color: #b45309; font-weight: 700; }
+        .ig-gradient { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+    <header class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
+            <div class="flex items-center space-x-3 shrink-0">
+                <a href="index.html" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-amber-100 text-slate-700 hover:text-amber-800 transition text-xs font-bold mr-1 border border-slate-200" title="返回教材入口總覽">
+                    <i class="fa-solid fa-house text-sm"></i>
+                    <span class="hidden sm:inline">教材首頁</span>
+                </a>
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-600 flex items-center justify-center text-white font-bold text-xl shadow-md">
+                    <i class="fa-solid fa-bell"></i>
+                </div>
+                <div>
+                    <h1 class="text-base sm:text-lg font-bold font-serif text-slate-900 leading-tight whitespace-nowrap">第一課 聲音鐘</h1>
+                    <p class="text-[11px] sm:text-xs text-slate-500 whitespace-nowrap">作者：陳黎 · 國中國文數位互動教材</p>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-3">
+                <button onclick="switchTab('text')" id="nav-text" class="tab-btn active px-2.5 lg:px-4 py-3 text-xs lg:text-sm font-medium text-slate-600 hover:text-amber-700 transition-all flex items-center space-x-1.5 whitespace-nowrap">
+                    <i class="fa-solid fa-book-open"></i><span>課文與聲景</span>
+                </button>
+                <button onclick="switchTab('author')" id="nav-author" class="tab-btn px-2.5 lg:px-4 py-3 text-xs lg:text-sm font-medium text-slate-600 hover:text-amber-700 transition-all flex items-center space-x-1.5 whitespace-nowrap">
+                    <i class="fa-solid fa-user-pen"></i><span>作者采風</span>
+                </button>
+                <button onclick="switchTab('quiz')" id="nav-quiz" class="tab-btn px-2.5 lg:px-4 py-3 text-xs lg:text-sm font-medium text-slate-600 hover:text-amber-700 transition-all flex items-center space-x-1.5 whitespace-nowrap">
+                    <i class="fa-solid fa-clipboard-question"></i><span>閱讀評量測驗</span>
+                </button>
+                <button onclick="switchTab('enrichment')" id="nav-enrichment" class="tab-btn px-2.5 lg:px-4 py-3 text-xs lg:text-sm font-medium text-slate-600 hover:text-amber-700 transition-all flex items-center space-x-1.5 whitespace-nowrap">
+                    <i class="fa-solid fa-language"></i><span>語文充電站（外來語）</span>
+                </button>
+            </nav>
+
+            <!-- Audio Player Quick Bar Control -->
+            <div class="flex items-center space-x-2 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-full shrink-0">
+                <button id="btn-global-audio" onclick="toggleGlobalAudio()" class="text-amber-700 hover:text-amber-900 focus:outline-none flex items-center space-x-1 text-xs font-bold whitespace-nowrap">
+                    <i id="icon-global-audio" class="fa-solid fa-circle-play text-lg text-amber-600"></i>
+                    <span id="text-global-audio">全文報讀</span>
+                </button>
+                <span class="text-slate-300">|</span>
+                <select id="speech-rate" onchange="changeSpeechRate()" class="bg-transparent text-xs text-amber-800 font-semibold focus:outline-none cursor-pointer">
+                    <option value="0.8">0.8x 慢速</option>
+                    <option value="1.0" selected>1.0x 標準</option>
+                    <option value="1.2">1.2x 快速</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Mobile Bottom/Top Navigation Row -->
+        <div class="md:hidden flex justify-around border-t border-slate-100 bg-white py-2 text-xs font-semibold">
+            <button onclick="switchTab('text')" id="mob-text" class="text-amber-700 flex flex-col items-center">
+                <i class="fa-solid fa-book-open text-base mb-0.5"></i>課文
+            </button>
+            <button onclick="switchTab('author')" id="mob-author" class="text-slate-500 flex flex-col items-center">
+                <i class="fa-solid fa-user-pen text-base mb-0.5"></i>作者
+            </button>
+            <button onclick="switchTab('quiz')" id="mob-quiz" class="text-slate-500 flex flex-col items-center">
+                <i class="fa-solid fa-clipboard-question text-base mb-0.5"></i>評量
+            </button>
+            <button onclick="switchTab('enrichment')" id="mob-enrichment" class="text-slate-500 flex flex-col items-center">
+                <i class="fa-solid fa-language text-base mb-0.5"></i>外來語
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- SECTION 1: 課文朗讀與賞析 (Textbook with Speech, Rhetoric & Vocab) -->
+        <section id="section-text" class="tab-content space-y-8">
+            <!-- Article Header Card -->
+            <div class="bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 rounded-3xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden">
+                <div class="absolute right-0 bottom-0 opacity-10 text-9xl transform translate-x-8 translate-y-8 select-none font-serif">鐘</div>
+                <div class="max-w-2xl space-y-3 relative z-10">
+                    <div class="inline-flex items-center space-x-2 bg-amber-500/30 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium text-amber-100 border border-amber-300/30">
+                        <i class="fa-solid fa-graduation-cap"></i><span>九年一貫國中國文一下 第一課</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold font-serif tracking-wide">聲音鐘</h2>
+                    <p class="text-amber-100 text-sm leading-relaxed">
+                        選自《陳黎跨世紀散文選》。作者把不同時段出現的小販叫賣聲比喻為「聲音鐘」，點出這些聲音構築的不是「物理的時間」，而是充滿溫情與生命力的「心情的時間」。
+                    </p>
+                    <!-- Quick Legend Badges -->
+                    <div class="pt-2 flex flex-wrap gap-2 text-xs">
+                        <span class="bg-sky-500/80 text-white px-2.5 py-1 rounded-lg flex items-center gap-1"><i class="fa-solid fa-wand-magic-sparkles"></i> 藍色：修辭解析</span>
+                        <span class="bg-emerald-500/80 text-white px-2.5 py-1 rounded-lg flex items-center gap-1"><i class="fa-solid fa-book"></i> 綠色：重點字詞注釋</span>
+                        <span class="bg-amber-400 text-amber-950 px-2.5 py-1 rounded-lg flex items-center gap-1 font-bold"><i class="fa-solid fa-volume-high"></i> 點擊段落旁喇叭可單段報讀</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reading Guide Banner -->
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-2xl shadow-sm text-amber-900 text-sm flex items-start space-x-3">
+                <i class="fa-solid fa-compass text-amber-600 text-lg mt-0.5"></i>
+                <div>
+                    <span class="font-bold">閱讀小叮嚀：</span>
+                    閱讀課文時，請留意文中出現了哪些叫賣聲？這些聲音與一天中的時間（時刻）、一週中的哪一天（星期），或是四季的更迭（季節）有何關聯性？
+                </div>
+            </div>
+
+            <!-- Article Paragraphs Container -->
+            <div class="space-y-6">
+
+                <!-- Paragraph 1 -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm relative hover:shadow-md transition-shadow group" id="p-1">
+                    <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-full">第一段 · 點題</span>
+                        <button onclick="speakParagraph('p1-text')" class="text-slate-400 hover:text-amber-600 transition-colors flex items-center space-x-1 text-xs">
+                            <i class="fa-solid fa-volume-high text-base"></i><span>報讀本段</span>
+                        </button>
+                    </div>
+                    <p id="p1-text" class="text-base sm:text-lg leading-relaxed font-serif text-slate-800">
+                        我喜歡那些像鐘一般準確出現的小販的叫賣聲。
+                    </p>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex flex-wrap gap-2 text-xs">
+                        <span onclick="showRhetoricModal('首尾呼應與明喻', '「像鐘一般準確...」使用了「明喻」修辭；同時本句作為開頭點題，與全文最後一段相互「首尾呼應」，深化喜愛之情。')" class="cursor-pointer bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 px-2.5 py-1 rounded-lg font-medium transition-colors">
+                            <i class="fa-solid fa-wand-magic-sparkles mr-1"></i>明喻 / 首尾呼應
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Paragraph 2 -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm relative hover:shadow-md transition-shadow group" id="p-2">
+                    <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-full">第二段 · 搬移書房前寂靜的生活</span>
+                        <button onclick="speakParagraph('p2-text')" class="text-slate-400 hover:text-amber-600 transition-colors flex items-center space-x-1 text-xs">
+                            <i class="fa-solid fa-volume-high text-base"></i><span>報讀本段</span>
+                        </button>
+                    </div>
+                    <p id="p2-text" class="text-base sm:text-lg leading-relaxed font-serif text-slate-800">
+                        我住的房子面對一條寬幽的大街，後面是一塊小小的空地。平常在家，除了自己偶然放的唱片，日子安靜得像掛在壁上的月曆。時間的推移總是默默地在不知不覺中進行，你至多只能從天晴時射入斗室內的陽光，它們的寬窄、亮暗來判定時光的腳步；或者假設今天剛好有信，郵差來按門鈴，你知道現在是早上十點半了；或者，如果你那粗心的妻子又忘了帶鑰匙，下班回家在門外大聲喊你，你知道又已經下午四點了。但自從我把書桌從前面的房間移到後面之後，才幾天，我就發覺我的頭腦裡裝了許多新的時鐘。
+                    </p>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex flex-wrap gap-2 text-xs">
+                        <span onclick="showRhetoricModal('明喻與擬人', '「日子安靜得像掛在壁上的月曆」：以靜態的月曆比喻平淡安靜的日子。「判定時光的腳步」：將時間擬人化，賦予其走路的腳步。')" class="cursor-pointer bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 px-2.5 py-1 rounded-lg font-medium">
+                            <i class="fa-solid fa-wand-magic-sparkles mr-1"></i>修辭：明喻、擬人
+                        </span>
+                        <span onclick="showVocabModal('斗室', 'ㄉㄡˇ ㄕˋ', '形容狹小的房間。斗，比喻小。')" class="cursor-pointer bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 px-2.5 py-1 rounded-lg font-medium">
+                            <i class="fa-solid fa-book mr-1"></i>斗室
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Paragraph 3 & 4 -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm relative hover:shadow-md transition-shadow group" id="p-3">
+                    <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-full">第三段～第四段 · 早晨出現的聲音鐘</span>
+                        <button onclick="speakParagraph('p3-text')" class="text-slate-400 hover:text-amber-600 transition-colors flex items-center space-x-1 text-xs">
+                            <i class="fa-solid fa-volume-high text-base"></i><span>報讀本段</span>
+                        </button>
+                    </div>
+                    <p id="p3-text" class="text-base sm:text-lg leading-relaxed font-serif text-slate-800 space-y-3">
+                        <span>那是因為走過那塊小小空地的小販的叫賣聲。</span><br><br>
+                        <span>那塊小小的空地是後面幾排人家出入的廣場，假日裡孩子們會在那兒玩沙、丟球，除此之外，就幾乎是附近女人家、老人家每日閒聚的特區了。那些小販們總是在這個小空間最需要他們時適時地出現。早起，看完報，你想起自己還沒吃早餐，「豆奶哦！煎包哦！糯米飯哦！」的叫賣聲就正好穿過你推開的窗戶，不客氣地進來，而且你知道這是用純正臺灣國語呼叫的「中華臺北版」早餐。換個方向，你也許聽到一輛緩緩駛近的小汽車，開著一臺錄音機嬌滴滴地喊著：「最好吃的美心麵包，最好吃的美心三明治，請來吃最好吃的美心巧克力蛋糕，美心冰淇淋蛋糕……」時間一到，這些叫賣聲就像報時的鐘一般準確地出現。</span>
+                    </p>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex flex-wrap gap-2 text-xs">
+                        <span onclick="showRhetoricModal('聽覺摹寫與轉化', '描摹「豆奶哦！煎包哦！糯米飯哦！」等叫賣聲，具體呈現生活臨場感；並以「不客氣地進來」將聲音擬人化、形象化。')" class="cursor-pointer bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 px-2.5 py-1 rounded-lg font-medium">
+                            <i class="fa-solid fa-wand-magic-sparkles mr-1"></i>聽覺摹寫 / 轉化
+                        </span>
+                        <span onclick="showVocabModal('中華臺北版早餐', 'ㄓㄨㄥ ㄏㄨㄚ ㄖㄞˊ ㄅㄟˇ ㄅㄢˇ', '作者幽默的說法，指臺灣本土口味常見的傳統豆漿、水煎包與糯米飯早餐組合。')" class="cursor-pointer bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 px-2.5 py-1 rounded-lg font-medium">
+                            <i class="fa-solid fa-book mr-1"></i>中華臺北版早餐
+                        </span>
+                    </div>
+
+                    <!-- Formative Checkpoint 1 -->
+                    <div class="mt-6 bg-amber-50/80 rounded-xl p-4 border border-amber-200">
+                        <div class="flex items-center space-x-2 text-amber-800 font-bold text-sm mb-2">
+                            <i class="fa-solid fa-pen-to-square"></i><span>形成性評量 1：早晨的聲音鐘</span>
+                        </div>
+                        <p class="text-xs text-slate-700 mb-3">作者推開窗戶聽到「豆奶哦！煎包哦！糯米飯哦！」的叫賣聲，點出了這是在什麼時間出現的聲音鐘？</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                            <button onclick="checkFormative(1, 'A')" class="p-2.5 text-left rounded-lg bg-white border border-slate-200 hover:border-amber-500 font-medium hover:bg-amber-100/50 transition-all">A. 黃昏放學時刻</button>
+                            <button onclick="checkFormative(1, 'B')" class="p-2.5 text-left rounded-lg bg-white border border-slate-200 hover:border-amber-500 font-medium hover:bg-amber-100/50 transition-all">B. 清晨看完報吃早餐時</button>
+                            <button onclick="checkFormative(1, 'C')" class="p-2.5 text-left rounded-lg bg-white border border-slate-200 hover:border-amber-500 font-medium hover:bg-amber-100/50 transition-all">C. 午夜宵夜時刻</button>
+                            <button onclick="checkFormative(1, 'D')" class="p-2.5 text-left rounded-lg bg-white border border-slate-200 hover:border-amber-500 font-medium hover:bg-amber-100/50 transition-all">D. 星期天下午茶時間</button>
+                        </div>
+                        <div id="formative-feedback-1" class="hidden mt-3 p-3 rounded-lg text-xs leading-relaxed"></div>
+                    </div>
+                </div>
+
+                <!-- Paragraph 5 & 6 -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm relative hover:shadow-md transition-shadow group" id="p-5">
+                    <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-full">第五段～第六段 · 物理時間 vs 心情時間 · 賣芭樂的老阿伯</span>
+                        <button onclick="speakParagraph('p5-text')" class="text-slate-400 hover:text-amber-600 transition-colors flex items-center space-x-1 text-xs">
+                            <i class="fa-solid fa-volume-high text-base"></i><span>報讀本段</span>
+                        </button>
+                    </div>
+                    <p id="p5-text" class="text-base sm:text-lg leading-relaxed font-serif text-slate-800 space-y-3">
+                        <span>但這些鐘可不是一成不變地只會敲著噹、噹、噹的聲音，或者每隔一個鐘頭伸出一隻小鳥，「布穀、布穀」地向你報時。他們的報時方式、出現時機，是和這有情世界一樣充滿變化與趣味的。他們構築的不是物理的時間，而是人性的——或者更準確地說——心情的時間。就拿在蚵仔麵線之後出現的賣芭樂的老阿伯為例吧，那清脆、鄉土的叫喊雖然只有幾個音節，但宛轉有致的抑揚頓挫卻讓你以為回到了古典臺灣。</span><br><br>
+                        <span>你聽，那一聲聲拉長的吟唱：「鹹————芭樂，鹹————甜脆，甘————的哦！」這簡直是人間天籟，臺語的瑰寶——具體而微地把整個民族、整塊土地的生命濃縮進一句呼喊。如果你在心裡一遍遍學著，你一定可以聽到跟牛犁歌或丟丟銅仔一樣鮮活有趣的旋律。</span>
+                    </p>
+
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex flex-wrap gap-2 text-xs">
+                        <span onclick="showVocabModal('抑揚頓挫', 'ㄧˋ ㄧㄤˊ ㄉㄨㄣˋ ㄘㄨㄛˋ', '形容聲音的各種變化。抑：低沉；揚：高揚；頓：停頓；挫：轉折。')" class="cursor-pointer bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 px-2.5 py-1 rounded-lg font-medium">
+                            <i class="fa-solid fa-book mr-1"></i>抑揚頓挫
+                        </span>
+                        <span onclick="showVocabModal('天籟', 'ㄊㄧㄢ ㄌㄞˋ', '形容美妙的聲音。籟：從孔穴發出的聲音，亦泛指一切聲音。')" class="cursor-pointer bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 px-2.5 py-1 rounded-lg font-medium">
+                            <i class="fa-solid fa-book mr-1"></i>天籟
+                        </span>
+                        <span onclick="showVocabModal('瑰寶', 'ㄍㄨㄟ ㄅㄠˇ', '珍貴的寶物。瑰：奇異、珍貴。')" class="cursor-pointer bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 px-2.5 py-1 rounded-lg font-medium">
+                            <i class="fa-solid fa-book mr-1"></i>瑰寶
+                        </span>
+                        <span onclick="showVocabModal('具體而微', 'ㄐㄩˋ ㄊㄧˇ ㄦˊ ㄨㄟˊ', '內容大致齊全，只是規模較小。')" class="cursor-pointer bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 px-2.5 py-1 rounded-lg font-medium">
+                            <i class="fa-solid fa-book mr-1"></i>具體而微
+                        </span>
+                        <span onclick="showRhetoricModal('映襯對比', '將無情的「物理的時間」（如鐘錶噹噹聲）與有情的「心情的時間」（叫賣聲帶來的溫情）進行深刻映襯。')" class="cursor-pointer bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 px-2.5 py-1 rounded-lg font-medium">
+                            <i class="fa-solid fa-wand-magic-sparkles mr-1"></i>映襯（物理時間 vs 心情時間）
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Paragraph 7 & 8 -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm relative hover:shadow-md transition-shadow group" id="p-7">
+                    <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-full">第七段～第八段 · 下午的美食交響曲與天氣變化</span>
+                        <button onclick="speakParagraph('p7-text')" class="text-slate-400 hover:text-amber-600 transition-colors flex items-center space-x-1 text-xs">
+                            <i class="fa-solid fa-volume-high text-base"></i><span>報讀本段</span>
+                        </button>
+                    </div>
+                    <p id="p7-text" class="text-base sm:text-lg leading-relaxed font-serif text-slate-800 space-y-3">
+                        <span>過了下午，乍暖還寒，此起彼落的叫賣聲就更加豐富了。一下子你吃到熱騰騰的「肉圓，豬血湯，四神湯哦」；一下子冷卻下來，變成「芋粿，紅豆仔粿，紅豆米糕」，或者清甜可口的「杏仁露，綠豆露，涼的愛玉哦」。那位賣蝦仁羹的歐巴桑的叫賣聲恐怕是最平板無奇的，但還沒看到她就拿著大碗小碗衝出來的大人小孩，每天不知凡幾。她的蝦仁羹，據「羹學界」人士表示，是確實「料好，味好，臺灣第一」的。</span><br><br>
+                        <span>碰到颳風下雨，這些鐘自然也有停擺、慢擺或亂擺的時候。他甚至跟你惡作劇。在跟你心情一樣明亮、美好的日子裡，你忽然發現早該出現的叫賣聲一直沒有出現，這時你就會強烈懷念起——譬如說，那推著手推車，一邊搖著鐵片罐子，一邊喊「阿————奇毛」的賣烤番薯的老頭了。你甚至擔心他是不是太老了、太累了、生病了，以至於不能出來賣了。但就在你懷疑、納悶的時候，那熟悉的聲音也許又出現了。</span>
+                    </p>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex flex-wrap gap-2 text-xs">
+                        <span onclick="showVocabModal('乍暖還寒', 'ㄓㄚˋ ㄋㄨㄢˇ ㄏㄨㄢˊ ㄏㄢˊ', '形容天氣冷熱不定。乍：剛剛；還：回復。')" class="cursor-pointer bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 px-2.5 py-1 rounded-lg font-medium">
+                            <i class="fa-solid fa-book mr-1"></i>乍暖還寒
+                        </span>
+                        <span onclick="showVocabModal('不知凡幾', 'ㄅㄨˋ ㄓ ㄈㄢˊ ㄐㄧˇ', '不知道總共有多少，意即數目很多。')" class="cursor-pointer bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 px-2.5 py-1 rounded-lg font-medium">
+                            <i class="fa-solid fa-book mr-1"></i>不知凡幾
+                        </span>
+                        <span onclick="showVocabModal('阿奇毛', '日文音譯 yakiimo', '指烤番薯（烤地瓜）。')" class="cursor-pointer bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 px-2.5 py-1 rounded-lg font-medium">
+                            <i class="fa-solid fa-book mr-1"></i>阿奇毛 (外來語)
+                        </span>
+                        <span onclick="showRhetoricModal('轉化（擬人）', '「他甚至跟你惡作劇」、「鐘自然也有停擺、慢擺或亂擺的時候」，將聲音鐘人格化，增添活潑溫馨的童趣。')" class="cursor-pointer bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 px-2.5 py-1 rounded-lg font-medium">
+                            <i class="fa-solid fa-wand-magic-sparkles mr-1"></i>擬人（惡作劇、停擺）
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Paragraph 9 & 10 & 11 -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm relative hover:shadow-md transition-shadow group" id="p-9">
+                    <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-full">第九段～第十一段 · 提示星期與季節 · 總結與呼應</span>
+                        <button onclick="speakParagraph('p9-text')" class="text-slate-400 hover:text-amber-600 transition-colors flex items-center space-x-1 text-xs">
+                            <i class="fa-solid fa-volume-high text-base"></i><span>報讀本段</span>
+                        </button>
+                    </div>
+                    <p id="p9-text" class="text-base sm:text-lg leading-relaxed font-serif text-slate-800 space-y-3">
+                        <span>這些聲音鐘不但告訴你時刻，也告訴你星期、季節。慢條斯理，喊著「修理沙發哦」的車子經過時，你知道又是週末了。賣麥芽糖、鹹橄欖粉的，照例在星期三出現；賣衛生紙與賣豆腐乳的，都是在星期天下午到達。昨天晚上你也許還吃著燒仙草，今天你忽然聽到他改叫「冷豆花哦」——這一叫，又讓你驚覺春天的確來了。</span><br><br>
+                        <span>時鐘，日曆，月曆。這些美妙的叫賣聲，活潑、快樂地在每日生活的舞臺裡翻滾跳躍。他們像陽光、綠野、花一樣，是這有活力的城市，有活力的人間，不可或缺的色彩。</span><br><br>
+                        <span class="font-bold text-amber-900">我喜歡聽那些像鐘一般準確出現的小販的叫賣聲。</span>
+                    </p>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex flex-wrap gap-2 text-xs">
+                        <span onclick="showRhetoricModal('首尾呼應與暗喻、排比', '「時鐘，日曆，月曆」將叫賣聲暗喻為計時工具；「像陽光、綠野、花一樣」為明喻與排比；最後一句完全重複第一句，達成完美的「首尾呼應」。')" class="cursor-pointer bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 px-2.5 py-1 rounded-lg font-medium">
+                            <i class="fa-solid fa-wand-magic-sparkles mr-1"></i>排比 / 首尾呼應 / 綜合修辭
+                        </span>
+                    </div>
+
+                    <!-- Formative Checkpoint 2 -->
+                    <div class="mt-6 bg-amber-50/80 rounded-xl p-4 border border-amber-200">
+                        <div class="flex items-center space-x-2 text-amber-800 font-bold text-sm mb-2">
+                            <i class="fa-solid fa-pen-to-square"></i><span>形成性評量 2：季節轉換的訊息</span>
+                        </div>
+                        <p class="text-xs text-slate-700 mb-3">作者聽到小販從「燒仙草」改喊「冷豆花哦」，代表哪一個季節的到來？</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                            <button onclick="checkFormative(2, 'A')" class="p-2.5 text-left rounded-lg bg-white border border-slate-200 hover:border-amber-500 font-medium hover:bg-amber-100/50 transition-all">A. 酷熱嚴夏</button>
+                            <button onclick="checkFormative(2, 'B')" class="p-2.5 text-left rounded-lg bg-white border border-slate-200 hover:border-amber-500 font-medium hover:bg-amber-100/50 transition-all">B. 溫暖春天</button>
+                            <button onclick="checkFormative(2, 'C')" class="p-2.5 text-left rounded-lg bg-white border border-slate-200 hover:border-amber-500 font-medium hover:bg-amber-100/50 transition-all">C. 蕭瑟秋天</button>
+                            <button onclick="checkFormative(2, 'D')" class="p-2.5 text-left rounded-lg bg-white border border-slate-200 hover:border-amber-500 font-medium hover:bg-amber-100/50 transition-all">D. 寒冷冬天</button>
+                        </div>
+                        <div id="formative-feedback-2" class="hidden mt-3 p-3 rounded-lg text-xs leading-relaxed"></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 2: 作者介紹 (INSTAGRAM, THREADS & DETAILED BIOGRAPHY) -->
+        <section id="section-author" class="tab-content hidden space-y-8">
+            <!-- Header banner -->
+            <div class="text-center max-w-3xl mx-auto space-y-2">
+                <span class="px-3 py-1 bg-gradient-to-r from-rose-500 to-purple-600 text-white rounded-full text-xs font-bold tracking-wide uppercase">文學大師深度解密</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-serif">認識作者 · 陳黎（本名：陳膺文）</h2>
+                <p class="text-slate-600 text-sm">結合現代社群 Instagram / Threads 與完整生平年表，全方位探索詩人陳黎的代表經典與土地情懷。</p>
+            </div>
+
+            <!-- Navigation Switcher Buttons -->
+            <div class="flex flex-wrap justify-center gap-2 sm:gap-3">
+                <button onclick="switchSocialTab('bio')" id="social-tab-bio" class="px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-md flex items-center space-x-2 bg-amber-600 text-white">
+                    <i class="fa-solid fa-address-card text-lg"></i><span>📜 完整生平與年表</span>
+                </button>
+                <button onclick="switchSocialTab('ig')" id="social-tab-ig" class="px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-sm flex items-center space-x-2 bg-slate-200 text-slate-700 hover:bg-slate-300">
+                    <i class="fa-brands fa-instagram text-lg text-rose-500"></i><span>Instagram 專頁</span>
+                </button>
+                <button onclick="switchSocialTab('threads')" id="social-tab-threads" class="px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-sm flex items-center space-x-2 bg-slate-200 text-slate-700 hover:bg-slate-300">
+                    <i class="fa-brands fa-threads text-lg text-slate-900"></i><span>Threads 即時動態</span>
+                </button>
+            </div>
+
+            <!-- DETAILED BIOGRAPHY CONTAINER (DEFAULT ACTIVE) -->
+            <div id="social-bio-container" class="max-w-4xl mx-auto space-y-6">
+                <!-- Main Bio Summary Card -->
+                <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-lg space-y-6">
+                    <div class="flex flex-col md:flex-row items-center md:items-start gap-6 border-b border-slate-100 pb-6">
+                        <!-- High reliability SVG Avatar with glasses and literary style -->
+                        <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl bg-gradient-to-br from-amber-600 via-amber-700 to-stone-800 p-1 flex-shrink-0 shadow-lg relative group">
+                            <div class="w-full h-full bg-stone-900 rounded-xl overflow-hidden flex flex-col items-center justify-center text-white relative">
+                                <svg class="w-24 h-24 text-amber-200" viewBox="0 0 100 100" fill="currentColor">
+                                    <!-- Head Outline -->
+                                    <path d="M50 15 C30 15 25 35 25 50 C25 65 35 75 50 75 C65 75 75 65 75 50 C75 35 70 15 50 15 Z" fill="#fde68a" />
+                                    <!-- Hair -->
+                                    <path d="M25 40 C25 20 35 12 50 12 C65 12 75 20 75 40 C70 25 60 18 50 18 C40 18 30 25 25 40 Z" fill="#334155" />
+                                    <!-- Glasses -->
+                                    <circle cx="38" cy="45" r="9" fill="none" stroke="#1e293b" stroke-width="3" />
+                                    <circle cx="62" cy="45" r="9" fill="none" stroke="#1e293b" stroke-width="3" />
+                                    <line x1="47" y1="45" x2="53" y2="45" stroke="#1e293b" stroke-width="3" />
+                                    <!-- Eyes -->
+                                    <circle cx="38" cy="45" r="3" fill="#0f172a" />
+                                    <circle cx="62" cy="45" r="3" fill="#0f172a" />
+                                    <!-- Gentle Smile -->
+                                    <path d="M42 62 Q50 67 58 62" fill="none" stroke="#9a3412" stroke-width="2.5" stroke-linecap="round" />
+                                </svg>
+                                <span class="text-[11px] font-bold tracking-wider text-amber-200 mt-1 font-serif">詩人 · 陳黎</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3 text-center md:text-left flex-grow">
+                            <div class="flex flex-wrap items-center justify-center md:justify-start gap-2">
+                                <h3 class="text-2xl font-bold font-serif text-slate-900">陳黎</h3>
+                                <span class="text-sm font-medium text-slate-500">（本名：陳膺文）</span>
+                                <span class="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-xs font-bold">1954年10月3日生</span>
+                                <span class="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-800 text-xs font-bold">臺灣花蓮人</span>
+                            </div>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                國立臺灣師範大學英語學系畢業。曾任花蓮花崗國中英語教師長達三十餘年，現專職寫作與翻譯。創作橫跨現代詩、散文、音樂評論與外國文學翻譯，被譽為臺灣中生代最富創造力與土地關懷的文學家之一。
+                            </p>
+                            <div class="flex flex-wrap justify-center md:justify-start gap-2 text-xs font-semibold">
+                                <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-lg"><i class="fa-solid fa-award text-amber-500 mr-1"></i>國家文藝獎得主</span>
+                                <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-lg"><i class="fa-solid fa-star text-amber-500 mr-1"></i>臺灣當代十大詩人</span>
+                                <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-lg"><i class="fa-solid fa-earth-americas text-sky-500 mr-1"></i>倫敦奧林匹克詩歌節臺灣代表</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Classic Works Showcase Grid -->
+                    <div class="space-y-3">
+                        <h4 class="font-bold text-slate-900 text-sm border-b border-slate-100 pb-2 flex items-center">
+                            <i class="fa-solid fa-book-bookmark text-amber-600 mr-2"></i>陳黎 經典作品集（現代詩 / 散文 / 譯作）
+                        </h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+                            <div class="p-3 bg-amber-50/80 rounded-xl border border-amber-200">
+                                <span class="font-bold text-amber-900 block text-sm mb-1">《戰爭交響曲》</span>
+                                <p class="text-slate-600">轟動國際的具象視覺詩，僅以「兵、乒、乓、丘」排列描繪戰場殘酷景象。</p>
+                            </div>
+                            <div class="p-3 bg-rose-50/80 rounded-xl border border-rose-200">
+                                <span class="font-bold text-rose-900 block text-sm mb-1">《小宇宙》</span>
+                                <p class="text-slate-600">包含數百首精緻現代三行俳句，融合日常微小事物與極簡詩意。</p>
+                            </div>
+                            <div class="p-3 bg-sky-50/80 rounded-xl border border-sky-200">
+                                <span class="font-bold text-sky-900 block text-sm mb-1">《聲音鐘》</span>
+                                <p class="text-slate-600">收錄於《陳黎跨世紀散文選》，獲選國中國文課本，細膩紀錄臺灣市井聲景。</p>
+                            </div>
+                            <div class="p-3 bg-purple-50/80 rounded-xl border border-purple-200">
+                                <span class="font-bold text-purple-900 block text-sm mb-1">《聶魯達雙情詩》</span>
+                                <p class="text-slate-600">與妻子張芬齡合譯諾貝爾獎得主聶魯達情詩名作，精準傳遞熱烈激情。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Timeline -->
+                    <div class="space-y-4 pt-2">
+                        <h4 class="font-bold text-slate-900 text-base border-b border-slate-100 pb-2 flex items-center">
+                            <i class="fa-solid fa-timeline text-amber-500 mr-2"></i>陳黎 生平重要年表與文學里程碑
+                        </h4>
+                        <div class="relative border-l-2 border-amber-200 ml-3 space-y-5 text-xs sm:text-sm">
+                            <div class="relative pl-6">
+                                <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-amber-500 border-2 border-white"></div>
+                                <span class="font-bold text-amber-700">1954 年（民國 43 年）</span>
+                                <h5 class="font-bold text-slate-900 text-sm">出生於臺灣花蓮</h5>
+                                <p class="text-slate-600 mt-1">考入國立臺灣師範大學英語學系，大量接觸拉丁美洲與西方現代文學。</p>
+                            </div>
+                            <div class="relative pl-6">
+                                <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-amber-500 border-2 border-white"></div>
+                                <span class="font-bold text-amber-700">1975 年（民國 64 年）</span>
+                                <h5 class="font-bold text-slate-900 text-sm">出版首本詩集《廟前》</h5>
+                                <p class="text-slate-600 mt-1">展現敏銳的語言感知與詩歌結構，開啟豐富的創作生涯。</p>
+                            </div>
+                            <div class="relative pl-6">
+                                <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-amber-500 border-2 border-white"></div>
+                                <span class="font-bold text-amber-700">1980 年（民國 69 年）</span>
+                                <h5 class="font-bold text-slate-900 text-sm">獲時報文學獎敘事詩首獎</h5>
+                                <p class="text-slate-600 mt-1">以關懷瑞芳煤礦災變的長詩〈最後的王木七〉獲獎，展現極強的人文關懷與社會批判力。</p>
+                            </div>
+                            <div class="relative pl-6">
+                                <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-amber-500 border-2 border-white"></div>
+                                <span class="font-bold text-amber-700">1995 年（民國 84 年）</span>
+                                <h5 class="font-bold text-slate-900 text-sm">發表震驚文壇代表作〈戰爭交響曲〉</h5>
+                                <p class="text-slate-600 mt-1">僅用「兵、乒、乓、丘」四個字排版，將聲音、字形與戰爭意象融為一體，被列入中文現代詩教材經典。</p>
+                            </div>
+                            <div class="relative pl-6">
+                                <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-amber-500 border-2 border-white"></div>
+                                <span class="font-bold text-amber-700">2005 年（民國 94 年）</span>
+                                <h5 class="font-bold text-slate-900 text-sm">獲選「臺灣當代十大詩人」</h5>
+                                <p class="text-slate-600 mt-1">陸續獲得國家文藝獎、吳三連文藝獎、金鼎獎等國內最高文學榮譽。</p>
+                            </div>
+                            <div class="relative pl-6">
+                                <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-amber-500 border-2 border-white"></div>
+                                <span class="font-bold text-amber-700">2012 年～迄今</span>
+                                <h5 class="font-bold text-slate-900 text-sm">走向國際文壇與專職翻譯</h5>
+                                <p class="text-slate-600 mt-1">代表臺灣參加倫敦奧林匹克詩歌節；翻譯《辛波絲卡詩選》、《聶魯達雙情詩》等二十餘部世界名著。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INSTAGRAM CONTAINER -->
+            <div id="social-ig-container" class="hidden max-w-xl mx-auto bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden">
+                <!-- IG Profile Header -->
+                <div class="p-6 border-b border-slate-100">
+                    <div class="flex items-center space-x-6">
+                        <!-- High Quality Profile Avatar Box -->
+                        <div class="relative">
+                            <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full p-[3px] ig-gradient">
+                                <div class="w-full h-full bg-stone-900 rounded-full overflow-hidden flex flex-col items-center justify-center border-2 border-white">
+                                    <svg class="w-14 h-14 text-amber-200" viewBox="0 0 100 100" fill="currentColor">
+                                        <path d="M50 15 C30 15 25 35 25 50 C25 65 35 75 50 75 C65 75 75 65 75 50 C75 35 70 15 50 15 Z" fill="#fde68a" />
+                                        <path d="M25 40 C25 20 35 12 50 12 C65 12 75 20 75 40 C70 25 60 18 50 18 C40 18 30 25 25 40 Z" fill="#334155" />
+                                        <circle cx="38" cy="45" r="9" fill="none" stroke="#1e293b" stroke-width="3" />
+                                        <circle cx="62" cy="45" r="9" fill="none" stroke="#1e293b" stroke-width="3" />
+                                        <line x1="47" y1="45" x2="53" y2="45" stroke="#1e293b" stroke-width="3" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <span class="absolute bottom-1 right-1 bg-blue-500 text-white rounded-full p-1 text-xs border-2 border-white flex items-center justify-center w-5 h-5"><i class="fa-solid fa-check"></i></span>
+                        </div>
+                        <div class="space-y-2 flex-grow">
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-bold text-lg text-slate-900">chenli_poet</h3>
+                                <button class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-1.5 rounded-lg text-xs font-bold transition-colors">追蹤</button>
+                            </div>
+                            <div class="flex space-x-4 text-xs sm:text-sm">
+                                <div><span class="font-bold text-slate-900">1,954</span> 貼文</div>
+                                <div><span class="font-bold text-slate-900">42.8k</span> 粉絲</div>
+                                <div><span class="font-bold text-slate-900">320</span> 追蹤中</div>
+                            </div>
+                            <div class="text-xs space-y-0.5">
+                                <p class="font-bold text-slate-900">陳黎 (Chen Li)</p>
+                                <p class="text-slate-600">詩人 / 散文家 / 譯者 🌊 花蓮太平洋畔寫字人</p>
+                                <p class="text-amber-700 font-semibold">📍 代表作《聲音鐘》《戰爭交響曲》《小宇宙》《聶魯達雙情詩》</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Highlights Story Row -->
+                    <div class="flex space-x-4 overflow-x-auto mt-6 pt-2 pb-1 text-center text-xs">
+                        <div class="flex flex-col items-center space-y-1 flex-shrink-0 cursor-pointer">
+                            <div class="w-14 h-14 rounded-full p-0.5 border-2 border-amber-500 bg-amber-50 flex items-center justify-center text-amber-700 text-lg shadow-sm">
+                                <i class="fa-solid fa-bell"></i>
+                            </div>
+                            <span class="text-[11px] font-medium text-slate-600">聲音鐘聲景</span>
+                        </div>
+                        <div class="flex flex-col items-center space-y-1 flex-shrink-0 cursor-pointer">
+                            <div class="w-14 h-14 rounded-full p-0.5 border-2 border-slate-300 bg-slate-50 flex items-center justify-center text-slate-700 text-lg shadow-sm">
+                                <i class="fa-solid fa-burst"></i>
+                            </div>
+                            <span class="text-[11px] font-medium text-slate-600">戰爭交響曲</span>
+                        </div>
+                        <div class="flex flex-col items-center space-y-1 flex-shrink-0 cursor-pointer">
+                            <div class="w-14 h-14 rounded-full p-0.5 border-2 border-slate-300 bg-slate-50 flex items-center justify-center text-slate-700 text-lg shadow-sm">
+                                <i class="fa-solid fa-feather-pointed"></i>
+                            </div>
+                            <span class="text-[11px] font-medium text-slate-600">譯作珍藏</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IG Feed Posts Showcase -->
+                <div class="divide-y divide-slate-100">
+                    <!-- IG Post 1: 經典作品《戰爭交響曲》 -->
+                    <div class="p-4 space-y-3">
+                        <div class="flex items-center justify-between text-xs">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 rounded-full bg-stone-900 text-amber-200 font-bold flex items-center justify-center text-xs border border-amber-500">陳</div>
+                                <span class="font-bold text-slate-900">chenli_poet</span>
+                                <span class="text-slate-400">· 經典作品展示</span>
+                            </div>
+                            <i class="fa-solid fa-ellipsis text-slate-400"></i>
+                        </div>
+                        <!-- Concrete Poetry Graphic Render Card -->
+                        <div class="rounded-2xl bg-stone-900 p-6 text-slate-100 font-mono shadow-inner border border-stone-800 space-y-4">
+                            <div class="text-center border-b border-stone-700 pb-2">
+                                <span class="text-amber-400 font-serif font-bold text-lg">《戰爭交響曲》 (1995)</span>
+                                <span class="text-stone-400 text-xs block">中文具象詩（Concrete Poetry）代表作</span>
+                            </div>
+                            <div class="text-xs sm:text-sm leading-snug tracking-widest text-stone-300 space-y-2 text-center py-2">
+                                <p class="text-emerald-400">兵 兵 兵 兵 兵 兵 兵 兵 兵 兵</p>
+                                <p class="text-amber-400">乒 乓 乒 乓 乒 乓 乒 乓 乒 乓</p>
+                                <p class="text-rose-400">丘 丘 丘 丘 丘 丘 丘 丘 丘 丘</p>
+                            </div>
+                            <p class="text-[11px] text-stone-400 text-center font-serif italic">「兵是健全的戰士，乒與乓是被砲火折損的手腳，丘是無言的墓塚。」</p>
+                        </div>
+                        <div class="flex items-center justify-between text-lg text-slate-700 pt-1">
+                            <div class="flex space-x-4">
+                                <i class="fa-solid fa-heart text-rose-500 cursor-pointer"></i>
+                                <i class="fa-regular fa-comment hover:text-amber-600 cursor-pointer"></i>
+                                <i class="fa-regular fa-paper-plane hover:text-amber-600 cursor-pointer"></i>
+                            </div>
+                            <i class="fa-solid fa-bookmark text-amber-600 cursor-pointer"></i>
+                        </div>
+                        <div class="text-xs space-y-1">
+                            <p class="font-bold text-slate-900">5,420 個讚</p>
+                            <p><span class="font-bold text-slate-900 mr-1.5">chenli_poet</span>【經典詩作回顧】《戰爭交響曲》全詩僅用「兵、乒、乓、丘」四個形似字排列。不費冗長詞彙，以視覺與字形消逝呈現戰爭的悲憫與殘酷。#戰爭交響曲 #陳黎現代詩 #具象詩</p>
+                            <p class="text-slate-400 text-[10px] uppercase pt-1">2 DAYS AGO</p>
+                        </div>
+                    </div>
+
+                    <!-- IG Post 2: 經典散文《聲音鐘》與叫賣聲 -->
+                    <div class="p-4 space-y-3">
+                        <div class="flex items-center justify-between text-xs">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 rounded-full bg-amber-700 text-white font-bold flex items-center justify-center text-xs">陳</div>
+                                <span class="font-bold text-slate-900">chenli_poet</span>
+                                <span class="text-slate-400">· 花蓮市</span>
+                            </div>
+                            <i class="fa-solid fa-ellipsis text-slate-400"></i>
+                        </div>
+                        <!-- Styled Sound Clock Card -->
+                        <div class="rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 p-6 text-white shadow-md text-center space-y-2">
+                            <i class="fa-solid fa-quote-left text-3xl opacity-30"></i>
+                            <h4 class="text-xl font-bold font-serif">「鹹————芭樂！<br>鹹————甜脆，甘————的哦！」</h4>
+                            <p class="text-xs text-amber-100 font-serif">—— 國中文學課本第一課《聲音鐘》</p>
+                        </div>
+                        <div class="flex items-center justify-between text-lg text-slate-700 pt-1">
+                            <div class="flex space-x-4">
+                                <i class="fa-regular fa-heart hover:text-rose-500 cursor-pointer"></i>
+                                <i class="fa-regular fa-comment hover:text-amber-600 cursor-pointer"></i>
+                                <i class="fa-regular fa-paper-plane hover:text-amber-600 cursor-pointer"></i>
+                            </div>
+                            <i class="fa-regular fa-bookmark hover:text-amber-600 cursor-pointer"></i>
+                        </div>
+                        <div class="text-xs space-y-1">
+                            <p class="font-bold text-slate-900">3,892 個讚</p>
+                            <p><span class="font-bold text-slate-900 mr-1.5">chenli_poet</span>下午把書桌移到後面房間，耳邊傳來阿伯的「鹹——芭樂」叫賣聲。這不只是報時，更是人間最美妙的天籟詩篇。☕📖 #聲音鐘 #花蓮日常 #心情的時間</p>
+                            <p class="text-slate-400 text-[10px] uppercase pt-1">3 hours ago</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- THREADS CONTAINER -->
+            <div id="social-threads-container" class="hidden max-w-lg mx-auto bg-white rounded-3xl border border-slate-200 shadow-xl p-6 space-y-6">
+                <!-- Threads Header -->
+                <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-brands fa-threads text-3xl text-slate-900"></i>
+                        <div>
+                            <h3 class="font-bold text-slate-900">陳黎 @chenli_poet</h3>
+                            <p class="text-xs text-slate-500">Threads 串文 · 《陳黎跨世紀詩選》專欄</p>
+                        </div>
+                    </div>
+                    <span class="text-xs font-semibold bg-amber-100 text-amber-800 px-3 py-1 rounded-full flex items-center gap-1">
+                        <i class="fa-solid fa-book-bookmark"></i>跨世紀詩選
+                    </span>
+                </div>
+
+                <!-- Threads Feed Items -->
+                <div class="space-y-6 text-sm divide-y divide-slate-100">
+                    <!-- Thread Item 1: 《陳黎跨世紀詩選》小宇宙 -->
+                    <div class="pt-4 space-y-3">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-9 h-9 rounded-full bg-amber-600 text-white font-bold flex items-center justify-center text-xs shadow-sm">陳</div>
+                                <div>
+                                    <span class="font-bold text-slate-900">chenli_poet</span>
+                                    <span class="text-xs text-slate-400 ml-2">2 小時前</span>
+                                </div>
+                            </div>
+                            <span class="text-[11px] bg-rose-50 text-rose-700 px-2 py-0.5 rounded border border-rose-100 font-bold">選自《跨世紀詩選》</span>
+                        </div>
+                        <!-- Poem Quote Box -->
+                        <div class="bg-amber-50/80 rounded-2xl p-4 border border-amber-200/80 text-slate-800 font-serif leading-relaxed space-y-1 my-2">
+                            <div class="text-xs font-bold text-amber-800 mb-1 flex items-center"><i class="fa-solid fa-quote-left mr-1.5 opacity-60"></i>〈小宇宙 65〉</div>
+                            <p class="font-semibold text-slate-900">星期天是烤得剛剛好的土司麵包，</p>
+                            <p class="font-semibold text-slate-900">奶油塗在假期的上方，</p>
+                            <p class="font-semibold text-slate-900">太陽在窗外微笑。</p>
+                        </div>
+                        <p class="text-slate-700 leading-relaxed text-xs sm:text-sm">
+                            在《陳黎跨世紀詩選》收錄的《小宇宙》俳句裡，我用三行字捕捉生活的悠閒。就像《聲音鐘》裡小販叫賣聲帶來的溫馨，塗上奶油的烤土司，不也是繁忙生活裡最美好的「心情時間」嗎？🍞✨
+                        </p>
+                        <div class="flex items-center space-x-6 text-slate-500 text-xs pt-1">
+                            <button class="hover:text-rose-500 flex items-center space-x-1"><i class="fa-regular fa-heart"></i><span>1,520</span></button>
+                            <button class="hover:text-sky-500 flex items-center space-x-1"><i class="fa-regular fa-comment"></i><span>138</span></button>
+                            <button class="hover:text-emerald-500 flex items-center space-x-1"><i class="fa-solid fa-retweet"></i><span>286</span></button>
+                        </div>
+                    </div>
+
+                    <!-- Thread Item 2: 《陳黎跨世紀詩選》戰爭交響曲 -->
+                    <div class="pt-4 space-y-3">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-9 h-9 rounded-full bg-amber-600 text-white font-bold flex items-center justify-center text-xs shadow-sm">陳</div>
+                                <div>
+                                    <span class="font-bold text-slate-900">chenli_poet</span>
+                                    <span class="text-xs text-slate-400 ml-2">昨天 18:30</span>
+                                </div>
+                            </div>
+                            <span class="text-[11px] bg-sky-50 text-sky-700 px-2 py-0.5 rounded border border-sky-100 font-bold">選自《跨世紀詩選》</span>
+                        </div>
+                        <!-- Concrete Poetry Graphic Box -->
+                        <div class="bg-stone-900 rounded-2xl p-4 text-slate-100 font-mono text-center space-y-2 shadow-md my-2 border border-stone-800">
+                            <div class="text-xs text-amber-400 font-serif font-bold">〈戰爭交響曲〉（視覺具象詩）</div>
+                            <div class="text-xs tracking-widest space-y-1 py-1 font-bold">
+                                <p class="text-emerald-400">兵 兵 兵 兵 兵 兵 兵 兵</p>
+                                <p class="text-amber-400">乒 乓 乒 乓 乒 乓 乒 乓</p>
+                                <p class="text-rose-400">丘 丘 丘 丘 丘 丘 丘 丘</p>
+                            </div>
+                        </div>
+                        <p class="text-slate-700 leading-relaxed text-xs sm:text-sm">
+                            收錄於《陳黎跨世紀詩選》經典具象詩〈戰爭交響曲〉。「兵」是整齊出征的戰士，「乒、乓」是被砲火折損的手腳殘肢，「丘」是默默無言的荒塚墓碑。文字不只是意義，字形與聲音本身就能傳遞極具震撼力的批判與悲憫。⚔️🕊️
+                        </p>
+                        <div class="flex items-center space-x-6 text-slate-500 text-xs pt-1">
+                            <button class="hover:text-rose-500 flex items-center space-x-1"><i class="fa-regular fa-heart"></i><span>3,410</span></button>
+                            <button class="hover:text-sky-500 flex items-center space-x-1"><i class="fa-regular fa-comment"></i><span>215</span></button>
+                            <button class="hover:text-emerald-500 flex items-center space-x-1"><i class="fa-solid fa-retweet"></i><span>512</span></button>
+                        </div>
+                    </div>
+
+                    <!-- Thread Item 3: 《陳黎跨世紀詩選》鄉土與花蓮 -->
+                    <div class="pt-4 space-y-3">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-9 h-9 rounded-full bg-amber-600 text-white font-bold flex items-center justify-center text-xs shadow-sm">陳</div>
+                                <div>
+                                    <span class="font-bold text-slate-900">chenli_poet</span>
+                                    <span class="text-xs text-slate-400 ml-2">3 天前</span>
+                                </div>
+                            </div>
+                            <span class="text-[11px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-100 font-bold">選自《跨世紀詩選》</span>
+                        </div>
+                        <div class="bg-emerald-50/80 rounded-2xl p-4 border border-emerald-200/80 text-emerald-950 font-serif leading-relaxed text-xs sm:text-sm my-2">
+                            <i class="fa-solid fa-quote-left mr-1 text-emerald-600"></i>
+                            「海帶給我們浪花，山帶給我們綠意，我們在太平洋的風裡，聽著小販聲音鐘敲響生活的旋律。」
+                        </div>
+                        <p class="text-slate-700 leading-relaxed text-xs sm:text-sm">
+                            整理四十年《跨世紀詩選》時，再次感受到花蓮土地對我創作的深遠影響。不論是寫詩還是寫國文課文《聲音鐘》，這些來自市井小民與土地的真摯情感，永遠是我創作靈感的泉源。🌊🏔️ #陳黎跨世紀詩選 #花蓮 #土地情懷
+                        </p>
+                        <div class="flex items-center space-x-6 text-slate-500 text-xs pt-1">
+                            <button class="hover:text-rose-500 flex items-center space-x-1"><i class="fa-regular fa-heart"></i><span>2,180</span></button>
+                            <button class="hover:text-sky-500 flex items-center space-x-1"><i class="fa-regular fa-comment"></i><span>164</span></button>
+                            <button class="hover:text-emerald-500 flex items-center space-x-1"><i class="fa-solid fa-retweet"></i><span>310</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: 閱讀評量測驗 (FORMATIVE & SUMMATIVE WITH GUIDED FEEDBACK) -->
+        <section id="section-quiz" class="tab-content hidden space-y-8">
+            <div class="text-center max-w-3xl mx-auto space-y-2">
+                <span class="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-bold uppercase">總結性評量 · 引導式學習</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-serif">《聲音鐘》全篇文意理解測驗</h2>
+                <p class="text-slate-600 text-sm">答錯時系統**不會直接給出答案**，而是提供思考引導線索，幫助你回頭閱讀課文尋找正確解答！</p>
+            </div>
+
+            <div class="max-w-3xl mx-auto space-y-6" id="quiz-container">
+                <!-- Quiz Item 1 -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4" id="quiz-card-1">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold bg-amber-100 text-amber-800 px-3 py-1 rounded-full">第 1 題 / 單選</span>
+                        <span class="text-xs text-slate-400">課文快篩理解</span>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-base sm:text-lg">
+                        1. 作者為什麼將小販的叫賣聲稱為「聲音鐘」？
+                    </h3>
+                    <div class="space-y-2 text-sm">
+                        <button onclick="handleSummativeAnswer(1, 'A', false)" class="w-full text-left p-3 rounded-xl border border-slate-200 hover:border-amber-500 hover:bg-amber-50/50 transition-all font-medium">A. 小販來的時候都會敲響大銅鐘引起大家注意</button>
+                        <button onclick="handleSummativeAnswer(1, 'B', false)" class="w-full text-left p-3 rounded-xl border border-slate-200 hover:border-amber-500 hover:bg-amber-50/50 transition-all font-medium">B. 他們叫賣的聲音跟時鐘報時一樣精準，分秒不差</button>
+                        <button onclick="handleSummativeAnswer(1, 'C', true)" class="w-full text-left p-3 rounded-xl border border-slate-200 hover:border-amber-500 hover:bg-amber-50/50 transition-all font-medium">C. 小販出現的時間極具規律性，能提示時刻、星期或季節</button>
+                        <button onclick="handleSummativeAnswer(1, 'D', false)" class="w-full text-left p-3 rounded-xl border border-slate-200 hover:border-amber-500 hover:bg-amber-50/50 transition-all font-medium">D. 因為聲音鐘是專門用來販賣鐘錶商品的叫賣聲</button>
+                    </div>
+                    <div id="quiz-feedback-1" class="hidden p-4 rounded-xl text-xs sm:text-sm leading-relaxed"></div>
+                </div>
+
+                <!-- Quiz Item 2 -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4" id="quiz-card-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold bg-amber-100 text-amber-800 px-3 py-1 rounded-full">第 2 題 / 單選</span>
+                        <span class="text-xs text-slate-400">深層意涵</span>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-base sm:text-lg">
+                        2. 作者認為聲音鐘構築的是「心情的時間」而非「物理的時間」，原因何在？
+                    </h3>
+                    <div class="space-y-2 text-sm">
+                        <button onclick="handleSummativeAnswer(2, 'A', true)" class="w-full text-left p-3 rounded-xl border border-slate-200 hover:border-amber-500 hover:bg-amber-50/50 transition-all font-medium">A. 叫賣聲的報時方式與時機充滿變化、趣味與人間溫情</button>
+                        <button onclick="handleSummativeAnswer(2, 'B', false)" class="w-full text-left p-3 rounded-xl border border-slate-200 hover:border-amber-500 hover:bg-amber-50/50 transition-all font-medium">B. 叫賣聲完全依照作者的心情好壞來決定是否出現</button>
+                        <button onclick="handleSummativeAnswer(2, 'C', false)" class="w-full text-left p-3 rounded-xl border border-slate-200 hover:border-amber-500 hover:bg-amber-50/50 transition-all font-medium">C. 因為物理時鐘經常壞掉，小販的叫賣聲比較準確</button>
+                        <button onclick="handleSummativeAnswer(2, 'D', false)" class="w-full text-left p-3 rounded-xl border border-slate-200 hover:border-amber-500 hover:bg-amber-50/50 transition-all font-medium">D. 小販可以透過叫賣聲精準預測氣象與心情指數</button>
+                    </div>
+                    <div id="quiz-feedback-2" class="hidden p-4 rounded-xl text-xs sm:text-sm leading-relaxed"></div>
+                </div>
+
+                <!-- Quiz Item 3 -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4" id="quiz-card-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold bg-amber-100 text-amber-800 px-3 py-1 rounded-full">第 3 題 / 單選</span>
+                        <span class="text-xs text-slate-400">修辭技巧</span>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-base sm:text-lg">
+                        3. 「我喜歡聽那些像鐘一般準確出現的小販的叫賣聲。」這句話在全文結構上有何作用？
+                    </h3>
+                    <div class="space-y-2 text-sm">
+                        <button onclick="handleSummativeAnswer(3, 'A', false)" class="w-full text-left p-3 rounded-xl border border-slate-200 hover:border-amber-500 hover:bg-amber-50/50 transition-all font-medium">A. 承上啟下，預告下文天氣轉變</button>
+                        <button onclick="handleSummativeAnswer(3, 'B', true)" class="w-full text-left p-3 rounded-xl border border-slate-200 hover:border-amber-500 hover:bg-amber-50/50 transition-all font-medium">B. 首尾呼應，點明主題並強化感情</button>
+                        <button onclick="handleSummativeAnswer(3, 'C', false)" class="w-full text-left p-3 rounded-xl border border-slate-200 hover:border-amber-500 hover:bg-amber-50/50 transition-all font-medium">C. 對比說明現代生活與古代生活的差異</button>
+                        <button onclick="handleSummativeAnswer(3, 'D', false)" class="w-full text-left p-3 rounded-xl border border-slate-200 hover:border-amber-500 hover:bg-amber-50/50 transition-all font-medium">D. 引用典故，說明小販歷史淵源</button>
+                    </div>
+                    <div id="quiz-feedback-3" class="hidden p-4 rounded-xl text-xs sm:text-sm leading-relaxed"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: 語文充電站 (LOANWORDS & EXTENDED LEARNING) -->
+        <section id="section-enrichment" class="tab-content hidden space-y-8">
+            <div class="text-center max-w-3xl mx-auto space-y-2">
+                <span class="px-3 py-1 bg-sky-100 text-sky-800 rounded-full text-xs font-bold uppercase">語文充電站</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-serif">趣談日常生活中的「外來語」</h2>
+                <p class="text-slate-600 text-sm">課文中的「歐巴桑」、「阿奇毛」都是來自日文的音譯外來語。點擊卡片探索外來語的豐富來源！</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4 hover:border-rose-400 transition-all">
+                    <div class="flex items-center space-x-3 text-rose-600">
+                        <i class="fa-solid fa-torii-gate text-2xl"></i>
+                        <h3 class="font-bold text-lg text-slate-900">來自日語的音譯</h3>
+                    </div>
+                    <ul class="space-y-3 text-sm text-slate-700">
+                        <li class="bg-rose-50 p-3 rounded-xl border border-rose-100">
+                            <span class="font-bold text-rose-900">歐巴桑 (obasan)：</span>原指大嫂、阿姨，現泛指中老年女性。
+                        </li>
+                        <li class="bg-rose-50 p-3 rounded-xl border border-rose-100">
+                            <span class="font-bold text-rose-900">阿奇毛 (yakiimo)：</span>日語烤地瓜（烤番薯）。
+                        </li>
+                        <li class="bg-rose-50 p-3 rounded-xl border border-rose-100">
+                            <span class="font-bold text-rose-900">沙西米 / 壽司：</span>生魚片 (Sashimi) 與 壽司 (Sushi)。
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4 hover:border-sky-400 transition-all">
+                    <div class="flex items-center space-x-3 text-sky-600">
+                        <i class="fa-solid fa-earth-americas text-2xl"></i>
+                        <h3 class="font-bold text-lg text-slate-900">來自英語的音譯</h3>
+                    </div>
+                    <ul class="space-y-3 text-sm text-slate-700">
+                        <li class="bg-sky-50 p-3 rounded-xl border border-sky-100">
+                            <span class="font-bold text-sky-900">三明治 (Sandwich)：</span>夾心麵包點心。
+                        </li>
+                        <li class="bg-sky-50 p-3 rounded-xl border border-sky-100">
+                            <span class="font-bold text-sky-900">幽默 (Humor)：</span>詼諧有趣，由林語堂先生翻譯推廣。
+                        </li>
+                        <li class="bg-sky-50 p-3 rounded-xl border border-sky-100">
+                            <span class="font-bold text-sky-900">拷貝 (Copy)：</span>複製文件或資料。
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4 hover:border-amber-400 transition-all">
+                    <div class="flex items-center space-x-3 text-amber-600">
+                        <i class="fa-solid fa-vihara text-2xl"></i>
+                        <h3 class="font-bold text-lg text-slate-900">古印度梵語音譯</h3>
+                    </div>
+                    <ul class="space-y-3 text-sm text-slate-700">
+                        <li class="bg-amber-50 p-3 rounded-xl border border-amber-100">
+                            <span class="font-bold text-amber-900">浮屠 (Buddha / Stupa)：</span>指佛陀或佛塔（如：勝造七級浮屠）。
+                        </li>
+                        <li class="bg-amber-50 p-3 rounded-xl border border-amber-100">
+                            <span class="font-bold text-amber-900">剎那 (Ksana)：</span>極短的時間瞬間。
+                        </li>
+                        <li class="bg-amber-50 p-3 rounded-xl border border-amber-100">
+                            <span class="font-bold text-amber-900">菩薩 (Bodhisattva)：</span>佛教覺悟有情者。
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Rhetoric & Vocab Explanation Modal Drawer -->
+    <div id="info-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 space-y-4 shadow-2xl border border-slate-100 transform transition-all">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 id="modal-title" class="font-bold text-lg text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-lightbulb text-amber-500"></i>解析說明
+                </h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 p-1">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+            <div id="modal-content" class="text-sm text-slate-700 leading-relaxed space-y-2"></div>
+            <div class="pt-2 flex justify-end">
+                <button onclick="closeModal()" class="bg-amber-600 text-white px-5 py-2 rounded-xl text-xs font-bold hover:bg-amber-700 transition-colors">知道了</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSpeechRate = 1.0;
+        let isSpeaking = false;
+
+        // Switch main top navigation tabs
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            const targetSection = document.getElementById(`section-${tabId}`);
+            if (targetSection) targetSection.classList.remove('hidden');
+
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            const activeNav = document.getElementById(`nav-${tabId}`);
+            if (activeNav) activeNav.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Switch social sub-tabs in Author Section (Bio vs IG vs Threads)
+        function switchSocialTab(platform) {
+            const bioContainer = document.getElementById('social-bio-container');
+            const igContainer = document.getElementById('social-ig-container');
+            const threadsContainer = document.getElementById('social-threads-container');
+            
+            const bioBtn = document.getElementById('social-tab-bio');
+            const igBtn = document.getElementById('social-tab-ig');
+            const threadsBtn = document.getElementById('social-tab-threads');
+
+            bioContainer.classList.add('hidden');
+            igContainer.classList.add('hidden');
+            threadsContainer.classList.add('hidden');
+
+            bioBtn.className = "px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-sm flex items-center space-x-2 bg-slate-200 text-slate-700 hover:bg-slate-300";
+            igBtn.className = "px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-sm flex items-center space-x-2 bg-slate-200 text-slate-700 hover:bg-slate-300";
+            threadsBtn.className = "px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-sm flex items-center space-x-2 bg-slate-200 text-slate-700 hover:bg-slate-300";
+
+            if (platform === 'bio') {
+                bioContainer.classList.remove('hidden');
+                bioBtn.className = "px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-md flex items-center space-x-2 bg-amber-600 text-white";
+            } else if (platform === 'ig') {
+                igContainer.classList.remove('hidden');
+                igBtn.className = "px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-md flex items-center space-x-2 bg-gradient-to-r from-purple-600 via-pink-600 to-rose-500 text-white";
+            } else if (platform === 'threads') {
+                threadsContainer.classList.remove('hidden');
+                threadsBtn.className = "px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-md flex items-center space-x-2 bg-slate-900 text-white";
+            }
+        }
+
+        function changeSpeechRate() {
+            const select = document.getElementById('speech-rate');
+            currentSpeechRate = parseFloat(select.value);
+            if (isSpeaking) {
+                window.speechSynthesis.cancel();
+                isSpeaking = false;
+                updateAudioUI(false);
+            }
+        }
+
+        function toggleGlobalAudio() {
+            if (isSpeaking) {
+                window.speechSynthesis.cancel();
+                isSpeaking = false;
+                updateAudioUI(false);
+            } else {
+                const fullText = document.getElementById('p1-text').innerText + ' ' +
+                                 document.getElementById('p2-text').innerText + ' ' +
+                                 document.getElementById('p3-text').innerText + ' ' +
+                                 document.getElementById('p5-text').innerText + ' ' +
+                                 document.getElementById('p7-text').innerText + ' ' +
+                                 document.getElementById('p9-text').innerText;
+                speakText(fullText);
+            }
+        }
+
+        function speakParagraph(elementId) {
+            window.speechSynthesis.cancel();
+            const text = document.getElementById(elementId).innerText;
+            speakText(text);
+        }
+
+        function speakText(text) {
+            if (!('speechSynthesis' in window)) {
+                alert('您的瀏覽器暫不支援語音報讀功能。');
+                return;
+            }
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'zh-TW';
+            utterance.rate = currentSpeechRate;
+
+            utterance.onstart = () => {
+                isSpeaking = true;
+                updateAudioUI(true);
+            };
+
+            utterance.onend = () => {
+                isSpeaking = false;
+                updateAudioUI(false);
+            };
+
+            utterance.onerror = () => {
+                isSpeaking = false;
+                updateAudioUI(false);
+            };
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function updateAudioUI(playing) {
+            const icon = document.getElementById('icon-global-audio');
+            const text = document.getElementById('text-global-audio');
+            if (playing) {
+                icon.className = "fa-solid fa-circle-pause text-lg text-rose-600 animate-pulse";
+                text.innerText = "暫停報讀";
+            } else {
+                icon.className = "fa-solid fa-circle-play text-lg text-amber-600";
+                text.innerText = "全文報讀";
+            }
+        }
+
+        // Formative Check Logic with Hints
+        function checkFormative(qNum, option) {
+            const feedbackEl = document.getElementById(`formative-feedback-${qNum}`);
+            feedbackEl.classList.remove('hidden');
+
+            if (qNum === 1) {
+                if (option === 'B') {
+                    feedbackEl.className = "mt-3 p-3 rounded-xl bg-emerald-100 text-emerald-900 border border-emerald-300 font-medium";
+                    feedbackEl.innerHTML = "🎉 <b>太棒了！答對囉！</b><br>作者在看完報、想吃早餐時，小販正好叫賣豆奶與煎包，精準提示了清晨早點的時間。";
+                } else {
+                    feedbackEl.className = "mt-3 p-3 rounded-xl bg-amber-100 text-amber-900 border border-amber-300";
+                    feedbackEl.innerHTML = "💡 <b>思考小幫手（引導提示）：</b><br>請再看一次課文：「早起，看完報，你想起自己還沒吃早餐，『豆奶哦！煎包哦！』叫賣聲就正好穿過推開的窗戶...」這是在一天中的什麼時候呢？再試試看！";
+                }
+            } else if (qNum === 2) {
+                if (option === 'B') {
+                    feedbackEl.className = "mt-3 p-3 rounded-xl bg-emerald-100 text-emerald-900 border border-emerald-300 font-medium";
+                    feedbackEl.innerHTML = "🎉 <b>答對囉！非常敏銳！</b><br>從熱呼呼的燒仙草換成冷豆花，象徵氣溫回暖、春暖花開的春天到了！";
+                } else {
+                    feedbackEl.className = "mt-3 p-3 rounded-xl bg-amber-100 text-amber-900 border border-amber-300";
+                    feedbackEl.innerHTML = "💡 <b>思考小幫手（引導提示）：</b><br>想想看：冬天天氣寒冷時大家喜歡吃熱熱的「燒仙草」，當小販改喊「涼甜冰爽的冷豆花」時，代表天氣開始變得如何？是哪一個季節呢？";
+                }
+            }
+        }
+
+        // Summative Quiz Logic with Non-revealing Guidance
+        function handleSummativeAnswer(qNum, option, isCorrect) {
+            const feedbackEl = document.getElementById(`quiz-feedback-${qNum}`);
+            feedbackEl.classList.remove('hidden');
+
+            if (isCorrect) {
+                feedbackEl.className = "p-4 rounded-xl bg-emerald-100 text-emerald-900 border border-emerald-300 font-medium space-y-1";
+                feedbackEl.innerHTML = `
+                    <div class="flex items-center space-x-2 font-bold text-base text-emerald-800">
+                        <i class="fa-solid fa-circle-check text-xl"></i><span>回答正確！完全掌握課文精髓！</span>
+                    </div>
+                    <p class="text-xs sm:text-sm">你成功理解了《聲音鐘》的核心意涵！叫賣聲不只是時間的標記，更是生活的情味所在。</p>
+                `;
+            } else {
+                feedbackEl.className = "p-4 rounded-xl bg-rose-50 text-rose-900 border border-rose-200 space-y-2";
+                let hintText = "";
+                if (qNum === 1) {
+                    hintText = "提示：小販們真的有手拿大銅鐘敲擊嗎？作者說「修理沙發」代表週末，「賣衛生紙」代表星期天，這說明了叫賣聲與什麼樣的頻率、週期有關？請回頭閱讀第九段！";
+                } else if (qNum === 2) {
+                    hintText = "提示：時鐘的「噹、噹、噹」是冰冷的物理數字；但賣芭樂老伯的「鹹——芭樂」卻帶有抑揚頓挫與人間情感。這代表小販與居民之間充滿了什麼樣的關係？";
+                } else if (qNum === 3) {
+                    hintText = "提示：請比對課文的第一句與最後一句！作者在開頭與結尾用了完全相同的文句，這種寫作手法在文章結構上叫作什麼？";
+                }
+
+                feedbackEl.innerHTML = `
+                    <div class="flex items-center space-x-2 font-bold text-rose-800 text-sm">
+                        <i class="fa-solid fa-compass text-rose-600"></i><span>還差一點點喔！先不要放棄，我們來思考看看：</span>
+                    </div>
+                    <p class="text-xs sm:text-sm leading-relaxed">${hintText}</p>
+                    <button onclick="this.parentElement.classList.add('hidden')" class="mt-2 bg-rose-600 text-white text-xs px-3 py-1.5 rounded-lg hover:bg-rose-700 transition-colors font-bold">
+                        <i class="fa-solid fa-rotate-left mr-1"></i>重新閱讀並再試一次
+                    </button>
+                `;
+            }
+        }
+
+        function showRhetoricModal(title, content) {
+            document.getElementById('modal-title').innerHTML = `<i class="fa-solid fa-wand-magic-sparkles text-sky-500"></i> 修辭解析：${title}`;
+            document.getElementById('modal-content').innerHTML = content;
+            document.getElementById('info-modal').classList.remove('hidden');
+        }
+
+        function showVocabModal(word, bopomofo, content) {
+            document.getElementById('modal-title').innerHTML = `<i class="fa-solid fa-book text-emerald-500"></i> 字詞注釋：${word} <span class="text-xs font-normal text-slate-500">（${bopomofo}）</span>`;
+            document.getElementById('modal-content').innerHTML = content;
+            document.getElementById('info-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('info-modal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
