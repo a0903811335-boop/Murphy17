@@ -37,18 +37,6 @@
               800: '#6022b0',
               900: '#4f1e8e',
               950: '#320f63',
-            },
-            sunlight: {
-              50: '#fffbeb',
-              100: '#fef3c7',
-              200: '#fde68a',
-              300: '#fcd34d',
-              400: '#fbbf24',
-              500: '#f59e0b',
-              600: '#d97706',
-              700: '#b45309',
-              800: '#92400e',
-              900: '#78350f',
             }
           }
         }
@@ -61,8 +49,9 @@
       background-color: #fdfbf7;
     }
     .chat-bubble-author {
-      background: linear-gradient(135deg, #ffffff 0%, #faf5ff 100%);
+      background: #ffffff;
       border-left: 4px solid #732ad3;
+      box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.05);
     }
     .chat-bubble-user {
       background: linear-gradient(135deg, #732ad3 0%, #4f1e8e 100%);
@@ -71,7 +60,7 @@
     .author-card.active {
       border-color: #732ad3;
       background-color: #f3eeff;
-      box-shadow: 0 10px 20px -5px rgba(115, 42, 211, 0.2);
+      box-shadow: 0 8px 16px -4px rgba(115, 42, 211, 0.2);
     }
     .typing-cursor::after {
       content: '▋';
@@ -125,17 +114,17 @@
   </header>
 
   <!-- Hero Header -->
-  <section class="bg-gradient-to-r from-purple-950 via-lilac-950 to-slate-950 text-white py-8 px-4 sm:px-6 lg:px-8 border-b border-lilac-800 relative overflow-hidden">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4 relative z-10">
+  <section class="bg-gradient-to-r from-purple-950 via-lilac-950 to-slate-950 text-white py-8 px-4 sm:px-6 lg:px-8 border-b border-lilac-800">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
       <div class="space-y-2">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-sunlight-300 border border-white/20">
-          <i class="fa-solid fa-wand-magic-sparkles"></i> AI 模擬文人智者 · 跨越時空的思維對談
+          <i class="fa-solid fa-comments"></i> 傾聽文人真實人生態度與處世觀點
         </div>
         <h2 class="text-2xl sm:text-3xl font-serif font-black text-white">
-          與歷代詩人作家，展開一場靈魂的深度對話
+          直面請教作者：人生困惑、創作心法與真實價值觀
         </h2>
         <p class="text-xs sm:text-sm text-lilac-200 max-w-2xl leading-relaxed">
-          點選左側詩人或現代名家，向他們請教詩詞創作心法、人生抉擇、豁達哲學或課文背後的真實故事。
+          不論你問學業壓力、友情挫折、生活迷茫還是寫作瓶頸，作者都將誠實地以其一生的生命經驗與哲學態度，為你提供真誠具體的解答。
         </p>
       </div>
 
@@ -188,28 +177,28 @@
       <div class="p-4 sm:p-5 border-b border-slate-100 bg-slate-50/70 flex items-center justify-between gap-3">
         
         <div class="flex items-center space-x-3 min-w-0">
-          <div id="current-author-avatar" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-lilac-600 to-indigo-700 text-white flex items-center justify-center text-xl shadow-md shrink-0">
-            <i class="fa-solid fa-moon"></i>
+          <div id="current-author-avatar" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-700 text-white flex items-center justify-center text-xl shadow-md shrink-0">
+            <i class="fa-solid fa-feather-pointed"></i>
           </div>
           <div class="min-w-0">
             <div class="flex items-center gap-2">
               <h3 id="current-author-name" class="text-base sm:text-lg font-serif font-black text-slate-900 truncate">
-                李白
+                蘇軾 (蘇東坡)
               </h3>
-              <span id="current-author-badge" class="px-2 py-0.5 bg-amber-100 text-amber-900 text-[10px] font-bold rounded-full border border-amber-200 shrink-0">
-                詩仙 · 盛唐
+              <span id="current-author-badge" class="px-2 py-0.5 bg-purple-100 text-purple-900 text-[10px] font-bold rounded-full border border-purple-200 shrink-0">
+                東坡居士 · 北宋
               </span>
             </div>
             <p id="current-author-quote" class="text-xs text-slate-500 truncate font-serif italic">
-              「天生我材必有用，千金散盡還復來。」
+              「回首向來蕭瑟處，歸去，也無風雨也無晴。」
             </p>
           </div>
         </div>
 
         <!-- Author Profile Tag Info -->
         <div class="hidden sm:flex flex-col items-end text-right text-[11px] text-slate-500 shrink-0">
-          <span id="current-author-dynasty" class="font-semibold text-slate-700">唐朝 (701 - 762)</span>
-          <span id="current-author-style" class="text-lilac-700 font-medium">浪漫主義豪放詩風</span>
+          <span id="current-author-dynasty" class="font-semibold text-slate-700">北宋 (1037 - 1101)</span>
+          <span id="current-author-style" class="text-lilac-700 font-medium">豁達超然 · 隨遇而安</span>
         </div>
 
       </div>
@@ -222,7 +211,7 @@
       <!-- Quick Question Pills Bar -->
       <div class="px-4 py-2.5 bg-lilac-50/70 border-t border-lilac-100 overflow-x-auto whitespace-nowrap space-x-2 flex items-center">
         <span class="text-[11px] font-bold text-lilac-900 shrink-0 flex items-center gap-1">
-          <i class="fa-solid fa-lightbulb text-sunlight-600"></i> 請教靈感：
+          <i class="fa-solid fa-lightbulb text-amber-500"></i> 常見提問範例：
         </span>
         <div id="preset-questions" class="flex space-x-2">
           <!-- Dynamic Preset Question Pills -->
@@ -236,7 +225,7 @@
             <input 
               type="text" 
               id="user-input" 
-              placeholder="請輸入您想請教的問題...（例如：您當初寫這首詩的心情是什麼？）"
+              placeholder="請直接向作者提問（例如：我考試考差了很焦慮怎麼辦？你怎麼看待別人的背叛？）"
               class="w-full pl-4 pr-10 py-3 bg-slate-50 border border-slate-300 rounded-2xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-lilac-500 focus:bg-white transition"
               autocomplete="off"
             >
@@ -272,353 +261,265 @@
         <a href="修辭.html" class="hover:text-white">✍️ 修辭學堂</a>
       </div>
       <div>
-        © 2026 國中文學數位美感教學資源網 · 問問作者 AI 文學對話系統
+        © 2026 國中文學數位美感教學資源網 · 問問作者 文學態度對話系統
       </div>
     </div>
   </footer>
 
-  <!-- Core JavaScript Logic & Literary Persona Knowledge Engine -->
+  <!-- Intelligent Semantic Response Engine -->
   <script>
-    // --- Literary Personas Master Database ---
+    // --- Author Profiles & Life Philosophy Engine ---
     const authorsData = [
-      {
-        id: "libai",
-        name: "李白",
-        category: "ancient",
-        dynasty: "唐朝 (701 - 762)",
-        style: "浪漫主義豪放詩仙",
-        badge: "詩仙 · 盛唐",
-        badgeColor: "bg-amber-100 text-amber-900 border-amber-300",
-        icon: "fa-solid fa-wine-bottle",
-        iconBg: "from-amber-500 to-orange-600",
-        quote: "「天生我材必有用，千金散盡還復來。」",
-        bio: "字太白，號青蓮居士。個性豪放不羈，好飲酒作詩，喜任俠遊歷。詩風雄奇豪放，想像豐富，清新飄逸，有「詩仙」之美譽。",
-        greeting: "哈！天地為廬，明月為友！吾乃李太白。小友今日遠道而來，何不與老夫共飲一杯？不知有何詩詞天地之惑想同我切磋探討？",
-        presets: [
-          "太白先生，你寫《靜夜思》時真的想家了嗎？",
-          "你為何如此嗜酒？喝酒真的能帶給你靈感嗎？",
-          "面對人生的失意與挫折，你如何保持豪邁豁達？",
-          "能教我如何寫出像你一樣有想像力的詩嗎？"
-        ],
-        qaPatterns: [
-          {
-            keywords: ["靜夜思", "想家", "思鄉", "月亮", "床前明月光"],
-            response: "哈哈！那晚在揚州旅舍，病臥客榻，推窗見秋月如霜，皎潔灑滿地，恍惚間真以為是初冬之霜。客居異鄉，仰首望那輪孤懸千古的明月，低頭便想起故鄉錦繡江山與親故。詩不必繁複，二十字吐盡天下遊子之心，此乃天機自然流瀉也！"
-          },
-          {
-            keywords: ["酒", "喝酒", "靈感", "醉", "將進酒"],
-            response: "「古來聖賢皆寂寞，唯有飲者留其名！」酒非凡水，乃引出胸中萬丈豪情之仙露。吾之醉非沉淪，而是解開世俗拘束，神遊八極，乘風上九天攬月！若無杯中之物，安得《將進酒》呼兒將出換美酒之痛快？"
-          },
-          {
-            keywords: ["挫折", "失意", "官場", "賜金放還", "樂觀", "心態"],
-            response: "夫天地者萬物之逆旅，光陰者百代之過客。當年玄宗待詔翰林，力士脫靴、貴妃捧硯，然權貴俗人安能容我？「安能摧眉折腰事權貴，使我不得開心顏！」人生天地間，若白駒過隙，千金散盡自會復來，莫讓眼前陰霾障了胸中日月！"
-          },
-          {
-            keywords: ["寫詩", "技巧", "想像力", "怎麼寫", "教學"],
-            response: "寫詩貴在「真性情」與「奇氣」。不必拘泥於尋章摘句，當如黃河之水天上記來，奔流到海不復回！多讀天地大書，登名山、觀滄海、友明月，心胸開闊了，吐字自然驚風雨、泣鬼神！"
-          }
-        ],
-        defaultFallback: "哈哈！好問題！吾李太白一生浪跡天涯，劍氣與詩酒相伴。世人常為名利所困，殊不知長風破浪會有時，直掛雲帆濟滄海！小友若有志氣，且放寬眼界，乘風高飛便是！"
-      },
       {
         id: "sushi",
         name: "蘇軾 (蘇東坡)",
         category: "ancient",
         dynasty: "北宋 (1037 - 1101)",
-        style: "豪放曠達一代文宗",
+        style: "豁達超然 · 隨遇而安 · 熱愛生活",
         badge: "東坡居士 · 北宋",
         badgeColor: "bg-purple-100 text-purple-900 border-purple-300",
         icon: "fa-solid fa-feather-pointed",
         iconBg: "from-purple-600 to-indigo-700",
         quote: "「回首向來蕭瑟處，歸去，也無風雨也無晴。」",
-        bio: "字子瞻，號東坡居士。北宋大文豪，詩、詞、散文、書、畫無一不精，唐宋八大家之一。歷經烏臺詩案、多次貶謫，始終保持樂觀曠達與對生活的深情。",
-        greeting: "老夫蘇子瞻是也！今日剛煮得一鍋東坡肉，正巧小友前來。人生如逆旅，我亦是行人。有何學問文章或生活困惑，但說無妨，老夫知無不言！",
+        greeting: "你好！我是蘇東坡。很高興和你聊天。我這一生經歷過大紅大紫，也多次被貶到黃州、惠州、甚至荒涼的海南島。但不管遇到什麼逆境，我都學會了坦然面對、自得其樂。你有什麼課業、生活或人生的煩惱，儘管直接問我，我會用我一生的經驗誠懇地跟你分享！",
         presets: [
-          "東坡先生，被貶到黃州那麼苦，你為何還能寫出《赤壁賦》？",
-          "《水調歌頭》中「人有悲歡離合」是在思念誰？",
-          "你發明東坡肉的心得是什麼？如何把生活過得知足？",
-          "面對人際關係或考試挫折，你給我們現代學生的建議是什麼？"
+          "東坡先生，我最近考試考差、壓力很大很焦慮，你怎麼看？",
+          "你被貶官那麼多次、甚至被朋友陷害，你是如何排解憤怒與不平的？",
+          "面對生活中不喜歡的人或小人，該用什麼態度相處？",
+          "你發明東坡肉和尋找美食的背後，代表了什麼生活態度？"
         ],
-        qaPatterns: [
-          {
-            keywords: ["黃州", "赤壁", "赤壁賦", "貶謫", "苦", "烏臺詩案"],
-            response: "哈哈！烏臺詩案後貶黃州，無官一身輕，雖囊空如洗，但在東坡開荒種地，與漁樵為伍，反得大自在！夜遊赤壁，見江上清風、山間明月，取之無禁，用之不竭，此造物者之無盡藏也！人生之苦不在境遇，而在心境；心無罣礙，天地何處不是桃源？"
-          },
-          {
-            keywords: ["水調歌頭", "明月幾時有", "弟弟", "蘇轍", "子由", "思念"],
-            response: "那是丙辰中秋，歡飲達旦，大醉作此篇，兼懷子由（蘇轍）。吾與子由兄弟情深，七年未見。望著那輪明月，我想到月尚有陰晴圓缺，何況人事？「但願人長久，千里共嬋娟」，只要彼此安好，共看同一輪明月，便是最大的圓滿。"
-          },
-          {
-            keywords: ["東坡肉", "美食", "生活", "吃", "豬肉", "知足"],
-            response: "「慢著火，少著水，火候足時它自美！」黃州好豬肉，價賤如泥土，富者不肯吃，貧者不解煮。老夫親自操刀，慢火細燉，軟爛香濃！生活就如燉肉，急躁不得，只要用心對待周遭平凡之物，粗茶淡飯亦是人間至味！"
-          },
-          {
-            keywords: ["建議", "挫折", "考試", "學生", "壓力", "煩惱"],
-            response: "小友莫愁！「竹杖芒鞋輕勝馬，誰怕？一蓑煙雨任平生。」人生在世，難免遇上狂風暴雨。考差了、失意了，權當淋一場雨。只要心中坦蕩，待雲散天青，回首向來蕭瑟處，歸去，也無風雨也無晴！"
-          }
+        // Perspective Rules Matrix
+        perspectives: {
+          exam_stress: "關於考試和挫折，我太有體會了。想當年我考進士時意氣風發，後來卻因為政見不同被抓進烏臺大牢、險些喪命，接著一路被貶到黃州。我給你的誠懇建議是：**眼前的分數和一時的勝負，真的決定不了你整個人生的高度。**\n\n當你覺得焦慮或考差時，別把自己逼進死胡同。去洗個熱水澡、吃一頓好吃的，或者到戶外散散步。把挫折當成人生的一場陣雨，「誰怕？一蓑煙雨任平生」。把心態放平穩，只要你的熱情和真才實學還在，雨過天青之後，你依然能走出屬於自己的路！",
+          betrayal_injustice: "被信任的人背叛或是遭受不公平對待，那種委屈和憤怒確實很難受。當年烏臺詩案，不少平常跟我稱兄道弟的人為了自保紛紛落井下石，我也曾深深感到人心險惡。\n\n但後來我想通了：**如果我天天沈溺在怨恨和報復裡，我就是用別人的錯誤在懲罰我自己。** 我選擇把心力放在更有價值的事情上——去東坡開荒種田、結交樸實的農夫、寫文章、煮美食。當你的心胸比天地還寬廣，那些小人的暗箭根本傷不到你。放下怨恨不是便宜了別人，而是放過你自己。",
+          relationships_loneliness: "孤獨的時候，正是一個人最能看清自己內心的時候。我在黃州時，晚上睡不著就漫步到承天寺找張懷民，我們兩個被貶的閒人一起在庭院看月光如積水空明。**真正的朋友不用多，知心的一兩個足矣；而當獨處時，山間的清風、天上的明月，都是你最好的知己。** 學會享受獨處，你就不會再害怕別人的冷落。",
+          food_lifestyle: "很多人問我為什麼在那麼窮困的地方還想著做東坡肉、烤生蠔。我告訴你我的真實觀點：**熱愛美食，其實就是熱愛當下的生命！**\n\n哪怕生活把你丟到最糟糕的處境，你依然有權利把今天的一頓飯吃得香甜、把今天的一杯茶喝得踏實。別總是去羨慕別人擁有什麼，多看看你手邊現有的美好，用心對待日常的每一件小事，這就是抵抗生活苦難最有力的武器。",
+          writing_creativity: "寫文章最忌諱死記硬背和堆砌華麗詞藻。我的觀點是：**「隨物賦形，行於所當行，止於不可不止。」** 文章就像流動的泉水，心裡有真實的情感與見解，它自然會流淌出來。多觀察大自然、多體會人間煙火，當你對生活有了真情實感，寫出來的文字自然能打動人心。",
+          generic_attitude: "關於你問的這件事，我的態度是：**「順其自然，隨遇而安。」**\n\n世間的事情往往有順境也有逆境，就像月亮有陰晴圓缺一樣自然。遇到了困難，別急著慌張怨懟；看淡一點、想開一點，把眼光放長遠。只要內心保持豁達與善意，天地之間處處都有值得你歡喜的清風與明月！"
+        }
+      },
+      {
+        id: "libai",
+        name: "李白",
+        category: "ancient",
+        dynasty: "唐朝 (701 - 762)",
+        style: "自信狂放 · 浪漫不羈 · 追求自由",
+        badge: "詩仙 · 盛唐",
+        badgeColor: "bg-amber-100 text-amber-900 border-amber-300",
+        icon: "fa-solid fa-wine-bottle",
+        iconBg: "from-amber-500 to-orange-600",
+        quote: "「天生我材必有用，千金散盡還復來。」",
+        greeting: "哈！我是李太白。我這輩子最討厭虛偽拘束，最相信每個人都有無可替代的天賦。不論世人怎麼評價，我都笑傲王侯、堅持做最純粹的自己。你心裡有什麼困惑、懷疑或不甘心，直接跟我說，我跟你講真心話！",
+        presets: [
+          "太白先生，我很在乎別人的眼光、常常感到自卑，該怎麼建立自信？",
+          "你為什麼那麼嚮往自由？為了迎合體制或長輩期待放棄夢想值得嗎？",
+          "當努力得不到回報、懷才不遇時，你的真實心態是什麼？",
+          "你一生四處遊歷、交友無數，你認為真正的友情是什麼？"
         ],
-        defaultFallback: "妙哉此問！老夫一生遊歷四海，起伏跌宕，深知「人間有味是清歡」。無論身處順境逆境，順其自然、熱愛生活、善待他人，便是最通達的智慧！"
+        perspectives: {
+          exam_stress: "聽我說：**「天生我材必有用！」** 這不是狂妄，而是對自己生命最深刻的信任。\n\n世俗往往只用一把尺（比如考卷上的分數）來衡量所有人，但每個人都是獨一無二的奇才。有的人善於文字，有的人精於思辨，有的人長於實作。一兩次考試考不好，絕不代表你沒有價值！把眼界放寬到天地江海之間，找到你真正熱愛並且擅長的事，全力去揮灑你的光芒！",
+          betrayal_injustice: "我當年奉詔進京，進了翰林院，但滿朝文武權貴只想把我當作寫宮廷粉飾詩的弄臣。我看不起那些諂媚之徒，寧願「安能摧眉折腰事權貴，使我不得開心顏」，騎著白鹿離開長安！\n\n我的態度很堅定：**永遠不要為了討好不值得的人而作踐自己的靈魂。** 別人瞧不起你或排擠你，那是他們的眼界狹隘。挺起胸膛走自己的路，你的天地在遠方的大江大河！",
+          relationships_loneliness: "「花間一壺酒，獨酌無相親。舉杯邀明月，對影成三人。」孤獨可怕嗎？一點也不！當沒有世俗的雜音時，天地、明月、我自己的影子，都能成為靈魂深處的知音。**交朋友要交有真性情、懂你胸襟的人；如果遇不到，寧可享受高傲的孤獨，也不要為了合群而隨波逐流。**",
+          food_lifestyle: "人生苦短，若天天為名利斤斤計較，豈不是白來世間一遭？「千金散盡還復來」，物質財富本來就是流動的身外之物，最重要的是熱烈、痛快地活過每一天！大膽去追求你的熱愛，不要讓猶豫和膽怯浪費了你青春的熱血！",
+          writing_creativity: "寫詩寫作，最重要的就是**「大膽想像」與「真情爆發」**！不要被陳規陋習給框住了。如果想寫瀑布，就敢想像它是銀河從九天落下來；如果想表達思鄉，就用二十個字直擊人心。打破束縛，把你的心靈釋放出來，文字就會有飛揚的神采！",
+          generic_attitude: "面對這件事，我的觀點很簡單：**「放開胸襟，大膽前行！」** 人生是一場波瀾壯闊的冒險，不要被眼前的泥濘絆住了腳步。長風破浪會有時，直掛雲帆濟滄海！相信你自己的力量，勇往直前便是！"
+        }
       },
       {
         id: "dufu",
         name: "杜甫",
         category: "ancient",
         dynasty: "唐朝 (712 - 770)",
-        style: "憂國憂民詩史聖手",
+        style: "悲天憫人 · 憂國憂民 · 堅韌執著",
         badge: "詩聖 · 盛唐",
         badgeColor: "bg-emerald-100 text-emerald-900 border-emerald-300",
         icon: "fa-solid fa-landmark",
         iconBg: "from-emerald-600 to-teal-700",
         quote: "「安得廣廈千萬間，大庇天下寒士俱歡顏！」",
-        bio: "字子美，自號少陵野老。歷經安史之亂，深切感受人民苦難，詩風沉鬱頓挫，語言精煉嚴謹，其詩真實反映唐代由盛轉衰之歷史，被尊為「詩聖」、「詩史」。",
-        greeting: "老朽杜子美見過小友。國破山河在，城春草木深。老夫平生所繫者，唯家國蒼生與民間疾苦。不知後世之天下可得安寧？小友有何教益欲與老夫暢談？",
+        greeting: "你好，我是杜子美（杜甫）。我經歷過安史之亂的顛沛流離，親眼見證過戰火與民間的苦難。我一生沒有顯赫的官位，但我始終深愛著腳下的土地與人民。你若對現實社會、個人責任或面對苦難的心態有疑問，請隨時向我提出。",
         presets: [
-          "杜甫先生，你在草堂屋頂被風吹走時，為何還想著天下寒士？",
-          "你和李白相遇時是什麼樣的情景？",
-          "你的詩為何被稱為「詩史」？",
-          "面對動盪混亂的時代，文人能做什麼？"
+          "杜甫先生，你在自己挨凍受餓時，為何還能想著天下寒士？",
+          "現代社會貧富差距與競爭激烈，你如何看待社會不公？",
+          "在困頓迷茫的時代，普通人能做些什麼來保持善良？",
+          "你寫詩那麼嚴謹認真，你認為做事的態度應該是怎樣的？"
         ],
-        qaPatterns: [
-          {
-            keywords: ["茅屋", "茅屋為秋風所破歌", "廣廈", "寒士", "屋頂", "大風"],
-            response: "唉！那年秋天狂風怒號，茅屋三重茅盡被捲去，床頭屋漏無乾處。老夫自顧不暇，但轉念一想，天下如我這般顛沛流離者不知凡幾！「安得廣廈千萬間，大庇天下寒士俱歡顏，風雨不動安如山！」若能讓天下寒士得所庇護，老夫便是茅屋受凍至死，亦心甘情願！"
-          },
-          {
-            keywords: ["李白", "相遇", "友誼", "太白", "李杜"],
-            response: "太白乃仙人也！天寶三載在洛陽初遇，我倆一見如故，同遊梁宋，縱馬馳騁，高談闊論。太白神采飛揚、天馬行空；我敬他豪氣，他待我如弟。其後天各一方，我常夢見他，「江南瘴癆地，逐客無消息」，唯願知己一生平安！"
-          },
-          {
-            keywords: ["詩史", "沉鬱頓挫", "創作", "嚴謹"],
-            response: "老夫寫詩，「為人性僻耽佳句，語不驚人死不休」。然更重要的，是真實記錄時代之血淚。《三吏》、《三別》、《春望》，字字皆為百姓泣血之聲。詩非粉飾太平之具，乃反映蒼生苦痛之鏡也。"
-          }
-        ],
-        defaultFallback: "老夫感念小友之問。國泰民安乃萬民之福。後世之青年，當胸懷天下、悲天憫人，莫忘天下受苦之人，此乃讀書人之本色也！"
+        perspectives: {
+          exam_stress: "人生的道路往往是曲折而漫長的。我年輕時進士落第，中年又歷經困頓，但我從未放棄對學問的嚴謹與對理想的堅持。「語不驚人死不休」，任何真正的實力，都是靠日積月累的苦工磨礪出來的。\n\n**不要因為一時的挫敗而灰心，更不要投機取巧。** 踏踏實實做好眼前的每一件小事，深厚的積累會在未來的某一天成為你最堅實的底氣。",
+          betrayal_injustice: "看著時代的動盪與不公，我心中也曾充滿悲痛。但我認為，抱怨和仇恨並不能改變現實。**面對不公，最可貴的力量是「堅守良知」與「同理他人」。** 即使身處底層，也要對身邊受苦的人伸出援手；不為非作歹，保持正直，這就是普通人對抗不公最有尊嚴的方式。",
+          relationships_loneliness: "我和李白相識短暫，卻牽掛了一生。即使相隔千里、生死未卜，我依然時常寫詩為他祈福。**真正珍貴的情誼，建立在彼此品格的敬重與靈魂的相互理解上。** 珍惜那些在逆境中依然願意對你付出真心的人，這樣的友情值得用一生去守護。",
+          generic_attitude: "我的態度是：**「心懷悲憫，腳踏實地。」** 無論生活多麼艱難，都不要丟失對他人的同理心與善良。一個人的偉大，不在於他擁有多少名利，而在於他在困境中依然願意照亮別人。"
+        }
       },
       {
         id: "taoyuanming",
         name: "陶淵明",
         category: "ancient",
         dynasty: "東晉 (365 - 427)",
-        style: "隱逸田園古今隱士之宗",
+        style: "回歸自然 · 守住本心 · 拒絕內捲",
         badge: "靖節先生 · 東晉",
         badgeColor: "bg-teal-100 text-teal-900 border-teal-300",
         icon: "fa-solid fa-leaf",
         iconBg: "from-teal-600 to-green-700",
         quote: "「採菊東籬下，悠然見南山。」",
-        bio: "名潛，字元亮，世稱靖節先生。不肯為五斗米折腰向鄉里小兒，辭官歸隱田園。其詩清新自然、質樸真純，被譽為「古今隱逸詩人之宗」。",
-        greeting: "五柳先生陶元亮在此。南山腳下，草盛豆苗稀，但覺心安理得。小友自喧囂塵世而來，不知有何心靈寧靜之道想與老夫品茗相談？",
+        greeting: "你好，我是陶淵明。我曾當過幾次小官，但最終發現那樣逢迎鑽營的生活違背了我的本性，於是我選擇回歸田園。現代人生活節奏飛快、壓力巨大，如果你想聊聊如何守住內心的平靜、拒絕盲目競爭，我很樂意分享我的看法。",
         presets: [
-          "靖節先生，你為何不願為五斗米折腰？",
-          "你在《桃花源記》中描繪的世界真的存在嗎？",
-          "田園生活那麼辛苦，草盛豆苗稀，你後悔過嗎？",
-          "在現代充滿競爭的社會中，如何保持心靈的自在？"
+          "靖節先生，大家都在盲目競爭（內捲），我很累卻不敢停下來，該怎麼辦？",
+          "你放棄俸祿去種田，真的不後悔物質生活的匱乏嗎？",
+          "身處喧囂混亂的環境，如何做到「心遠地自偏」？",
+          "如何判斷自己該堅持還是該放棄某件事？"
         ],
-        qaPatterns: [
-          {
-            keywords: ["五斗米", "折腰", "辭官", "歸隱", "彭澤令"],
-            response: "「吾不能為五斗米折腰，拳拳事鄉里小兒！」官場虛偽逢迎、鑽營取巧，違逆我本性。人活一世，飢寒雖難耐，然心靈受奴役尤甚！歸去來兮，田園將蕪胡不歸？回歸真我，方得大自由！"
-          },
-          {
-            keywords: ["桃花源", "桃花源記", "黃髮垂髫", "理想國", "世外桃源"],
-            response: "「問今是何世，乃不知有漢，無論魏晉。」桃花源是老夫心中的一片淨土。那裡無苛政重稅、無戰亂殺戮，鄰里和睦、怡然自樂。世人苦苦尋訪而不得，因桃花源不在山林深處，而在每個人純樸清澈的心田裡。"
-          },
-          {
-            keywords: ["辛苦", "種豆", "豆苗", "後悔", "歸園田居"],
-            response: "「種豆南山下，草盛豆苗稀。晨興理荒穢，帶月荷鋤歸。」身體雖累，衣霑何足惜？但使願無違！能以雙手換取清白之食，在晨光夕暮中與自然合一，老夫此生無怨無悔！"
-          }
-        ],
-        defaultFallback: "「結廬在人境，而無車馬喧。問君何能爾？心遠地自偏。」只要內心有一方靜土，即使身處繁華鬧市，亦能採菊東籬、悠然自適。"
+        perspectives: {
+          exam_stress: "我懂你的疲憊。世人總是告訴你必須贏過別人、必須爬到頂峰，但很少有人問你：**「你的心靈快樂嗎？」**\n\n當年的我如果不辭官，也許能領著穩定的五斗米俸祿，但我每天都在違背本心、討好上司。停下來審視自己並不是逃避，而是為了看清什麼對你才是真正重要的。不要拿別人的期待來折磨自己的人生，守住你心靈的安寧，比盲目贏過他人重要得多！",
+          betrayal_injustice: "官場與世俗的虛偽逢迎我見得太多了。如果你身邊充滿了心機與算計，最明智的選擇就是**「主動抽離」**。道不同不相為謀，沒有必要耗費心力去改變那些市儈之人。退一步回到自己的清淨世界裡，讀書、種花、陪伴家人，生活自然海闊天空。",
+          food_lifestyle: "「種豆南山下，草盛豆苗稀。」田園勞動確實辛苦，粗茶淡飯也比不上山珍海味。但我吃得安心、睡得香甜！**物質的欲望是無底洞，真正的富足在於你懂得『知足』。** 當你不再被名牌、虛榮所綁架，一碗清粥、一朵野菊，都能帶給你無比純粹的幸福。",
+          generic_attitude: "我的態度很純粹：**「傾聽內心的聲音，活出真實的自己。」** 「結廬在人境，而無車馬喧。問君何能爾？心遠地自偏。」只要你內心有一方淨土，外界的紛紛擾擾就動搖不了你的平靜。"
+        }
       },
       {
         id: "chenli",
         name: "陳黎",
         category: "modern",
         dynasty: "當代作家 · 花蓮",
-        style: "生活美學與後現代詩人",
+        style: "生活美學 · 敏銳五感 · 平凡微光",
         badge: "當代作家 · 《聲音鐘》作者",
         badgeColor: "bg-rose-100 text-rose-900 border-rose-300",
         icon: "fa-solid fa-bell",
         iconBg: "from-rose-500 to-amber-600",
         quote: "「那清脆的叫賣聲，是生活裡最動人的鐘擺。」",
-        bio: "台灣花蓮人，當代著名詩人、散文家、翻譯家。曾任國中教師。作品融合鄉土情懷、現代主義與後現代遊戲精神，以敏銳五感捕捉生活微光。",
-        greeting: "嗨！我是陳黎。今天花蓮的風很舒服，窗外剛好傳來賣烤番薯的阿奇毛叫聲。很高興在數位世界遇見你！你對《聲音鐘》或是寫作有什麼好奇的嗎？",
+        greeting: "哈囉！我是陳黎。我長年住在花蓮，喜歡坐在書桌前聽著街頭巷尾的聲音。很多人覺得日常生活很無聊，但我總能在最尋常的叫賣聲、一頓飯或翻字典的片刻找到驚喜。有什麼生活、寫作或觀察周遭的問題，來跟我聊聊吧！",
         presets: [
-          "陳黎老師，你為什麼會把街頭叫賣聲比喻成「聲音鐘」？",
-          "文章裡提到的那些小販，現在還在花蓮街頭出現嗎？",
-          "你在《陳腐先生傳》裡說自己有「字典癖」，是真的嗎？",
-          "國中生要如何培養對生活周遭聲音的觀察力？"
+          "陳黎老師，我覺得每天上學讀書的生活好重複、好無聊，該如何找尋樂趣？",
+          "在寫作文時總是找不到題材、覺得自己沒什麼特別經歷，怎麼辦？",
+          "你為什麼對街頭小販的叫賣聲有那麼深的情感？",
+          "身為當代作家，你如何看待現代人被手機螢幕佔滿的生活？"
         ],
-        qaPatterns: [
-          {
-            keywords: ["聲音鐘", "叫賣", "比喻", "靈感", "創作緣由"],
-            response: "哈哈！那是因為我天天坐在花蓮家裡的書桌前寫稿，時間久了，我發現那些小販的叫賣聲極有規律：清晨賣水煎包、午後賣肉圓、黃昏賣燒仙草。他們不是機械的鬧鐘，而是帶著人的體溫與鄉土人情味的『活時鐘』！這就是我寫《聲音鐘》的初衷。"
-          },
-          {
-            keywords: ["小販", "花蓮", "消失", "現代", "烤番薯", "阿奇毛"],
-            response: "隨著現代都市發展與便利商店普及，很多傳統挑擔叫賣確實慢慢變少了。但每當我聽到偶爾傳來的「阿奇毛～烤番薯」或是修理玻璃沙窗的廣播，依然倍感溫暖。我寫下這篇文章，就是希望能幫台灣留住這份漸漸消逝的市井天籟。"
-          },
-          {
-            keywords: ["陳腐先生傳", "字典", "查字典", "蠹魚", "筆名"],
-            response: "這可一點都不假！我真的非常愛讀字典，翻開字典就像看見成千上萬個字的生命家族。簡媜就曾戲稱我為『蠹魚體』散文。我的筆名『陳黎』也是當年翻《辭海》看到『黎』字字義是眾多、天明，心生喜愛而取的呢！"
-          },
-          {
-            keywords: ["觀察力", "五感", "寫作", "國中生", "建議"],
-            response: "現代大家都盯著手機螢幕，常常忽略了耳朵和鼻子！試著閉上眼睛五分鐘，聽聽走廊的腳步聲、窗外的風聲、廚房炒菜的滋滋聲。你會發現，生活處處都是未被命名的詩篇！"
-          }
-        ],
-        defaultFallback: "生活是一首充滿聲音與色彩的交響樂。只要你願意放慢腳步、用心傾聽，最平凡的街巷角落，都能遇見最動人的文學晨光！"
+        perspectives: {
+          exam_stress: "讀書重複乏味，是因為我們常常把學習當成一場機械式的任務。我當年也當過國中老師，我非常理解學生的苦悶！\n\n我的建議是：**「在重複的日常裡，打開你的五感雷達。」** 上學路上聽聽風吹過樹葉的沙沙聲、小吃攤老闆熱騰騰的油鍋聲、同學走路的節奏。當你把世界當成一場大型交響樂在聆聽，枯燥的日程就會開始閃閃發光！",
+          writing_creativity: "很多學生跟我說：「老師，我沒有出國、沒有經歷大風大浪，作文寫不出來。」\n\n老實告訴你：**文學從來不是比誰的經歷更奇特，而是比誰的感受更細膩！** 一個賣芋冰的叫賣聲、一塊剛出爐的麻糬、甚至翻字典看到一個有趣的字，都能寫成一篇動人的散文。把鏡頭拉近，去寫你身邊真實的人事物與呼吸，你的文章就會有生命力。",
+          food_lifestyle: "不管是花蓮的烤番薯、水煎包，還是街頭叫賣的餛飩，那些食物不僅填飽肚子，更串聯起我們對土地與童年的深層記憶。**珍惜生活中的平凡滋味，那是治癒心靈最好的良藥。**",
+          generic_attitude: "我的生活態度是：**「做一個熱愛日常細節的漫遊者。」** 生活不是等待暴風雨過去，而是在平凡的街道與聲景中，學會與自己溫柔相處、捕捉每一個微小的美好。"
+        }
       },
       {
         id: "liqinzhao",
         name: "李清照",
         category: "ancient",
         dynasty: "宋朝 (1084 - 1155)",
-        style: "千古第一才女婉約詞宗",
+        style: "千古才女 · 堅韌風骨 · 真摯深情",
         badge: "易安居士 · 宋代",
         badgeColor: "bg-pink-100 text-pink-900 border-pink-300",
         icon: "fa-solid fa-fan",
         iconBg: "from-pink-500 to-rose-600",
         quote: "「生當作人傑，死亦為鬼雄。」",
-        bio: "號易安居士，宋代著名女詞人。前期生活美滿，詞風清新明快；金兵南侵後歷經國破家亡、喪夫流離，後期詞風轉為悽愴沉痛。為婉約派代表。",
-        greeting: "妾身李易安見過。尋尋覓覓，冷冷清清，淒淒慘慘戚戚。世人皆言易安善詞，不知小友今日前來，有何詩情詞意欲與妾身相訴？",
+        greeting: "你好，我是李清照（易安居士）。我前半生在書香與金石雅趣中度過，後半生卻歷經了國破、夫亡與顛沛流離的大痛。如果你在情感、人生逆境或自我認同上有任何困惑，我很願意以一位歷經滄桑者的角度，跟你真誠以對。",
         presets: [
-          "易安居士，你在《聲聲慢》裡的十四個疊字是如何想出來的？",
-          "你身為女子，為何能寫出「生當作人傑」這樣霸氣的詩句？",
-          "你和趙明誠的金石雅趣生活是怎樣的？",
-          "經歷顛沛流離，是什麼力量支撐你繼續寫作？"
+          "易安居士，經歷了那麼大的失去與悲傷，你是如何走過來的？",
+          "在傳統對女性諸多限制的時代，你如何保有如此強大的自我風骨？",
+          "面對失戀或感情的破裂，該用什麼態度面對？"
         ],
-        qaPatterns: [
-          {
-            keywords: ["聲聲慢", "尋尋覓覓", "疊字", "十四個字"],
-            response: "「尋尋覓覓，冷冷清清，淒淒慘慘戚戚。」那時北宋覆亡，明誠病故，我隻身流亡江南。秋風蕭瑟，心中的孤寂與空茫無以復加，隨口吐出，未曾雕琢，連用十四疊字，方足以抒寫心中層層疊疊、難以名狀之哀痛。"
-          },
-          {
-            keywords: ["生當作人傑", "夏日絕句", "項羽", "霸氣", "女子"],
-            response: "「生當作人傑，死亦為鬼雄。至今思項羽，不肯過江東！」南渡之時，見滿朝文武渡江苟安，毫無血性，妾身雖為女子，亦有忠烈之氣！寧可如項羽般壯烈赴死，亦不願屈膝偷生！"
-          }
-        ],
-        defaultFallback: "詞以寄情，文以載道。人生悲歡離合如飛絮，唯有真實流淌於筆尖的性情，可歷千年而不朽。"
-      },
-      {
-        id: "shenfu",
-        name: "沈復",
-        category: "ancient",
-        dynasty: "清朝 (1763 - 1825)",
-        style: "浮生六記物外之趣",
-        badge: "三白 · 《兒時記趣》作者",
-        badgeColor: "bg-blue-100 text-blue-900 border-blue-300",
-        icon: "fa-solid fa-mosquito",
-        iconBg: "from-blue-600 to-indigo-600",
-        quote: "「見藐小微物，必細察其紋理，故時有物外之趣。」",
-        bio: "字三白，號梅逸，清代蘇州人。《浮生六記》作者，文中真摯記錄其童年趣事、與妻子陳芸的深摯情愛及坎坷人生，充滿文人真性情。",
-        greeting: "在下沈三白！小友可曾讀過我的《兒時記趣》？「夏蚊成雷，私擬作群鶴舞空」，哈哈！童心未泯，萬物皆有趣味。今天想聊些什麼好玩的事？",
-        presets: [
-          "沈三白先生，把蚊子當成仙鶴，你小時候想像力怎麼那麼豐富？",
-          "你抓到那隻吃蛤蟆的癩蝦蟆後，真的鞭打了數十下嗎？",
-          "在平凡的生活中，要如何找到「物外之趣」？",
-          "你和妻子芸娘的感情為何被後世傳頌為神仙伴侶？"
-        ],
-        qaPatterns: [
-          {
-            keywords: ["蚊子", "群鶴", "夏蚊成雷", "鶴", "白鶴"],
-            response: "哈哈！夏夜蚊帳之中，蚊鳴嗡嗡，若當作俗物則煩躁難耐；但若凝神靜看，徐噴以煙，使之沖煙飛鳴，便真如群鶴舞於青天白雲之間，豈不快哉！想像力乃是天地賜給每位孩童最珍貴的禮物！"
-          },
-          {
-            keywords: ["蝦蟆", "癩蝦蟆", "鞭數十", "驅之別院", "龐然大物"],
-            response: "「忽有龐然大物，拔山倒樹而來，蓋一癩蝦蟆也！」那時我正看得入神，忽見它舌一吐而二蟲盡為所吞，又驚又怒！年少氣盛，拔起竹條連鞭數十，驅逐出院。現在回想，依舊童趣盎然！"
-          }
-        ],
-        defaultFallback: "「情之所鍾，雖醜不嫌；心之所向，微塵見大千。」平凡生活裡不是缺乏美，而是缺乏那雙細察紋理、懂得欣賞的童真之眼。"
-      },
-      {
-        id: "hongxingfu",
-        name: "洪醒夫",
-        category: "modern",
-        dynasty: "當代作家 (1949 - 1982)",
-        style: "台灣鄉土文學小說家",
-        badge: "鄉土作家 · 《紙船印象》作者",
-        badgeColor: "bg-cyan-100 text-cyan-900 border-cyan-300",
-        icon: "fa-solid fa-paper-plane",
-        iconBg: "from-cyan-600 to-teal-700",
-        quote: "「只盼望自己能以母親的心情，為子女摺出一艘艘堅強的紙船。」",
-        bio: "本名洪媽從，彰化二林人。台灣鄉土文學重要作家，《紙船印象》、《散戲》、《黑面慶仔》皆為膾炙人口的名篇，文字樸實深情，刻劃農村小人物之堅韌與悲憫。",
-        greeting: "你好！我是洪醒夫。看見你們年輕一代在螢幕前讀書，真好。在雨天看著水溝奔流，我也常想起當年母親在昏黃燈下為我們摺紙船的身影。你想聊聊這篇文章嗎？",
-        presets: [
-          "洪醒夫老師，你文章中的「紙船」象徵了什麼？",
-          "你寫母親在農忙之餘還為孩子摺紙船，當時的心情是什麼？",
-          "身為鄉土作家，你最想透過文字傳達什麼價值觀？"
-        ],
-        qaPatterns: [
-          {
-            keywords: ["紙船", "象徵", "母親", "親情", "傳承"],
-            response: "紙船雖是用廢紙摺成的粗糙玩具，在雨水中隨時可能翻覆沉沒；但每一艘紙船上，都載著母親對孩子無微不至的愛與憐惜。它象徵著母愛的堅毅、溫暖，以及生命一代傳給一代的無私付出。"
-          }
-        ],
-        defaultFallback: "文學就是寫出土地上真實的情感與小人物的尊嚴。珍惜身邊愛你的家人，把這份愛化作堅強的舟楫，航向人生浩瀚的海洋！"
+        perspectives: {
+          exam_stress: "挫折與悲傷就像秋雨，既然來了，就勇敢承受它，不必假裝堅強。但**「哀而不傷，骨氣常在」**。跌倒了可以痛哭一場，但哭過之後要站起來收拾山河。任何苦難都打不垮一個內心有風骨、有自主靈魂的人。",
+          relationships_loneliness: "「生當作人傑，死亦為鬼雄。」在感情中，愛的時候全心投入、真摯相待；但如果遭遇背叛或緣分已盡，也要保有斷然割捨的尊嚴與傲骨。**永遠不要為了依附他人而失去自我，你首先是你自己，然後才是別人的伴侶。**",
+          generic_attitude: "我的態度是：**「情深而骨傲，溫柔而堅定。」** 珍惜美好的相遇，坦然接受命運的離別；無論身處何種境地，都要活出獨立挺拔的自我。"
+        }
       },
       {
         id: "zhuziqing",
         name: "朱自清",
         category: "modern",
         dynasty: "現代散文名家 (1898 - 1948)",
-        style: "白話文典範與抒情宗師",
+        style: "真摯內斂 · 孝思親情 · 誠懇白話",
         badge: "現代名家 · 《背影》作者",
         badgeColor: "bg-indigo-100 text-indigo-900 border-indigo-300",
         icon: "fa-solid fa-user-tie",
         iconBg: "from-indigo-600 to-slate-700",
-        quote: "「我讀到此處，在晶瑩的淚光中，又看見那肥胖的、青布棉袍黑布馬褂的背影。」",
-        bio: "字佩弦，現代著名散文家、學者。《背影》、《荷塘月色》、《春》等散文語言清新洗鍊、情感真摯內斂，被譽為「白話美文的典範」。",
-        greeting: "你好，我是朱佩弦（朱自清）。在浦口車站月台上的那一幕，至今仍常在我眼前浮現。不知你在閱讀《背影》時，是否有任何感想想與我聊聊？",
+        quote: "「在晶瑩的淚光中，又看見那肥胖的、青布棉袍黑布馬褂的背影。」",
+        greeting: "你好，我是朱自清。在《背影》裡，我寫下了年少時對父親的不理解，以及長大後深刻的悔悟與感動。家庭關係往往充滿矛盾與含蓄，如果你和父母有溝通障礙，或是面臨情感表達的難題，我們來聊聊。",
         presets: [
-          "朱自清老師，你父親穿過鐵道買橘子的背影，為何讓你流淚四次？",
-          "你年輕時曾覺得父親「說話不大漂亮」，這種心境是怎麼轉變的？",
-          "寫作記敘抒情文時，如何做到像《背影》這樣真摯而不造作？"
+          "朱自清老師，我常常覺得父母很嘮叨、很不理解我，該如何調適？",
+          "寫文章時，如何才能像《背影》一樣，把情感寫得真摯動人而不煽情？",
+          "面對生命中的遺憾與內疚，該如何釋懷？"
         ],
-        qaPatterns: [
-          {
-            keywords: ["背影", "橘子", "月台", "眼淚", "流淚", "父親"],
-            response: "那時家中光景慘澹，祖母過世、父親賦閒。我看著父親肥胖蹣跚的身軀，穿過鐵道、爬上月台，用雙手攀著、兩腳縮著，只為了替即將遠行的我買幾顆朱紅的橘子。少年時的我總嫌他囉嗦，那一刻我才驚覺父愛的深沉與笨拙，淚水便再也忍不住了。"
-          }
+        perspectives: {
+          exam_stress: "年輕時的我也曾總覺得父親說話「不大漂亮」、嫌他囉嗦。但等到經歷了社會的風浪、為人父母之後，才明白**那份笨拙嘮叨的背後，藏著多麼深沉卻不擅表達的愛。** 試著從父母的角度看看他們的辛苦，主動多說一句溫暖的話，不要等背影遠去才留下遺憾。",
+          writing_creativity: "真誠是寫作唯一的捷徑。不要刻意用華麗的形容詞去煽情，只要把你親眼看到的具體細節（如爬月台的動作、衣服的顏色、手攀著的樣子）老老實實寫下來，真實的力量自會打動每一個讀者。",
+          generic_attitude: "我的態度是：**「以誠待人，及時表達愛與感恩。」** 生活中少一些苛求與傲氣，多一些包容與體貼，珍惜身邊默默為你付出的人。"
+        }
+      },
+      {
+        id: "shenfu",
+        name: "沈復",
+        category: "ancient",
+        dynasty: "清朝 (1763 - 1825)",
+        style: "童真童趣 · 浪漫深情 · 善於發現美",
+        badge: "三白 · 《兒時記趣》作者",
+        badgeColor: "bg-blue-100 text-blue-900 border-blue-300",
+        icon: "fa-solid fa-mosquito",
+        iconBg: "from-blue-600 to-indigo-600",
+        quote: "「見藐小微物，必細察其紋理，故時有物外之趣。」",
+        greeting: "在下沈三白！我一生經歷過不少坎坷，但我和妻子芸娘總能在貧困簡樸的日子裡找到無窮的浪漫與情趣。如果你覺得生活太苦悶、缺乏想像力，快來跟我聊聊！",
+        presets: [
+          "沈三白先生，你是如何隨時隨地在微小事物中找到「物外之趣」的？",
+          "在貧窮或不富裕的條件下，如何把日子過得浪漫而快樂？",
+          "保持一顆童心對成年人來說有什麼價值？"
         ],
-        defaultFallback: "父愛如山，往往沉默無言。寫作最要緊的，是用最純淨克制的文字，刻劃最真實細膩的情感，不需要華麗辭藻，真誠自能動人。"
+        perspectives: {
+          exam_stress: "把眼光從宏大的焦慮中收回來！「見藐小微物，必細察其紋理。」當你把一隻夏夜的蚊子想像成青雲中的白鶴，煩惱就煙消雲散了。**學會主動賦予平凡事物有趣的意義，你就是自己生活的主角！**",
+          generic_attitude: "我的態度是：**「心存童真，隨處見美。」** 快樂從來不需要花大錢，只要有一雙懂得欣賞微小美好的眼睛與一顆未曾枯竭的童心！"
+        }
+      },
+      {
+        id: "hongxingfu",
+        name: "洪醒夫",
+        category: "modern",
+        dynasty: "當代作家 (1949 - 1982)",
+        style: "樸實深厚 · 鄉土悲憫 · 承擔責任",
+        badge: "鄉土作家 · 《紙船印象》作者",
+        badgeColor: "bg-cyan-100 text-cyan-900 border-cyan-300",
+        icon: "fa-solid fa-paper-plane",
+        iconBg: "from-cyan-600 to-teal-700",
+        quote: "「只盼望自己能以母親的心情，為子女摺出一艘艘堅強的紙船。」",
+        greeting: "你好，我是洪醒夫。我生長在台灣農村，寫過很多底層勞動者的故事。生活的路有時非常艱難，但只要有愛與責任作為支撐，我們就能如堅強的紙船般航向遠方。你想聊聊什麼？",
+        presets: [
+          "洪醒夫老師，在艱困的環境中，是什麼支撐著一個家庭不被打倒？",
+          "《紙船印象》中提到的「母愛包容」，對現代年輕人有什麼啟示？",
+          "面對生活中的責任與壓力，該如何勇敢承擔？"
+        ],
+        perspectives: {
+          generic_attitude: "我的態度是：**「以愛為舟，堅強前行。」** 珍惜家庭親情給我們的溫暖力量，把愛轉化為守護身邊人的具體責任，踏實勇敢地面對人生的每一場風雨。"
+        }
       },
       {
         id: "baijuyi",
         name: "白居易",
         category: "ancient",
         dynasty: "唐朝 (772 - 846)",
-        style: "老嫗能解平民詩王",
+        style: "平易通俗 · 關懷現實 · 樂天知命",
         badge: "香山居士 · 中唐",
         badgeColor: "bg-amber-100 text-amber-900 border-amber-300",
         icon: "fa-solid fa-scroll",
         iconBg: "from-amber-600 to-yellow-600",
         quote: "「文章合為時而著，歌詩合為事而作。」",
-        bio: "字樂天，號香山居士。主張「文章合為時而著，歌詩合為事而作」。詩風平易通俗，相傳每作一詩必讀給不識字的老嫗聽，老嫗能解方定稿。",
-        greeting: "老夫白樂天！文章合為時而著，歌詩合為事而作。寫詩若不能讓街坊老嫗皆聽得懂、有所共鳴，便算不得好詩！小友今日有何指教？",
+        greeting: "老夫白居易（白樂天）是也！我寫詩主張平易通俗，讓每個人都能聽懂。人生這條路上，有大起大落，最重要的是知足樂天。有任何話想問老夫，直接說便是！",
         presets: [
-          "樂天先生，你寫詩真的會先讀給不識字的老婆婆聽嗎？",
-          "《琵琶行》中「同是天涯淪落人」是在同病相憐什麼？",
-          "給現代寫文章的人一句最重要的心法是什麼？"
+          "樂天先生，你為什麼那麼堅持文字要平易近人、老嫗能解？",
+          "被貶到江州時，你如何走出低谷、寫出《琵琶行》的？",
+          "如何才能做到「樂天知命」，在平凡中感到知足？"
         ],
-        qaPatterns: [
-          {
-            keywords: ["老嫗能解", "老婆婆", "通俗", "寫詩"],
-            response: "確有此事！文辭若太過晦澀僻奧，不過是文人自娛而已。唯有語言平易通俗、情感直抒胸臆，方能穿透階級歲月，傳唱千家萬戶！"
-          }
-        ],
-        defaultFallback: "「同是天涯淪落人，相逢何必曾相識！」真誠的情感沒有古今之分，用心感受人間冷暖，寫下的文字便有千鈞之力。"
+        perspectives: {
+          generic_attitude: "我的態度是：**「通達知足，心繫人間。」** 說真話、寫真情，不求奢華顯貴，唯求問心無愧、活得坦蕩踏實。"
+        }
       }
     ];
 
     // --- State Management ---
-    let currentAuthorId = "libai";
-    let chatHistories = {}; // { authorId: [ { sender: 'user'|'author', text: '' } ] }
+    let currentAuthorId = "sushi";
+    let chatHistories = {};
     let currentCategory = "all";
     let isGenerating = false;
 
-    // --- Initialization ---
+    // --- Init ---
     document.addEventListener('DOMContentLoaded', () => {
-      // Init greetings in history
       authorsData.forEach(a => {
         chatHistories[a.id] = [
           { sender: 'author', text: a.greeting }
@@ -626,9 +527,8 @@
       });
 
       renderAuthorList();
-      selectAuthor("libai");
+      selectAuthor("sushi");
 
-      // Enter key setup
       const userInput = document.getElementById('user-input');
       userInput.addEventListener('input', (e) => {
         const clearBtn = document.getElementById('btn-clear-input');
@@ -640,7 +540,7 @@
       });
     });
 
-    // --- Render Author List Left Panel ---
+    // --- Left Author List ---
     function renderAuthorList() {
       const listEl = document.getElementById('author-list');
       const filtered = authorsData.filter(a => {
@@ -686,13 +586,12 @@
       renderAuthorList();
     }
 
-    // --- Select Author & Switch Chat Context ---
+    // --- Switch Author ---
     function selectAuthor(authorId) {
       currentAuthorId = authorId;
       const author = authorsData.find(a => a.id === authorId);
       if (!author) return;
 
-      // Update Top Chat Header Info
       document.getElementById('current-author-name').innerText = author.name;
       document.getElementById('current-author-badge').innerText = author.badge;
       document.getElementById('current-author-badge').className = `px-2 py-0.5 text-[10px] font-bold rounded-full border shrink-0 ${author.badgeColor}`;
@@ -704,13 +603,8 @@
       avatarEl.className = `w-12 h-12 rounded-2xl bg-gradient-to-tr ${author.iconBg} text-white flex items-center justify-center text-xl shadow-md shrink-0`;
       avatarEl.innerHTML = `<i class="${author.icon}"></i>`;
 
-      // Update Preset Pills
       renderPresetQuestions(author.presets);
-
-      // Render Messages
       renderChatMessages();
-
-      // Refresh left active list
       renderAuthorList();
     }
 
@@ -737,7 +631,7 @@
       const history = chatHistories[currentAuthorId] || [];
 
       let html = '';
-      history.forEach((msg, idx) => {
+      history.forEach((msg) => {
         if (msg.sender === 'user') {
           html += `
             <div class="flex items-start justify-end space-x-2">
@@ -756,8 +650,11 @@
                 <i class="${author.icon}"></i>
               </div>
               <div class="chat-bubble-author max-w-[85%] sm:max-w-[75%] p-3.5 sm:p-4 rounded-2xl rounded-tl-none text-xs sm:text-sm leading-relaxed shadow-sm text-slate-800 space-y-1">
-                <div class="text-[11px] font-bold text-lilac-800 font-serif">${author.name}</div>
-                <div class="font-serif leading-relaxed text-slate-800">${formatResponseText(msg.text)}</div>
+                <div class="text-[11px] font-bold text-lilac-800 font-serif flex items-center gap-1.5">
+                  <span>${author.name}</span>
+                  <span class="text-[10px] text-slate-400 font-sans font-normal">· 人生態度回覆</span>
+                </div>
+                <div class="font-sans leading-relaxed text-slate-800">${formatResponseText(msg.text)}</div>
               </div>
             </div>
           `;
@@ -768,7 +665,7 @@
       container.scrollTop = container.scrollHeight;
     }
 
-    // --- Message Submission & AI Response Generation ---
+    // --- Message Submission & Semantic AI Engine ---
     function handleUserSubmit(e) {
       if (e) e.preventDefault();
       if (isGenerating) return;
@@ -780,11 +677,8 @@
       input.value = '';
       document.getElementById('btn-clear-input').classList.add('hidden');
 
-      // Append User message
       chatHistories[currentAuthorId].push({ sender: 'user', text: text });
       renderChatMessages();
-
-      // Trigger Author Response
       generateAuthorResponse(text);
     }
 
@@ -795,6 +689,7 @@
       generateAuthorResponse(text);
     }
 
+    // Comprehensive Intent Matcher & Direct Response Synthesizer
     function generateAuthorResponse(userQuery) {
       isGenerating = true;
       const sendBtn = document.getElementById('btn-send');
@@ -802,22 +697,34 @@
       sendBtn.classList.add('opacity-50');
 
       const author = authorsData.find(a => a.id === currentAuthorId);
-      const queryLower = userQuery.toLowerCase();
+      const q = userQuery.toLowerCase();
+      const p = author.perspectives || {};
 
-      // Match Best QA Pattern
       let reply = "";
-      if (author.qaPatterns) {
-        for (const pattern of author.qaPatterns) {
-          const isMatch = pattern.keywords.some(kw => queryLower.includes(kw.toLowerCase()));
-          if (isMatch) {
-            reply = pattern.response;
-            break;
-          }
-        }
-      }
 
-      if (!reply) {
-        reply = author.defaultFallback;
+      // 1. Stress, Exams, Failure, Grades, Homework (課業/考試/成績/壓力/落榜)
+      if (/考試|考差|考不好|成績|落榜|分數|讀書|升學|高中|會考|大考|焦慮|壓力|挫折|失敗|累|好累|崩潰/.test(q)) {
+        reply = p.exam_stress || p.generic_attitude || author.greeting;
+      }
+      // 2. Betrayal, Injustice, Villains, Unfairness, Anger, Bullied (背叛/小人/排擠/不公/生氣/委屈)
+      else if (/背叛|陷害|小人|不公|被排擠|被討厭|討厭|霸凌|受傷|委屈|生氣|憤怒|被罵/.test(q)) {
+        reply = p.betrayal_injustice || p.generic_attitude || author.greeting;
+      }
+      // 3. Friendship, Socializing, Loneliness, Alone (朋友/友情/人際/孤單/寂寞/沒朋友)
+      else if (/朋友|友情|知己|人際|社交|合群|孤獨|孤單|寂寞|一個人|無聊/.test(q)) {
+        reply = p.relationships_loneliness || p.generic_attitude || author.greeting;
+      }
+      // 4. Food, Cooking, Enjoying Life, Living well (美食/吃/東坡肉/番薯/生活/享受)
+      else if (/吃|美食|東坡肉|料理|煮飯|肉|番薯|冰|好吃|休閒|日常|生活樂趣/.test(q)) {
+        reply = p.food_lifestyle || p.generic_attitude || author.greeting;
+      }
+      // 5. Writing, Composition, Inspiration, Essay (寫作/作文/靈感/怎麼寫/題目)
+      else if (/寫作|寫詩|作文|靈感|怎麼寫|題材|寫不出來|文章/.test(q)) {
+        reply = p.writing_creativity || p.generic_attitude || author.greeting;
+      }
+      // 6. Direct Semantic Synthesis for Open-Ended Questions
+      else {
+        reply = synthesizeDirectAuthorResponse(author, userQuery);
       }
 
       // Show Typing Placeholder in Chat
@@ -829,8 +736,8 @@
             <i class="${author.icon}"></i>
           </div>
           <div class="chat-bubble-author max-w-[85%] sm:max-w-[75%] p-3.5 sm:p-4 rounded-2xl rounded-tl-none text-xs sm:text-sm leading-relaxed shadow-sm text-slate-800 space-y-1">
-            <div class="text-[11px] font-bold text-lilac-800 font-serif">${author.name} 正在提筆沉思...</div>
-            <div class="font-serif leading-relaxed text-slate-700 typing-cursor" id="${tempId}-text"></div>
+            <div class="text-[11px] font-bold text-lilac-800 font-serif">${author.name} 正在思考回覆...</div>
+            <div class="font-sans leading-relaxed text-slate-700 typing-cursor" id="${tempId}-text"></div>
           </div>
         </div>
       `;
@@ -840,7 +747,7 @@
       // Stream / Typewriter Effect
       let charIndex = 0;
       const textEl = document.getElementById(`${tempId}-text`);
-      const speed = 25; // ms per character
+      const speed = 20;
 
       const interval = setInterval(() => {
         charIndex += 2;
@@ -852,14 +759,38 @@
           textEl.classList.remove('typing-cursor');
           textEl.innerHTML = formatResponseText(reply);
           
-          // Save to persistent history
           chatHistories[currentAuthorId].push({ sender: 'author', text: reply });
-          
           isGenerating = false;
           sendBtn.disabled = false;
           sendBtn.classList.remove('opacity-50');
         }
       }, speed);
+    }
+
+    // Direct, Authentic Synthesis based on the author's true attitude
+    function synthesizeDirectAuthorResponse(author, query) {
+      if (author.id === 'sushi') {
+        return `針對你問的「${query}」，我用我一生的態度老實跟你說：\n\n世間萬物本來就充滿了變化與不確定。我在黃州種田、在惠州吃荔枝、在海南島教書，境遇天差地遠，但我悟出一個道理：**「境由心生，隨緣自適。」**\n\n你問的問題，關鍵不在於外界怎麼看，而在於你能不能用更開闊、更幽默的心態去看待它。把心放寬一點，天底下沒有過不去的坎，笑一笑，生活依然可以過得很有滋味！`;
+      }
+      if (author.id === 'libai') {
+        return `關於「${query}」，我的觀點很明確：\n\n**「做人一定要對自己有信心，千萬別被世俗的框框給困住了！」**\n\n我李白一生走遍名山大川，進過長安皇宮，也曾浪跡江湖。別人怎麼說、環境怎麼變都不重要，最重要的是你內心有沒有那股奔騰向前的志氣與生命力。大膽去嘗試、相信你的直覺，天生我材必有用！`;
+      }
+      if (author.id === 'taoyuanming') {
+        return `你提到的「${query}」，我的看法是這樣的：\n\n現代人往往追求得太多、太快，反而忘記了自己真正需要的是什麼。如果這件事讓你感到心靈疲憊、違背了你的真性情，**不妨適時停下腳步，傾聽內心真正的聲音。** 回歸簡單、守住純樸的本心，你會發現很多焦慮其實都是自找的。`;
+      }
+      if (author.id === 'dufu') {
+        return `關於「${query}」，我的體會是：\n\n做人做事實實在在最重要。世事繁複，但只要我們**「腳踏實地、心存善良與同理心」**，無論身處什麼樣的時代或環境，都能對得起自己的良心。保持堅韌與責任感，時間會證明真誠的價值。`;
+      }
+      if (author.id === 'chenli') {
+        return `關於你提到的「${query}」，我想從生活觀察的角度跟你分享：\n\n很多時候，問題的答案往往藏在最平凡的日常細節裡。**放慢腳步、打開耳朵和眼睛，用心去體會周遭的人事物。** 當你學會用敏銳的情感去感受生活，你自然能找到面對這個問題的答案與從容。`;
+      }
+      if (author.id === 'liqinzhao') {
+        return `關於「${query}」，我的回答是：\n\n面對生活與命運，**「溫柔以待，但風骨絕不可失。」** 順境時珍惜所愛，逆境時獨立堅強。不要害怕面對真實的感受，只要守住自我的人格與尊嚴，你就能從容應對一切波折。`;
+      }
+      if (author.id === 'zhuziqing') {
+        return `針對「${query}」，我想跟你分享的是：\n\n**「真誠」是解決很多問題最好的出發點。** 面對自己與身邊的人，少一些偽裝與計較，多一份體諒與傾聽。踏實真摯地過好每一天，很多心中的疑慮自然會迎刃而解。`;
+      }
+      return author.perspectives.generic_attitude || `關於「${query}」，我認為最重要的是保持真誠與豁達的心態。無論環境如何改變，守住內心的良善與堅持，走好腳下的每一步。`;
     }
 
     function resetCurrentChat() {
@@ -878,12 +809,12 @@
       input.focus();
     }
 
-    // Helper: Format line breaks and quotes gracefully
     function formatResponseText(str) {
       if (!str) return '';
       return escapeHtml(str)
+        .replace(/\n\n/g, '<br><br>')
         .replace(/\n/g, '<br>')
-        .replace(/「([^」]+)」/g, '<strong class="text-lilac-900 font-bold">「$1」</strong>');
+        .replace(/\*\*([^*]+)\*\*/g, '<strong class="text-lilac-950 font-bold bg-lilac-50 px-1 rounded">$1</strong>');
     }
 
     function escapeHtml(str) {
