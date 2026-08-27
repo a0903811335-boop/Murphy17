@@ -221,8 +221,14 @@
 
       <!-- Navigation & Action Buttons -->
       <div class="flex items-center space-x-2 sm:space-x-3">
+        <!-- Ask the Author AI Link -->
+        <a href="ask_author.html" class="flex items-center space-x-1.5 px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-700 hover:to-indigo-800 text-white font-bold text-xs sm:text-sm shadow-md transition whitespace-nowrap">
+          <i class="fa-solid fa-feather-pointed"></i>
+          <span>🤖 問問作者</span>
+        </a>
+
         <!-- Dedicated Link to Teacher Prep Vault (備課寶典) -->
-        <a href="prep_hub.html" class="flex items-center space-x-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-700 hover:to-rose-800 text-white font-bold text-xs sm:text-sm shadow-md transition whitespace-nowrap">
+        <a href="prep_hub.html" class="flex items-center space-x-1.5 px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-700 hover:to-rose-800 text-white font-bold text-xs sm:text-sm shadow-md transition whitespace-nowrap">
           <i class="fa-solid fa-book-bookmark"></i>
           <span>📖 備課寶典</span>
         </a>
@@ -354,16 +360,20 @@
               </div>
             </a>
 
-            <!-- 4. 素養導向題 -->
-            <button onclick="openToolkitModal('inquiry')" class="bg-white/80 hover:bg-white p-2.5 rounded-xl border border-lilac-200/80 hover:border-indigo-400 hover:shadow-md transition flex items-center space-x-2.5 text-left group">
-              <div class="w-8 h-8 rounded-lg bg-indigo-100 group-hover:bg-indigo-200 text-indigo-700 flex items-center justify-center text-sm transition">
-                <i class="fa-solid fa-clipboard-check"></i>
+            <!-- 4. 問問作者 (AI 文學對話室) -->
+            <a href="ask_author.html" class="bg-gradient-to-tr from-purple-50 to-indigo-100/90 hover:from-purple-100 hover:to-indigo-200/90 p-2.5 rounded-xl border-2 border-purple-300 hover:border-purple-500 hover:shadow-lg transition flex items-center space-x-2.5 text-left group ring-2 ring-purple-200/50 relative overflow-hidden">
+              <span class="absolute -right-2 -bottom-2 text-2xl text-purple-500/20 font-serif font-black">🤖</span>
+              <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-600 to-indigo-700 text-white flex items-center justify-center text-sm shadow-sm group-hover:scale-110 transition">
+                <i class="fa-solid fa-feather-pointed"></i>
               </div>
               <div>
-                <div class="text-xs font-bold text-slate-800 group-hover:text-indigo-800">素養導向題</div>
-                <div class="text-[10px] text-slate-500">PISA 三層次探究</div>
+                <div class="text-xs font-bold text-purple-950 flex items-center gap-1">
+                  <span>問問作者</span>
+                  <span class="text-[9px] bg-purple-600 text-white px-1 rounded font-normal">AI對話</span>
+                </div>
+                <div class="text-[10px] text-purple-700 font-medium">李白/東坡/陳黎</div>
               </div>
-            </button>
+            </a>
 
           </div>
 
@@ -1743,6 +1753,17 @@
 
     // --- Global Search Master Database ---
     const searchDatabase = [
+      {
+        type: "AI 文人對話",
+        badge: "bg-purple-100 text-purple-900 border-purple-300",
+        icon: "fa-solid fa-feather-pointed text-purple-500",
+        title: "問問作者 · 跨時空文學對話室",
+        author: "李白 / 蘇軾 / 杜甫 / 陶淵明 / 陳黎",
+        desc: "AI 模擬歷代古詩人與經典名家，隨時跨時空向大文豪請教創作與人生！",
+        keywords: "問問作者 作者 詩人 李白 蘇軾 蘇東坡 杜甫 陶淵明 李清照 白居易 沈復 陳黎 洪醒夫 朱自清 AI 聊天 對話",
+        url: "ask_author.html",
+        actionText: "開始對話"
+      },
       {
         type: "課文教材",
         badge: "bg-amber-100 text-amber-900 border-amber-300",
