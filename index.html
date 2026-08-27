@@ -314,16 +314,20 @@
               </div>
             </button>
 
-            <!-- 3. 修辭大圖鑑 -->
-            <button onclick="openToolkitModal('rhetoric')" class="bg-white/80 hover:bg-white p-2.5 rounded-xl border border-lilac-200/80 hover:border-sunlight-400 hover:shadow-md transition flex items-center space-x-2.5 text-left group">
-              <div class="w-8 h-8 rounded-lg bg-sunlight-100 group-hover:bg-sunlight-200 text-sunlight-700 flex items-center justify-center text-sm transition">
+            <!-- 3. 修辭大圖鑑 (直接連結到 修辭.html 互動學堂) -->
+            <a href="修辭.html" class="bg-gradient-to-tr from-sunlight-50 to-amber-100/90 hover:from-sunlight-100 hover:to-amber-200/90 p-2.5 rounded-xl border-2 border-sunlight-300 hover:border-sunlight-500 hover:shadow-lg transition flex items-center space-x-2.5 text-left group ring-2 ring-sunlight-200/50 relative overflow-hidden">
+              <span class="absolute -right-2 -bottom-2 text-2xl text-sunlight-500/20 font-serif font-black">✍️</span>
+              <div class="w-8 h-8 rounded-lg bg-sunlight-500 text-white flex items-center justify-center text-sm shadow-sm group-hover:scale-110 transition">
                 <i class="fa-solid fa-pen-nib"></i>
               </div>
               <div>
-                <div class="text-xs font-bold text-slate-800 group-hover:text-sunlight-800">修辭大圖鑑</div>
-                <div class="text-[10px] text-slate-500">國中必考全解析</div>
+                <div class="text-xs font-bold text-amber-950 flex items-center gap-1">
+                  <span>修辭大圖鑑</span>
+                  <span class="text-[9px] bg-sunlight-600 text-white px-1 rounded font-normal">互動寶典</span>
+                </div>
+                <div class="text-[10px] text-amber-700 font-medium">國中必考全解析</div>
               </div>
-            </button>
+            </a>
 
             <!-- 4. 素養導向題 -->
             <button onclick="openToolkitModal('inquiry')" class="bg-white/80 hover:bg-white p-2.5 rounded-xl border border-lilac-200/80 hover:border-indigo-400 hover:shadow-md transition flex items-center space-x-2.5 text-left group">
@@ -1213,6 +1217,19 @@
 
         <!-- 3. Rhetoric Glossary Panel -->
         <div id="tool-panel-rhetoric" class="hidden space-y-4">
+          <!-- Direct Link Banner to 修辭.html -->
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-3 bg-gradient-to-r from-sunlight-100 via-amber-50 to-orange-50 p-4 rounded-2xl border border-sunlight-300 shadow-xs">
+            <div>
+              <h5 class="text-sm font-bold text-amber-950 font-serif flex items-center gap-2">
+                <i class="fa-solid fa-graduation-cap text-sunlight-600 text-base"></i> 國中國語修辭學堂（專屬互動系統）
+              </h5>
+              <p class="text-xs text-amber-900/80 mt-0.5">完整收錄各大修辭分類、每項 4 個課文經典範例與互動測驗題庫！</p>
+            </div>
+            <a href="修辭.html" class="px-4 py-2 bg-gradient-to-r from-sunlight-500 to-amber-600 hover:from-sunlight-600 hover:to-amber-700 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center gap-1.5 whitespace-nowrap">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> 開啟修辭學堂
+            </a>
+          </div>
+
           <p class="text-xs text-slate-500">國中三年必備修辭判斷與經典課文實例速查表：</p>
           
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1422,10 +1439,10 @@
         <div class="md:col-span-3 space-y-2">
           <h5 class="text-xs font-bold text-white uppercase tracking-wider">教師教學工具</h5>
           <ul class="text-xs space-y-1.5 text-lilac-300">
-            <li><button onclick="openToolkitModal(); switchToolkitTab('picker');" class="hover:text-sunlight-300 transition">🎲 課堂隨堂點名抽籤器</button></li>
-            <li><button onclick="openToolkitModal(); switchToolkitTab('timer');" class="hover:text-sunlight-300 transition">⏱️ 小組討論與寫作計時器</button></li>
-            <li><button onclick="openToolkitModal(); switchToolkitTab('rhetoric');" class="hover:text-sunlight-300 transition">📖 國中必考修辭大圖鑑</button></li>
-            <li><button onclick="openToolkitModal(); switchToolkitTab('inquiry');" class="hover:text-sunlight-300 transition">💬 PISA 素養導向提問指南</button></li>
+            <li><a href="修辭.html" class="hover:text-sunlight-300 transition flex items-center gap-1.5"><i class="fa-solid fa-pen-nib text-[10px] text-sunlight-400"></i> 《國語修辭學堂》互動系統</a></li>
+            <li><button onclick="openToolkitModal('picker');" class="hover:text-sunlight-300 transition flex items-center gap-1.5"><i class="fa-solid fa-dice text-[10px]"></i> 1~20 號隨堂點名籤筒</button></li>
+            <li><button onclick="openToolkitModal('timer');" class="hover:text-sunlight-300 transition flex items-center gap-1.5"><i class="fa-solid fa-stopwatch text-[10px]"></i> 3分/5分小組討論計時器</button></li>
+            <li><button onclick="openToolkitModal('inquiry');" class="hover:text-sunlight-300 transition flex items-center gap-1.5"><i class="fa-solid fa-lightbulb text-[10px]"></i> PISA 素養導向提問指南</button></li>
           </ul>
         </div>
 
