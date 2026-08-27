@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>國文二上第一課《新詩選》互動數位教材</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        amberCustom: '#b45309'
+                    },
+                    fontFamily: {
+                        serifTC: ['"Noto Serif TC"', 'serif'],
+                        sansTC: ['"Noto Sans TC"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f8fafc; }
+        .font-serif-tc { font-family: 'Noto Serif TC', serif; }
+        .tab-btn.active {
+            border-bottom-color: #16a34a;
+            color: #16a34a;
+            background-color: #f0fdf4;
+            font-weight: 700;
+        }
+        .flip-card { perspective: 1000px; }
+        .flip-card-inner { transition: transform 0.6s; transform-style: preserve-3d; }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { backface-visibility: hidden; }
+        .flip-card-back { transform: rotateY(180deg); }
+        .mindmap-node { transition: all 0.3s ease; }
+        .mindmap-node:hover { transform: scale(1.03); }
+    </style>
+</head>
+<body class="text-slate-800 bg-slate-50 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-emerald-800 via-teal-800 to-slate-900 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-2">
+            <div class="flex items-center space-x-3">
+                <a href="index.html" class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-emerald-100 hover:text-white text-xs font-bold transition flex items-center gap-1.5 border border-white/20 shrink-0">
+                    <i class="fa-solid fa-house"></i>
+                    <span>教材首頁</span>
+                </a>
+                <div class="bg-emerald-500 text-white p-2.5 rounded-xl shadow-inner">
+                    <i class="fa-solid font-bold fa-book-open text-2xl"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-semibold px-2 py-0.5 bg-emerald-700/80 rounded text-emerald-100 uppercase tracking-wider">國中國文 2上 第一課</span>
+                    <h1 class="text-xl sm:text-2xl font-bold font-serif-tc tracking-wide">新詩選：〈傘〉與〈風箏〉</h1>
+                </div>
+            </div>
+            <!-- Quick Actions -->
+            <div class="flex items-center space-x-2 text-xs">
+                <a href="ask_author.html" class="px-3 py-1.5 rounded-xl bg-purple-600/80 hover:bg-purple-600 text-white font-bold transition border border-purple-400/40 flex items-center gap-1">
+                    <i class="fa-solid fa-feather-pointed"></i> 問問作者
+                </a>
+                <a href="修辭.html" class="px-3 py-1.5 rounded-xl bg-amber-500/80 hover:bg-amber-500 text-white font-bold transition border border-amber-400/40 hidden sm:flex items-center gap-1">
+                    <i class="fa-solid fa-pen-nib"></i> 修辭學堂
+                </a>
+                <a href="prep_hub.html" class="px-3 py-1.5 rounded-xl bg-rose-600/80 hover:bg-rose-600 text-white font-bold transition border border-rose-400/40 flex items-center gap-1">
+                    <i class="fa-solid fa-book-bookmark"></i> 備課寶典
+                </a>
+                <div class="flex items-center space-x-2 text-xs bg-slate-800/60 backdrop-blur px-3 py-1.5 rounded-full border border-emerald-500/30">
+                    <span id="quizScoreDisplay" class="text-amber-300 font-semibold">評量得分: --/100</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="bg-white border-b border-slate-200 text-slate-600 text-sm font-medium overflow-x-auto shadow-sm">
+            <div class="max-w-7xl mx-auto px-2 flex space-x-1 sm:space-x-4 min-w-max">
+                <button onclick="switchTab('poem-structure')" id="tab-poem-structure" class="tab-btn active py-3 px-4 border-b-2 border-transparent hover:text-emerald-600 flex items-center gap-2">
+                    <i class="fa-solid fa-sitemap text-emerald-600"></i> 課文賞析與架構圖
+                </button>
+                <button onclick="switchTab('vocab-section')" id="tab-vocab-section" class="tab-btn py-3 px-4 border-b-2 border-transparent hover:text-emerald-600 flex items-center gap-2">
+                    <i class="fa-solid fa-spell-check text-blue-600"></i> 難字詞與形音義
+                </button>
+                <button onclick="switchTab('rhetoric-section')" id="tab-rhetoric-section" class="tab-btn py-3 px-4 border-b-2 border-transparent hover:text-emerald-600 flex items-center gap-2">
+                    <i class="fa-solid fa-wand-magic-sparkles text-purple-600"></i> 核心修辭教室
+                </button>
+                <button onclick="switchTab('author-poems')" id="tab-author-poems" class="tab-btn py-3 px-4 border-b-2 border-transparent hover:text-emerald-600 flex items-center gap-2">
+                    <i class="fa-solid fa-feather-pointed text-amber-600"></i> 作者與詠物詩藝
+                </button>
+                <button onclick="switchTab('quiz-section')" id="tab-quiz-section" class="tab-btn py-3 px-4 border-b-2 border-transparent hover:text-emerald-600 flex items-center gap-2">
+                    <i class="fa-solid fa-clipboard-check text-rose-600"></i> 課堂互動評量
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 flex-1 w-full">
+
+        <!-- ========================================== -->
+        <!-- TAB 1: 課文與架構圖 Module                 -->
+        <!-- ========================================== -->
+        <section id="poem-structure" class="tab-content space-y-6">
+            
+            <!-- Poem Switcher Sub-tabs -->
+            <div class="flex justify-center mb-4">
+                <div class="inline-flex p-1 bg-slate-200/80 rounded-xl space-x-1">
+                    <button onclick="switchPoemView('san')" id="btn-poem-san" class="px-6 py-2 rounded-lg font-medium text-sm transition-all bg-white text-emerald-800 shadow">
+                        <i class="fa-solid fa-umbrella mr-2"></i>蓉子〈傘〉
+                    </button>
+                    <button onclick="switchPoemView('fengzheng')" id="btn-poem-fengzheng" class="px-6 py-2 rounded-lg font-medium text-sm transition-all text-slate-600 hover:text-slate-900">
+                        <i class="fa-solid fa-paper-plane mr-2"></i>白靈〈風箏〉
+                    </button>
+                </div>
+            </div>
+
+            <!-- Poem 1: 傘 Container -->
+            <div id="view-san" class="space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Poem Interactive Text (5 columns) -->
+                    <div class="lg:col-span-5 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                                <h2 class="text-2xl font-bold font-serif-tc text-emerald-900">〈傘〉 <span class="text-sm font-normal text-slate-500">蓉子</span></h2>
+                                <span class="text-xs bg-emerald-100 text-emerald-800 font-semibold px-2.5 py-1 rounded-full">抒情詩 / 詠物抒懷</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mb-4"><i class="fa-solid fa-circle-info mr-1"></i>點擊各節詩句可查看詳細意涵與修辭分析：</p>
+                            
+                            <!-- Stanzas -->
+                            <div class="space-y-4 font-serif-tc text-lg leading-relaxed text-slate-700">
+                                <div onclick="highlightNode('san-1')" class="p-3 rounded-xl border border-dashed border-transparent hover:border-emerald-400 hover:bg-emerald-50/50 cursor-pointer transition">
+                                    <span class="text-xs text-emerald-600 font-bold block mb-1 font-sans">【第一節：形狀】</span>
+                                    鳥翅初撲<br>
+                                    幅幅相連 以蝙蝠弧形的雙翼<br>
+                                    連成一個無懈可擊的圓。
+                                </div>
+                                <div onclick="highlightNode('san-2')" class="p-3 rounded-xl border border-dashed border-transparent hover:border-emerald-400 hover:bg-emerald-50/50 cursor-pointer transition">
+                                    <span class="text-xs text-emerald-600 font-bold block mb-1 font-sans">【第二節：色彩】</span>
+                                    一把綠色小傘是一頂荷蓋<br>
+                                    紅色朝暾 黑色晚雲<br>
+                                    各種顏色的傘是載花的樹<br>
+                                    而且能夠行走……
+                                </div>
+                                <div onclick="highlightNode('san-3')" class="p-3 rounded-xl border border-dashed border-transparent hover:border-emerald-400 hover:bg-emerald-50/50 cursor-pointer transition">
+                                    <span class="text-xs text-emerald-600 font-bold block mb-1 font-sans">【第三節：功能與心境】</span>
+                                    一柄頂天<br>
+                                    頂著豔陽 頂著雨<br>
+                                    頂著單純兒歌的透明音符<br>
+                                    自在自適的小小世界
+                                </div>
+                                <div onclick="highlightNode('san-4')" class="p-3 rounded-xl border border-dashed border-transparent hover:border-emerald-400 hover:bg-emerald-50/50 cursor-pointer transition">
+                                    <span class="text-xs text-emerald-600 font-bold block mb-1 font-sans">【第四節：關係與感受】</span>
+                                    一傘在握 開闔自如<br>
+                                    闔則為竿為杖 開則為花為亭<br>
+                                    亭中藏一個寧靜的我
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500 bg-slate-50 p-3 rounded-xl">
+                            <strong>主旨：</strong> 藉傘下純真的小世界，寫作者寧靜自在的心境與「操之在己」的處世修養。
+                        </div>
+                    </div>
+
+                    <!-- Visual Mind Map / Structure (7 columns) -->
+                    <div class="lg:col-span-7 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                                    <i class="fa-solid fa-diagram-project text-emerald-600"></i> 〈傘〉課文心智架構圖
+                                </h3>
+                                <span class="text-xs text-slate-400">點擊點陣可對應說明</span>
+                            </div>
+
+                            <!-- Interactive Tree Diagram -->
+                            <div class="space-y-4">
+                                <!-- Node Root -->
+                                <div class="bg-gradient-to-r from-emerald-700 to-teal-700 text-white p-3 rounded-xl text-center font-bold text-base shadow">
+                                    《傘》—— 詠物抒懷（物我合一）
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <!-- Branch 1: 人看傘 -->
+                                    <div id="mindmap-san-1" class="mindmap-node border-2 border-emerald-200 bg-emerald-50/40 p-4 rounded-xl space-y-3">
+                                        <div class="font-bold text-emerald-900 border-b border-emerald-200 pb-1 flex justify-between items-center">
+                                            <span>一、人看傘（觀物形象）</span>
+                                            <i class="fa-solid fa-eye text-emerald-600"></i>
+                                        </div>
+                                        <div class="text-xs space-y-2 text-slate-700">
+                                            <div class="bg-white p-2 rounded shadow-sm">
+                                                <strong class="text-emerald-700 block">1. 外在形狀 (動態與視覺)</strong>
+                                                初開：鳥翅初撲<br>
+                                                半開：蝙蝠弧形雙翼<br>
+                                                全開：無懈可擊的圓（象徵圓滿）
+                                            </div>
+                                            <div class="bg-white p-2 rounded shadow-sm">
+                                                <strong class="text-emerald-700 block">2. 色彩聯想 (自然美景)</strong>
+                                                綠傘 ➔ 荷蓋｜紅傘 ➔ 朝暾<br>
+                                                黑傘 ➔ 晚雲｜花傘 ➔ 載花行走的樹
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Branch 2: 人與傘 -->
+                                    <div id="mindmap-san-2" class="mindmap-node border-2 border-teal-200 bg-teal-50/40 p-4 rounded-xl space-y-3">
+                                        <div class="font-bold text-teal-900 border-b border-teal-200 pb-1 flex justify-between items-center">
+                                            <span>二、人與傘（情意轉化）</span>
+                                            <i class="fa-solid fa-hand-holding-heart text-teal-600"></i>
+                                        </div>
+                                        <div class="text-xs space-y-2 text-slate-700">
+                                            <div class="bg-white p-2 rounded shadow-sm">
+                                                <strong class="text-teal-700 block">1. 傘的功能與意義</strong>
+                                                傘上：頂豔陽 (順境)、頂雨 (逆境)<br>
+                                                傘下：自在自適的小小世界 (安詳自得)
+                                            </div>
+                                            <div class="bg-white p-2 rounded shadow-sm">
+                                                <strong class="text-teal-700 block">2. 開闔哲理與心境</strong>
+                                                開闔自如：命運操之在己<br>
+                                                闔為竿杖 / 開為花亭 ➔ 藏寧靜的我
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Mind Map Explanation Box -->
+                                <div id="san-detail-box" class="bg-slate-100 p-4 rounded-xl border border-slate-200 text-sm">
+                                    <p class="text-slate-600"><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i><strong>結構亮點：</strong> 首尾兩節各3行，中間兩節各4行，結構對稱整齊。從客觀物象層層推進至主觀情懷，達到物我合一的藝術境界。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Poem 2: 風箏 Container -->
+            <div id="view-fengzheng" class="space-y-6 hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Poem Interactive Text (5 columns) -->
+                    <div class="lg:col-span-5 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                                <h2 class="text-2xl font-bold font-serif-tc text-sky-900">〈風箏〉 <span class="text-sm font-normal text-slate-500">白靈</span></h2>
+                                <span class="text-xs bg-sky-100 text-sky-800 font-semibold px-2.5 py-1 rounded-full">抒情詩 / 象徵說理</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mb-4"><i class="fa-solid fa-circle-info mr-1"></i>全詩共五行，文字精巧且富哲理：</p>
+                            
+                            <!-- Stanzas -->
+                            <div class="space-y-4 font-serif-tc text-lg leading-relaxed text-slate-700">
+                                <div class="p-3 rounded-xl border border-slate-100 hover:border-sky-300 hover:bg-sky-50/50 transition">
+                                    <span class="text-xs text-sky-600 font-bold block mb-1 font-sans">【第一行：遊戲開始】</span>
+                                    扶搖直上，小小的希望能懸得多高呢
+                                </div>
+                                <div class="p-3 rounded-xl border border-slate-100 hover:border-sky-300 hover:bg-sky-50/50 transition">
+                                    <span class="text-xs text-sky-600 font-bold block mb-1 font-sans">【第二行：承上啟下】</span>
+                                    長長一生莫非這樣一場遊戲吧
+                                </div>
+                                <div class="p-3 rounded-xl border border-slate-100 hover:border-sky-300 hover:bg-sky-50/50 transition">
+                                    <span class="text-xs text-sky-600 font-bold block mb-1 font-sans">【第三、四行：以小搏大】</span>
+                                    細細一線，卻想與整座天空拔河<br>
+                                    上去，再上去，都快看不見了
+                                </div>
+                                <div class="p-3 rounded-xl border border-slate-100 hover:border-sky-300 hover:bg-sky-50/50 transition">
+                                    <span class="text-xs text-sky-600 font-bold block mb-1 font-sans">【第五行：豪情壯志】</span>
+                                    沿著河堤，我開始拉著天空奔跑
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500 bg-slate-50 p-3 rounded-xl">
+                            <strong>主旨：</strong> 以放風箏活動象徵追求人生希望，展現昂揚志氣、不畏艱難與「人定勝天」的積極豪情。
+                        </div>
+                    </div>
+
+                    <!-- Visual Mind Map / Structure (7 columns) -->
+                    <div class="lg:col-span-7 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                                    <i class="fa-solid fa-diagram-project text-sky-600"></i> 〈風箏〉課文脈絡圖
+                                </h3>
+                                <span class="text-xs text-slate-400">象徵對應</span>
+                            </div>
+
+                            <div class="space-y-4">
+                                <!-- Root Node -->
+                                <div class="bg-gradient-to-r from-sky-600 to-indigo-700 text-white p-3 rounded-xl text-center font-bold text-base shadow">
+                                    《風箏》—— 象徵手法與人生哲理
+                                </div>
+
+                                <!-- Flow Diagram -->
+                                <div class="space-y-3 text-xs">
+                                    <div class="p-3 bg-sky-50 rounded-xl border border-sky-200 flex items-center justify-between">
+                                        <div>
+                                            <span class="font-bold text-sky-900 block text-sm">起：具體活動 ➔ 象徵希望</span>
+                                            「扶搖直上，小小的希望能懸得多高呢」
+                                        </div>
+                                        <span class="bg-sky-200 text-sky-800 px-2 py-1 rounded text-xs font-semibold">風箏 ＝ 希望</span>
+                                    </div>
+
+                                    <div class="p-3 bg-indigo-50 rounded-xl border border-indigo-200 flex items-center justify-between">
+                                        <div>
+                                            <span class="font-bold text-indigo-900 block text-sm">承：連結人生 ➔ 遊戲象徵</span>
+                                            「長長一生莫非這樣一場遊戲吧」
+                                        </div>
+                                        <span class="bg-indigo-200 text-indigo-800 px-2 py-1 rounded text-xs font-semibold">承上啟下</span>
+                                    </div>
+
+                                    <div class="p-3 bg-blue-50 rounded-xl border border-blue-200 flex items-center justify-between">
+                                        <div>
+                                            <span class="font-bold text-blue-900 block text-sm">轉：以小搏大 ➔ 勇毅奮鬥</span>
+                                            「細細一線，卻想與整座天空拔河 / 上去，再上去……」
+                                        </div>
+                                        <span class="bg-blue-200 text-blue-800 px-2 py-1 rounded text-xs font-semibold">天空 ＝ 現實環境考驗</span>
+                                    </div>
+
+                                    <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-200 flex items-center justify-between">
+                                        <div>
+                                            <span class="font-bold text-emerald-900 block text-sm">合：擁抱理想 ➔ 人定勝天</span>
+                                            「沿著河堤，我開始拉著天空奔跑」
+                                        </div>
+                                        <span class="bg-emerald-200 text-emerald-800 px-2 py-1 rounded text-xs font-semibold">豪情壯志</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TAB 2: 難字詞與形音義 Module                -->
+        <!-- ========================================== -->
+        <section id="vocab-section" class="tab-content space-y-6 hidden">
+            <!-- Filter / Search Header -->
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-spell-check text-blue-600"></i> 重點字詞與形音義辨析
+                    </h2>
+                    <p class="text-xs text-slate-500">翻轉卡片學習重要形近字、注音與成語典故</p>
+                </div>
+                <div class="flex gap-2 w-full md:w-auto">
+                    <input type="text" id="vocabSearch" onkeyup="filterVocab()" placeholder="搜尋字詞或注音..." class="px-4 py-2 border border-slate-300 rounded-xl text-sm focus:outline-none focus:border-blue-500 w-full">
+                </div>
+            </div>
+
+            <!-- Interactive Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="vocabGrid">
+                
+                <!-- Card 1: 撲 / 樸 / 僕 / 璞 -->
+                <div class="vocab-card flip-card h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-sm border border-slate-200 bg-white">
+                        <!-- Front -->
+                        <div class="flip-card-front absolute inset-0 p-5 flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start">
+                                    <span class="text-2xl font-bold font-serif-tc text-blue-900">撲</span>
+                                    <span class="text-xs bg-blue-100 text-blue-800 font-semibold px-2 py-0.5 rounded">注音：ㄆㄨ</span>
+                                </div>
+                                <p class="text-sm font-semibold text-slate-600 mt-2">課文：鳥翅初「撲」</p>
+                                <p class="text-xs text-slate-500 mt-1">釋義：(動詞) 拍擊空氣。</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 text-center text-xs text-blue-600 font-medium">
+                                <i class="fa-solid fa-rotate mr-1"></i>點擊翻轉查看【形近字辨析】
+                            </div>
+                        </div>
+                        <!-- Back -->
+                        <div class="flip-card-back absolute inset-0 p-5 bg-blue-900 text-white rounded-2xl flex flex-col justify-between">
+                            <div>
+                                <h4 class="font-bold border-b border-blue-700 pb-2 mb-2 text-blue-200">【形近字組辨析】</h4>
+                                <ul class="text-xs space-y-2 text-blue-100">
+                                    <li><strong class="text-amber-300">撲 (ㄆㄨ)：</strong>鳥翅初撲、飛蛾撲火</li>
+                                    <li><strong class="text-amber-300">樸 (ㄆㄨ)：</strong>質樸、樸實無華</li>
+                                    <li><strong class="text-amber-300">僕 (ㄆㄨ)：</strong>公僕、風塵仆仆/僕僕</li>
+                                    <li><strong class="text-amber-300">璞 (ㄆㄨ)：</strong>璞玉渾金 (未琢之玉)</li>
+                                </ul>
+                            </div>
+                            <span class="text-xs text-blue-300 text-center">點擊翻回</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: 暾 / 墩 / 燉 / 敦 -->
+                <div class="vocab-card flip-card h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-sm border border-slate-200 bg-white">
+                        <div class="flip-card-front absolute inset-0 p-5 flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start">
+                                    <span class="text-2xl font-bold font-serif-tc text-amber-900">朝暾</span>
+                                    <span class="text-xs bg-amber-100 text-amber-800 font-semibold px-2 py-0.5 rounded">ㄊㄨㄣ</span>
+                                </div>
+                                <p class="text-sm font-semibold text-slate-600 mt-2">課文：紅色朝暾</p>
+                                <p class="text-xs text-slate-500 mt-1">釋義：早晨初升的太陽。</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 text-center text-xs text-amber-600 font-medium">
+                                <i class="fa-solid fa-rotate mr-1"></i>點擊翻轉查看【形近字辨析】
+                            </div>
+                        </div>
+                        <div class="flip-card-back absolute inset-0 p-5 bg-amber-900 text-white rounded-2xl flex flex-col justify-between">
+                            <div>
+                                <h4 class="font-bold border-b border-amber-700 pb-2 mb-2 text-amber-200">【形近字組辨析】</h4>
+                                <ul class="text-xs space-y-2 text-amber-100">
+                                    <li><strong class="text-amber-300">暾 (ㄊㄨㄣ)：</strong>朝暾 (初升太陽)</li>
+                                    <li><strong class="text-amber-300">墩 (ㄉㄨㄣ)：</strong>橋墩、樹墩</li>
+                                    <li><strong class="text-amber-300">燉 (ㄉㄨㄣ)：</strong>燉雞、慢火燉煮</li>
+                                    <li><strong class="text-amber-300">敦 (ㄉㄨㄣ)：</strong>敦厚、敦親睦鄰</li>
+                                </ul>
+                            </div>
+                            <span class="text-xs text-amber-300 text-center">點擊翻回</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: 載 (ㄗㄞˋ / ㄗㄞˇ) -->
+                <div class="vocab-card flip-card h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-sm border border-slate-200 bg-white">
+                        <div class="flip-card-front absolute inset-0 p-5 flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start">
+                                    <span class="text-2xl font-bold font-serif-tc text-emerald-900">載</span>
+                                    <span class="text-xs bg-emerald-100 text-emerald-800 font-semibold px-2 py-0.5 rounded">多音字</span>
+                                </div>
+                                <p class="text-sm font-semibold text-slate-600 mt-2">課文：載(ㄗㄞˋ)花的樹</p>
+                                <p class="text-xs text-slate-500 mt-1">釋義：裝載、承載。</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 text-center text-xs text-emerald-600 font-medium">
+                                <i class="fa-solid fa-rotate mr-1"></i>點擊翻轉查看【字音字義】
+                            </div>
+                        </div>
+                        <div class="flip-card-back absolute inset-0 p-5 bg-emerald-900 text-white rounded-2xl flex flex-col justify-between">
+                            <div>
+                                <h4 class="font-bold border-b border-emerald-700 pb-2 mb-2 text-emerald-200">【音義區分】</h4>
+                                <ul class="text-xs space-y-2 text-emerald-100">
+                                    <li><strong class="text-amber-300">ㄗㄞˋ (四聲)：</strong>裝載、載歌載舞、滿載而歸</li>
+                                    <li><strong class="text-amber-300">ㄗㄞˇ (三聲)：</strong>年/記 (三年五載、刊載)</li>
+                                    <li><strong class="text-amber-300">同音形異字：</strong>戴安全帽、栽種樹木、剪裁</li>
+                                </ul>
+                            </div>
+                            <span class="text-xs text-emerald-300 text-center">點擊翻回</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4: 闔 / 閤 / 閣 / 隔 -->
+                <div class="vocab-card flip-card h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-sm border border-slate-200 bg-white">
+                        <div class="flip-card-front absolute inset-0 p-5 flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start">
+                                    <span class="text-2xl font-bold font-serif-tc text-indigo-900">開闔</span>
+                                    <span class="text-xs bg-indigo-100 text-indigo-800 font-semibold px-2 py-0.5 rounded">ㄏㄜˊ</span>
+                                </div>
+                                <p class="text-sm font-semibold text-slate-600 mt-2">課文：開闔自如</p>
+                                <p class="text-xs text-slate-500 mt-1">釋義：闔，閉合、關閉。</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 text-center text-xs text-indigo-600 font-medium">
+                                <i class="fa-solid fa-rotate mr-1"></i>點擊翻轉查看【形近字】
+                            </div>
+                        </div>
+                        <div class="flip-card-back absolute inset-0 p-5 bg-indigo-900 text-white rounded-2xl flex flex-col justify-between">
+                            <div>
+                                <h4 class="font-bold border-b border-indigo-700 pb-2 mb-2 text-indigo-200">【門字部形近字】</h4>
+                                <ul class="text-xs space-y-2 text-indigo-100">
+                                    <li><strong class="text-amber-300">闔 (ㄏㄜˊ)：</strong>開闔自如、闔家光臨 (全)</li>
+                                    <li><strong class="text-amber-300">閤 (ㄏㄜˊ)：</strong>閤家歡樂 (通「闔」)</li>
+                                    <li><strong class="text-amber-300">閣 (ㄍㄜˊ)：</strong>內閣、閣下、置之高閣</li>
+                                    <li><strong class="text-amber-300">隔 (ㄍㄜˊ)：</strong>隔閡、隔天 (阻隔)</li>
+                                </ul>
+                            </div>
+                            <span class="text-xs text-indigo-300 text-center">點擊翻回</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5: 扶搖直上 -->
+                <div class="vocab-card flip-card h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-sm border border-slate-200 bg-white">
+                        <div class="flip-card-front absolute inset-0 p-5 flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start">
+                                    <span class="text-2xl font-bold font-serif-tc text-purple-900">扶搖直上</span>
+                                    <span class="text-xs bg-purple-100 text-purple-800 font-semibold px-2 py-0.5 rounded">成語典故</span>
+                                </div>
+                                <p class="text-sm font-semibold text-slate-600 mt-2">課文：扶搖直上，小小的希望...</p>
+                                <p class="text-xs text-slate-500 mt-1">釋義：隨旋風快速上升。比喻仕途順遂或快速上升。</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 text-center text-xs text-purple-600 font-medium">
+                                <i class="fa-solid fa-rotate mr-1"></i>點擊翻轉查看【莊子典故】
+                            </div>
+                        </div>
+                        <div class="flip-card-back absolute inset-0 p-5 bg-purple-900 text-white rounded-2xl flex flex-col justify-between">
+                            <div>
+                                <h4 class="font-bold border-b border-purple-700 pb-2 mb-2 text-purple-200">【典故來源】</h4>
+                                <p class="text-xs text-purple-100 leading-relaxed">
+                                    出自《莊子・逍遙遊》：「鵬之徙於南冥也，水擊三千里，搏扶搖而上者九萬里。」形容大鵬鳥乘著旋風高飛。後用於比喻地位職務快速上升。
+                                </p>
+                            </div>
+                            <span class="text-xs text-purple-300 text-center">近義：平步青雲、飛黃騰達</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6: 無懈可擊 -->
+                <div class="vocab-card flip-card h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-sm border border-slate-200 bg-white">
+                        <div class="flip-card-front absolute inset-0 p-5 flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start">
+                                    <span class="text-2xl font-bold font-serif-tc text-rose-900">無懈可擊</span>
+                                    <span class="text-xs bg-rose-100 text-rose-800 font-semibold px-2 py-0.5 rounded">ㄒㄧㄝˋ</span>
+                                </div>
+                                <p class="text-sm font-semibold text-slate-600 mt-2">課文：連成一個無懈可擊的圓</p>
+                                <p class="text-xs text-slate-500 mt-1">釋義：沒有缺點或破綻可讓人攻擊，形容非常完美嚴密。</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 text-center text-xs text-rose-600 font-medium">
+                                <i class="fa-solid fa-rotate mr-1"></i>點擊翻轉查看【近反義詞】
+                            </div>
+                        </div>
+                        <div class="flip-card-back absolute inset-0 p-5 bg-rose-900 text-white rounded-2xl flex flex-col justify-between">
+                            <div>
+                                <h4 class="font-bold border-b border-rose-700 pb-2 mb-2 text-rose-200">【近反義詞與字的拆解】</h4>
+                                <p class="text-xs text-rose-100 leading-relaxed mb-2">
+                                    <strong>懈：</strong>鬆散、怠惰、缺點。<br>
+                                    <strong>近義：</strong>天衣無縫、十全十美。<br>
+                                    <strong>反義：</strong>破綻百出、漏洞百出。
+                                </p>
+                            </div>
+                            <span class="text-xs text-rose-300 text-center">點擊翻回</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TAB 3: 核心修辭教室 Module                 -->
+        <!-- ========================================== -->
+        <section id="rhetoric-section" class="tab-content space-y-6 hidden">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <h2 class="text-xl font-bold text-slate-800 mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-wand-magic-sparkles text-purple-600"></i> 本課核心修辭透視解析
+                </h2>
+                <p class="text-xs text-slate-500 mb-6">重點掌握「譬喻（明喻、隱喻）」、「轉化」、「類疊」與「雙重否定」的運用藝術。</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <!-- Rhetoric 1: 譬喻修辭大解密 -->
+                    <div class="bg-purple-50/60 p-5 rounded-2xl border border-purple-200">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="font-bold text-purple-900 text-base"><i class="fa-solid fa-shapes mr-2"></i>1. 譬喻修辭（打比方）</h3>
+                            <span class="text-xs bg-purple-200 text-purple-800 px-2 py-0.5 rounded font-bold">本課核心</span>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                            用有相似點的「喻依」來說明所要描述的「喻體」。
+                        </p>
+                        <div class="space-y-2 text-xs">
+                            <div class="bg-white p-3 rounded-xl border border-purple-100 shadow-sm">
+                                <strong class="text-purple-800 block">【明喻】：喻體 + 喻詞 (像/如) + 喻依</strong>
+                                例：「一把綠色小傘<span class="text-purple-600 font-bold">是</span>（似）一頂荷蓋。」
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-purple-100 shadow-sm">
+                                <strong class="text-purple-800 block">【隱喻/暗喻】：喻體 + 喻詞 (是/成為) + 喻依</strong>
+                                例：「各種顏色的傘<span class="text-purple-600 font-bold">是</span>載花的樹。」
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-purple-100 shadow-sm">
+                                <strong class="text-purple-800 block">【借喻】：省略喻體與喻詞，直接用喻依</strong>
+                                例：「鳥翅初撲」（以鳥翅初拍擊借喻開傘初期的瞬間）。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rhetoric 2: 轉化修辭 -->
+                    <div class="bg-blue-50/60 p-5 rounded-2xl border border-blue-200">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="font-bold text-blue-900 text-base"><i class="fa-solid fa-person-arrow-up-from-line mr-2"></i>2. 轉化修辭（擬人/人性化）</h3>
+                            <span class="text-xs bg-blue-200 text-blue-800 px-2 py-0.5 rounded font-bold">想像力發揮</span>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                            描述事物時，轉變其原本性質，化無情為有情、化抽象為具體。
+                        </p>
+                        <div class="space-y-2 text-xs">
+                            <div class="bg-white p-3 rounded-xl border border-blue-100 shadow-sm">
+                                <strong class="text-blue-800 block">【擬人】：把物當作人來描寫</strong>
+                                例：「細細一線，卻想與整座天空<span class="text-blue-600 font-bold">拔河</span>。」（將風箏與天空賦予人的角力動作）
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-blue-100 shadow-sm">
+                                <strong class="text-blue-800 block">【形象化】：將抽象的概念化為具體事物</strong>
+                                例：「扶搖直上，小小的<span class="text-blue-600 font-bold">希望</span>能懸得多高呢」（將抽象的「希望」具體化為可懸掛的風箏）。
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-blue-100 shadow-sm">
+                                <strong class="text-blue-800 block">【誇飾兼轉化】：擴大情境</strong>
+                                例：「我開始<span class="text-blue-600 font-bold">拉著天空奔跑</span>」（豪情壯志，人定勝天）。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rhetoric 3: 類疊與雙重否定 -->
+                    <div class="bg-emerald-50/60 p-5 rounded-2xl border border-emerald-200 md:col-span-2">
+                        <h3 class="font-bold text-emerald-900 text-base mb-2"><i class="fa-solid fa-quote-left mr-2"></i>3. 類疊與雙重否定語氣</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                            <div class="bg-white p-3 rounded-xl border border-emerald-100">
+                                <strong class="text-emerald-800 block mb-1">【疊字/類字 (類疊)】：節奏美感</strong>
+                                <ul>
+                                    <li>• 「幅幅相連」：強調傘面一張張緊密相連。</li>
+                                    <li>• 「頂著豔陽 頂著雨」：強調傘承擔順境與逆境的堅毅。</li>
+                                    <li>• 「上去，再上去」：呈現風箏持續爬升的動態視覺。</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-emerald-100">
+                                <strong class="text-emerald-800 block mb-1">【雙重否定句】：負負得正，加強肯定語氣</strong>
+                                <p class="text-slate-600 leading-relaxed">
+                                    句中出現兩個否定詞，表達極強烈的「肯定」意涵。<br>
+                                    例：「長長一生<span class="text-rose-600 font-bold">莫非</span>（莫+非 ＝ 無不、都是）這樣一場遊戲吧。」<br>
+                                    例：「非他莫屬」（一定是他）。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TAB 4: 作者介紹與詠物詩展示 Module          -->
+        <!-- ========================================== -->
+        <section id="author-poems" class="tab-content space-y-6 hidden">
+            <!-- Author Bios -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Author 1: 蓉子 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-800 font-serif-tc text-2xl font-bold shadow-inner">
+                                蓉
+                            </div>
+                            <div>
+                                <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-semibold">詩壇「永遠的青鳥」</span>
+                                <h3 class="text-xl font-bold text-slate-800 font-serif-tc">蓉子 <span class="text-sm font-normal text-slate-500">(1922-2021)</span></h3>
+                                <p class="text-xs text-slate-500">本名王蓉芷，江蘇漣水人</p>
+                            </div>
+                        </div>
+                        <ul class="text-xs text-slate-600 space-y-2 leading-relaxed border-t border-slate-100 pt-3">
+                            <li><strong class="text-emerald-800">風格：</strong>詩風柔美典雅、音韻和諧，蘊含哲思。作品常展現生命力與寧靜安適的心境。</li>
+                            <li><strong class="text-emerald-800">詩壇佳話：</strong>與丈夫羅門同為知名詩人，被譽為「臺灣詩壇的勃朗寧夫婦」；居住之處佈置有各種藝術造型燈，被稱為「燈屋傳奇」。</li>
+                            <li><strong class="text-emerald-800">代表作：</strong>詩集《青鳥集》（第一本詩集）、《千曲之聲》、《黑海上的晨曦》。余光中曾稱許她是「詩壇上開得最久的菊花」。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Author 2: 白靈 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center text-sky-800 font-serif-tc text-2xl font-bold shadow-inner">
+                                靈
+                            </div>
+                            <div>
+                                <span class="text-xs bg-sky-100 text-sky-800 px-2 py-0.5 rounded font-semibold">理化雙棲詩人</span>
+                                <h3 class="text-xl font-bold text-slate-800 font-serif-tc">白靈 <span class="text-sm font-normal text-slate-500">(1951-)</span></h3>
+                                <p class="text-xs text-slate-500">本名莊祖煌，臺北萬華人</p>
+                            </div>
+                        </div>
+                        <ul class="text-xs text-slate-600 space-y-2 leading-relaxed border-t border-slate-100 pt-3">
+                            <li><strong class="text-sky-800">風格：</strong>專長化工，理性與感性兼備。詩作題材多樣，長於謀篇安排，文字語淺意深，想像力豐富。</li>
+                            <li><strong class="text-sky-800">獨特詩觀：</strong>「想像力是詩的開罐器」、「詩是語言的光」。曾大力推動台北市「公車詩」活動，打造詩的城市。</li>
+                            <li><strong class="text-sky-800">代表作：</strong>詩集《白靈世紀詩選》、《後裔》；詩論集《一首詩的誕生》（新詩入門經典）。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Extended Modern Poetry Gallery -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-icons text-amber-600"></i> 其他經典詠物新詩集錦賞析
+                        </h3>
+                        <p class="text-xs text-slate-500">詠物詩透過細膩觀察，將物件特徵融入情感或人生哲理：</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    
+                    <!-- Poem Example 1: 蔣勳《門》 -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">蔣勳〈門〉</span>
+                            <div class="font-serif-tc text-sm my-3 leading-relaxed text-slate-700 italic">
+                                「開，或者關/都可以<br>
+                                有時候是阻擋/有時候是歡迎<br>
+                                進，或者出/都可以<br>
+                                它真正的意思/只是通過」
+                            </div>
+                        </div>
+                        <div class="text-xs text-slate-500 border-t border-slate-200 pt-2">
+                            <strong>賞析：</strong>以「門」的開關與進出，傳達通達、不執著的包容心態。
+                        </div>
+                    </div>
+
+                    <!-- Poem Example 2: 商禽《五官素描・眉》 -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">商禽〈五官素描・眉〉</span>
+                            <div class="font-serif-tc text-sm my-3 leading-relaxed text-slate-700 italic">
+                                「只有翅翼<br>
+                                而無身軀的鳥<br>
+                                在哭和笑之間<br>
+                                不斷飛翔」
+                            </div>
+                        </div>
+                        <div class="text-xs text-slate-500 border-t border-slate-200 pt-2">
+                            <strong>賞析：</strong>將左右兩道眉毛比喻為無身的雙翅，隨喜怒哀樂上下揚動。
+                        </div>
+                    </div>
+
+                    <!-- Poem Example 3: 羅行《橡皮擦》 -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">羅行〈橡皮擦〉</span>
+                            <div class="font-serif-tc text-sm my-3 leading-relaxed text-slate-700 italic">
+                                「執意一塊軟橡皮/搓/揉/捏/壓/扭/都不說話/在橡皮擦自己消失之前/修整/一幅/趕忙的世界。」
+                            </div>
+                        </div>
+                        <div class="text-xs text-slate-500 border-t border-slate-200 pt-2">
+                            <strong>賞析：</strong>描繪橡皮擦默默犧牲自我、修正錯誤的無私奉獻精神。
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TAB 5: 課堂互動評量 Module                 -->
+        <!-- ========================================== -->
+        <section id="quiz-section" class="tab-content space-y-6 hidden">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-4 mb-6 gap-2">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-clipboard-check text-rose-600"></i> 《新詩選》課堂互動小測驗
+                        </h2>
+                        <p class="text-xs text-slate-500">測試你對課文意涵、字詞形音義與修辭的理解（共 10 題）</p>
+                    </div>
+                    <button onclick="resetQuiz()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition">
+                        <i class="fa-solid fa-rotate-right mr-1"></i>重置測驗
+                    </button>
+                </div>
+
+                <!-- Quiz Form Container -->
+                <div id="quizContainer" class="space-y-6">
+                    <!-- Questions injected dynamically by JS -->
+                </div>
+
+                <div class="mt-8 pt-6 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div id="quizResultBox" class="text-sm font-bold text-slate-700">
+                        答題完成後請點擊下方按鈕計算成績！
+                    </div>
+                    <button onclick="submitQuiz()" class="w-full sm:w-auto px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow hover:shadow-lg transition">
+                        提交答案測驗
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 text-slate-400 text-xs py-6 mt-12 border-t border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+            <p>國中國文 2上 第一課《新詩選》（蓉子〈傘〉、白靈〈風箏〉）互動教學教材</p>
+            <p class="text-slate-500">設計輔助教學用途，依據國中新課綱備課用書內容製作</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Interactive Engine -->
+    <script>
+        
+        // Quiz Questions Data (Extracted & aligned with the PDF provided)
+        const quizData = [
+            {
+                id: 1,
+                question: "在蓉子的〈傘〉一詩中，作者將「一把綠色小傘」比喻為下列何者？",
+                options: ["荷蓋", "朝暾", "晚雲", "鳥翅"],
+                answer: 0,
+                explanation: "課文寫道：「一把綠色小傘是一頂荷蓋」，綠傘在視覺與形狀上皆似荷葉。"
+            },
+            {
+                id: 2,
+                question: "〈傘〉一詩中「頂著豔陽 頂著雨」句中的「豔陽」與「雨」分別象徵人生的何種境遇？",
+                options: ["熱情與悲傷", "順境與逆境", "白晝與黑夜", "成功與失敗"],
+                answer: 1,
+                explanation: "豔陽代表晴朗順利的「順境」，雨則代表挫折困頓的「逆境」。"
+            },
+            {
+                id: 3,
+                question: "白靈〈風箏〉一詩中「細細一線，卻想與整座天空拔河」，這段詩句表現出何種態度？",
+                options: ["好高騖遠，不自量力", "委曲求全，隨波逐流", "昂揚志氣，不畏艱難", "知難而退，明哲保身"],
+                answer: 2,
+                explanation: "以細小的線抗拒龐大天空的拉力，展現出「以小搏大」、不畏困難的奮鬥勇氣。"
+            },
+            {
+                id: 4,
+                question: "白靈〈風箏〉詩末「我開始拉著天空奔跑」，表達出何種意涵？",
+                options: ["追尋理想的豪情壯志與積極態度", "逃避現實環境的無奈感", "對童年遊戲的懷念", "體力充沛的體育精神"],
+                answer: 0,
+                explanation: "轉化拉風箏的動作為「拉著天空奔跑」，展現擁抱理想、人定勝天的豪情壯志。"
+            },
+            {
+                id: 5,
+                question: "下列何者屬於「雙重否定」句，表達強烈的「肯定」意涵？",
+                options: ["不慌不忙地走過來", "長長一生莫非這樣一場遊戲吧", "無非是為了掩飾過錯", "毋枉毋縱"],
+                answer: 1,
+                explanation: "「莫非」由「莫」與「非」兩否定詞組成，在此作「無不、都是」解，表示肯定語氣。"
+            },
+            {
+                id: 6,
+                question: "關於「朝暾」的注音與字義，下列敘述何者正確？",
+                options: ["注音為 ㄉㄨㄣ，指晚霞", "注音為 ㄊㄨㄣ，指早晨初升的太陽", "注音為 ㄉㄨㄣ，指橋樑下的支柱", "注音為 ㄊㄨㄣ，指慢火燉煮"],
+                answer: 1,
+                explanation: "朝暾（ㄊㄨㄣ）：早晨初升的太陽。"
+            },
+            {
+                id: 7,
+                question: "下列各組形近字，何者注音完全相同？",
+                options: ["鳥翅初「撲」／「樸」實無華／「璞」玉", "「弧」形／「孤」單／「狐」狸", "朝「暾」／橋「墩」／「燉」雞", "「載」花的樹／安全「戴」／「栽」樹"],
+                answer: 0,
+                explanation: "A選項皆讀作 ㄆㄨ；B: ㄏㄨ/ㄍㄨ/ㄏㄨ；C: ㄊㄨㄣ/ㄉㄨㄣ/ㄉㄨㄣ；D: ㄗㄞˋ/ㄉㄞˋ/ㄗㄞ。"
+            },
+            {
+                id: 8,
+                question: "蓉子被譽為臺灣詩壇的什麼？",
+                options: ["永遠的青鳥", "理化雙棲詩人", "孤獨國國王", "公車詩人"],
+                answer: 0,
+                explanation: "蓉子因第一本詩集《青鳥集》及溫婉優雅的形象，被譽為詩壇「永遠的青鳥」。"
+            },
+            {
+                id: 9,
+                question: "白靈提出的獨特詩觀中，將什麼比喻為「詩的開罐器」？",
+                options: ["豐富的生活經驗", "高度的想像力", "華麗的修辭技巧", "嚴密的邏輯思考"],
+                answer: 1,
+                explanation: "白靈認為生活經驗只是素材，高度的「想像力」才是詩的開罐器。"
+            },
+            {
+                id: 10,
+                question: "「開，或者關/都可以/有時候是阻擋/有時候是歡迎」這首蔣勳的新詩歌詠的是何種物件？",
+                options: ["傘", "門", "風箏", "窗"],
+                answer: 1,
+                explanation: "這是蔣勳歌詠「門」的詠物詩佳作。"
+            }
+        ];
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+            document.getElementById(tabId).classList.remove('hidden');
+            document.getElementById('tab-' + tabId).classList.add('active');
+        }
+
+        // Sub-Tab Switcher for Poems (傘 vs 風箏)
+        function switchPoemView(poemKey) {
+            if (poemKey === 'san') {
+                document.getElementById('view-san').classList.remove('hidden');
+                document.getElementById('view-fengzheng').classList.add('hidden');
+                document.getElementById('btn-poem-san').className = "px-6 py-2 rounded-lg font-medium text-sm transition-all bg-white text-emerald-800 shadow";
+                document.getElementById('btn-poem-fengzheng').className = "px-6 py-2 rounded-lg font-medium text-sm transition-all text-slate-600 hover:text-slate-900";
+            } else {
+                document.getElementById('view-san').classList.add('hidden');
+                document.getElementById('view-fengzheng').classList.remove('hidden');
+                document.getElementById('btn-poem-san').className = "px-6 py-2 rounded-lg font-medium text-sm transition-all text-slate-600 hover:text-slate-900";
+                document.getElementById('btn-poem-fengzheng').className = "px-6 py-2 rounded-lg font-medium text-sm transition-all bg-white text-sky-800 shadow";
+            }
+        }
+
+        // Vocab Search Filter
+        function filterVocab() {
+            const query = document.getElementById('vocabSearch').value.toLowerCase();
+            const cards = document.querySelectorAll('.vocab-card');
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                if (text.includes(query)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        // Highlight Mind Map Node
+        function highlightNode(nodeId) {
+            const detailBox = document.getElementById('san-detail-box');
+            if(nodeId === 'san-1') {
+                detailBox.innerHTML = `<p class="text-emerald-900 font-bold"><i class="fa-solid fa-feather text-emerald-600 mr-2"></i>【第一節解析】：</p>從傘的「形狀」描摹開傘過程。以「鳥翅初撲」比喻初開瞬間的動態美，半開如「蝙蝠弧形雙翼」，全開為「無懈可擊的圓」，象徵圓滿自足。`;
+            } else if(nodeId === 'san-2') {
+                detailBox.innerHTML = `<p class="text-emerald-900 font-bold"><i class="fa-solid fa-palette text-emerald-600 mr-2"></i>【第二節解析】：</p>寫傘的「色彩」。運用豐富譬喻：綠傘如荷蓋、紅傘如朝暾、黑傘如晚雲，各式花傘則是「載花行走的樹」，富含豐富視覺美感。`;
+            } else if(nodeId === 'san-3') {
+                detailBox.innerHTML = `<p class="text-emerald-900 font-bold"><i class="fa-solid fa-umbrella text-emerald-600 mr-2"></i>【第三節解析】：</p>寫傘的「功用」與傘下心境。傘能擋艷陽(順境)、遮雨(逆境)。雨聲如兒歌透明音符，構築出傘下「自在自適的小小世界」。`;
+            } else if(nodeId === 'san-4') {
+                detailBox.innerHTML = `<p class="text-emerald-900 font-bold"><i class="fa-solid fa-user-check text-emerald-600 mr-2"></i>【第四節解析】：</p>寫人傘關係。「一傘在握 開闔自如」寓有操控自我的生活態度。闔為竿杖、開為花亭，「亭中藏一個寧靜的我」達到了物我合一的境界。`;
+            }
+        }
+
+        // Quiz Generator and Evaluator
+        function renderQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+
+            quizData.forEach((q, index) => {
+                const qHtml = `
+                    <div class="p-4 sm:p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-3" id="q-block-${q.id}">
+                        <div class="font-bold text-slate-800 text-sm sm:text-base flex items-start gap-2">
+                            <span class="bg-slate-200 text-slate-700 text-xs px-2 py-0.5 rounded-full mt-0.5">第 ${index + 1} 題</span>
+                            <span>${q.question}</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
+                            ${q.options.map((opt, optIdx) => `
+                                <label class="flex items-center space-x-2 p-3 bg-white rounded-xl border border-slate-200 hover:bg-emerald-50/50 cursor-pointer text-xs sm:text-sm transition">
+                                    <input type="radio" name="q-${q.id}" value="${optIdx}" class="text-emerald-600 focus:ring-emerald-500">
+                                    <span>${['(A)', '(B)', '(C)', '(D)'][optIdx]} ${opt}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                        <div id="explain-${q.id}" class="hidden text-xs p-3 rounded-xl bg-blue-50 text-blue-900 border border-blue-200 mt-2">
+                            <strong><i class="fa-solid fa-circle-info mr-1"></i> 解析：</strong> ${q.explanation}
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += qHtml;
+            });
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            let total = quizData.length;
+
+            quizData.forEach(q => {
+                const selected = document.querySelector(`input[name="q-${q.id}"]:checked`);
+                const qBlock = document.getElementById(`q-block-${q.id}`);
+                const explainBlock = document.getElementById(`explain-${q.id}`);
+
+                explainBlock.classList.remove('hidden');
+
+                if (selected && parseInt(selected.value) === q.answer) {
+                    score += 10;
+                    qBlock.classList.remove('bg-slate-50', 'border-slate-200');
+                    qBlock.classList.add('bg-emerald-50/60', 'border-emerald-300');
+                } else {
+                    qBlock.classList.remove('bg-slate-50', 'border-slate-200');
+                    qBlock.classList.add('bg-rose-50/60', 'border-rose-300');
+                }
+            });
+
+            // Update score displays
+            document.getElementById('quizScoreDisplay').innerText = `評量得分: ${score}/100`;
+            const resultBox = document.getElementById('quizResultBox');
+            
+            if (score >= 80) {
+                resultBox.innerHTML = `<span class="text-emerald-600 font-bold"><i class="fa-solid fa-circle-check text-lg mr-1"></i>太棒了！獲得 ${score} 分！您對《新詩選》已有深厚的理解！</span>`;
+            } else if (score >= 60) {
+                resultBox.innerHTML = `<span class="text-amber-600 font-bold"><i class="fa-solid fa-triangle-exclamation text-lg mr-1"></i>獲得 ${score} 分！相當不錯，建議複習錯題的解析！</span>`;
+            } else {
+                resultBox.innerHTML = `<span class="text-rose-600 font-bold"><i class="fa-solid fa-circle-xmark text-lg mr-1"></i>獲得 ${score} 分。建議再對照課文賞析與形音義進行複習！</span>`;
+            }
+        }
+
+        function resetQuiz() {
+            renderQuiz();
+            document.getElementById('quizScoreDisplay').innerText = `評量得分: --/100`;
+            document.getElementById('quizResultBox').innerText = `答題完成後請點擊下方按鈕計算成績！`;
+        }
+
+        // Initialize App on Load
+        window.onload = function() {
+            renderQuiz();
+        };
+    </script>
+</body>
+</html>
