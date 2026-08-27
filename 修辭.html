@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中國語修辭互動學習與測驗系統</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['"Noto Sans TC"', 'sans-serif'] },
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+  </style>
+</head>
+<body class="h-full text-slate-800 font-sans flex flex-col justify-between">
+
+  <!-- 頂部導覽列 -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center gap-3">
+          <a href="index.html" class="flex items-center space-x-1 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-brand-100 text-slate-700 hover:text-brand-800 transition text-xs font-bold mr-1 border border-slate-200" title="返回教材入口總覽">
+            <i class="fa-solid fa-house text-sm"></i>
+            <span class="hidden sm:inline">教材首頁</span>
+          </a>
+          <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white font-bold text-xl shadow-md">
+            <i class="fa-solid fa-book-open-reader"></i>
+          </div>
+          <div>
+            <h1 class="font-bold text-lg sm:text-xl text-slate-900 leading-tight">國中國語修辭學堂</h1>
+            <p class="text-xs text-slate-500 hidden sm:block">詳細分類 • 每項 4 個經典範例 • 互動測驗提示</p>
+          </div>
+        </div>
+
+        <!-- 頁籤切換按鈕 -->
+        <nav class="flex bg-slate-100 p-1 rounded-xl gap-1">
+          <button id="nav-dict-btn" onclick="switchTab('dict')" class="px-4 py-2 text-sm font-semibold rounded-lg transition-all bg-white text-brand-600 shadow-sm">
+            <i class="fa-solid fa-book mr-1.5"></i>修辭寶典 (含範例)
+          </button>
+          <button id="nav-quiz-btn" onclick="switchTab('quiz')" class="px-4 py-2 text-sm font-semibold rounded-lg transition-all text-slate-600 hover:text-slate-900">
+            <i class="fa-solid fa-pen-to-square mr-1.5"></i>互動測驗
+          </button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full">
+
+    <!-- ===== 1. 修辭寶典區（優先展示） ===== -->
+    <section id="tab-dict" class="space-y-6">
+      
+      <!-- 寶典搜尋與分類篩選 -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+        <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+          <div class="relative w-full md:w-80">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+            <input type="text" id="dict-search" oninput="filterRhetoricDict()" placeholder="搜尋修辭名稱、細分或例句（如：漂流木）..." class="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+          </div>
+
+          <div class="flex flex-wrap gap-1.5 w-full md:w-auto" id="dict-category-tags">
+            <button onclick="setDictCategory('all')" class="category-btn active px-3 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white">全部修辭</button>
+            <button onclick="setDictCategory('表意類')" class="category-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200">表意形象</button>
+            <button onclick="setDictCategory('結構類')" class="category-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200">句型結構</button>
+            <button onclick="setDictCategory('語氣感官')" class="category-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200">語氣與感官</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 修辭卡片網格 -->
+      <div id="dict-grid" class="grid grid-cols-1 gap-6">
+        <!-- 動態渲染修辭卡片 -->
+      </div>
+
+    </section>
+
+    <!-- ===== 2. 互動測驗區 ===== -->
+    <section id="tab-quiz" class="hidden space-y-6">
+      
+      <!-- 頂部資訊與控制欄 -->
+      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col md:flex-row gap-4 items-center justify-between">
+        <div class="flex items-center gap-4 w-full md:w-auto">
+          <div class="flex-1">
+            <div class="flex justify-between text-xs font-semibold text-slate-500 mb-1">
+              <span>答題進度</span>
+              <span id="quiz-progress-text">1 / 10 題</span>
+            </div>
+            <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+              <div id="quiz-progress-bar" class="bg-brand-500 h-full transition-all duration-300" style="width: 10%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 w-full md:w-auto justify-end">
+          <span class="text-xs font-medium text-slate-500">題目篩選：</span>
+          <select id="quiz-filter" onchange="filterQuestions()" class="text-sm border border-slate-300 rounded-lg px-3 py-1.5 bg-white text-slate-700 focus:ring-2 focus:ring-brand-500 outline-none">
+            <option value="all">全題庫綜合測驗</option>
+            <option value="single">僅單選題</option>
+            <option value="multiple">僅複選題</option>
+          </select>
+          <button onclick="resetQuiz()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium px-3 py-2 rounded-lg transition">
+            <i class="fa-solid fa-rotate-right mr-1"></i>重新開始
+          </button>
+        </div>
+      </div>
+
+      <!-- 測驗主要卡片 -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden transition-all">
+        <div class="p-6 md:p-8 space-y-6">
+          
+          <!-- 題號與類型標籤 -->
+          <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+            <span id="q-badge-type" class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800">
+              <i class="fa-solid fa-layer-group mr-1"></i>複選題
+            </span>
+            <span id="q-attempts-count" class="text-xs font-medium text-slate-400">
+              嘗試次數：<span id="q-attempt-val" class="text-slate-700 font-bold">0</span>
+            </span>
+          </div>
+
+          <!-- 題目內容 -->
+          <div>
+            <h2 id="q-title" class="text-lg sm:text-xl font-bold text-slate-800 leading-relaxed">
+              題目載入中...
+            </h2>
+            <p id="q-subtitle" class="text-xs text-slate-400 mt-1">請仔細思考後選擇最適當的答案。</p>
+          </div>
+
+          <!-- 選項區域 -->
+          <div id="q-options" class="space-y-3">
+            <!-- 動態生成選項 -->
+          </div>
+
+          <!-- 提示與反饋訊息區（答錯時不公開答案） -->
+          <div id="feedback-panel" class="hidden rounded-xl p-4 transition-all">
+            <div id="feedback-header" class="font-bold flex items-center gap-2 mb-1 text-sm">
+              <!-- 圖示與標題 -->
+            </div>
+            <div id="feedback-body" class="text-sm leading-relaxed">
+              <!-- 提示內容 -->
+            </div>
+          </div>
+
+          <!-- 操作按鈕區 -->
+          <div class="pt-4 border-t border-slate-100 flex flex-wrap gap-3 justify-between items-center">
+            <button id="btn-request-hint" onclick="toggleExplicitHint()" class="text-sm text-slate-500 hover:text-brand-600 font-medium flex items-center gap-1.5 transition">
+              <i class="fa-regular fa-lightbulb text-amber-500"></i>
+              <span>需要解題思路提示嗎？</span>
+            </button>
+
+            <div class="flex gap-3">
+              <button id="btn-submit" onclick="checkAnswer()" class="px-6 py-2.5 bg-brand-600 hover:bg-brand-700 active:scale-95 text-white font-semibold rounded-xl shadow-sm transition-all flex items-center gap-2">
+                <i class="fa-solid fa-paper-plane text-xs"></i> 提交答案
+              </button>
+              <button id="btn-next" onclick="nextQuestion()" class="hidden px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-semibold rounded-xl shadow-sm transition-all items-center gap-2">
+                下一題 <i class="fa-solid fa-arrow-right text-xs"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- 頁尾 -->
+  <footer class="bg-white border-t border-slate-200 py-4 mt-8">
+    <div class="max-w-6xl mx-auto px-4 text-center text-xs text-slate-400">
+      國中國語修辭互動學習系統 &copy; 完整分類 • 4 大範例 • 觀念引導無透題
+    </div>
+  </footer>
+
+  <script>
+    // 1. 國中必學 20 大修辭資料庫（包含細分分類 + 每個細分各 4 個標準例句）
+    const rhetoricDatabase = [
+      {
+        id: "r1",
+        name: "譬喻",
+        category: "表意類",
+        definition: "利用兩件具有相似點的事物，借具體、熟悉的事物來說明抽象、生疏的事物。",
+        subtypesDetail: [
+          {
+            subName: "明喻",
+            formula: "本體 + 喻詞（像、如、似、好比、若） + 喻體",
+            examples: [
+              "那小姑娘的臉蛋，像剛摘下的紅蘋果。",
+              "媽媽的愛就像暖陽，照亮了我心中的陰霾。",
+              "靜夜的月光如同一層薄薄的白紗，輕輕籠罩著大地。",
+              "時間如流水，一去不復返。"
+            ]
+          },
+          {
+            subName: "隱喻 / 暗喻",
+            formula: "本體 + 繫詞（是、成為、即、成了） + 喻體",
+            examples: [
+              "我是一根漂流木，在茫茫人海中浮沉。",
+              "青春是一本太倉促的書。",
+              "失敗是成功之母。",
+              "生活是一場沒有彩排的即興演出。"
+            ]
+          },
+          {
+            subName: "略喻",
+            formula: "省略喻詞，直接連接本體與喻體",
+            examples: [
+              "菊，花之隱逸者也。（菊花，花中的隱士）",
+              "人心不同，各如其面。",
+              "英雄氣短，兒女情長。",
+              "臺灣，美麗寶島。"
+            ]
+          },
+          {
+            subName: "借喻",
+            formula: "省略本體與喻詞，直接用喻體代替本體",
+            examples: [
+              "我們必須把這隻「害群之馬」清除出去。（害群之馬代指壞人）",
+              "歲月在他的臉上刻下了「溝壑」。（溝壑代指皺紋）",
+              "溫室裡的花朵是經不起風浪的。（溫室裡的花朵代指欠缺磨練的人）",
+              "吹面不寒楊柳風。（楊柳風代指春風）"
+            ]
+          }
+        ],
+        trap: "【易錯陷阱】「看起來像」不一定是譬喻！若只是單純推測（例如：他看起來像生病了）或者比較（如：他長得像他爸爸），則不屬於譬喻修辭。"
+      },
+      {
+        id: "r2",
+        name: "轉化",
+        category: "表意類",
+        definition: "描述事物時，轉變其原本的本質，化為另一種截然不同的事物來描寫。",
+        subtypesDetail: [
+          {
+            subName: "擬人（人性化）",
+            formula: "把無生命的事物或動物當作「人」來描寫（賦予人的動作、情感）",
+            examples: [
+              "風在林間低語，撫慰著寂寞的大地。",
+              "太陽公公露出了慈祥的微笑。",
+              "街燈在夜色中眨著倦怠的眼睛。",
+              "溪水歡快地唱著歌，向遠方奔流。"
+            ]
+          },
+          {
+            subName: "擬物（物性化）",
+            formula: "把「人」或抽象事物當作「具體物件或動物」來描寫",
+            examples: [
+              "請把你那傲慢的脾氣收起來！",
+              "在黑闇裡，他伸長了耳朵張望。",
+              "我把思念揉成一團，扔進了風裡。",
+              "我把心張開，像一朵盛開的花。"
+            ]
+          },
+          {
+            subName: "形象化",
+            formula: "將抽象概念（如時間、情緒、理智）轉化為具體可感的事物",
+            examples: [
+              "理智被憤怒的火焰吞噬了。",
+              "寂寞在夜深人靜時悄悄蔓延開來。",
+              "歲月偷走了我們的青春與年華。",
+              "悲傷充斥著整個房間，壓得人喘不過氣。"
+            ]
+          }
+        ],
+        trap: "【易錯陷阱】擬人必須賦予「人類獨有的喜怒哀樂或社會動作」；若只是描繪自然物體本身的物理移動，不構成轉化。"
+      },
+      {
+        id: "r3",
+        name: "誇飾",
+        category: "表意類",
+        definition: "超過客觀事實，故意誇大或縮小事物的數量、程度或規模，以強化視覺或情感印象。",
+        subtypesDetail: [
+          {
+            subName: "誇大誇飾",
+            formula: "把事物的數量、規模、程度往大處或強處描寫",
+            examples: [
+              "這聲音大得連屋頂都要被震飛了！",
+              "蜀道之難，難於上青天。（李白《蜀道難》）",
+              "他急得像熱鍋上的螞蟻，流的汗可以淹沒一條街。",
+              "白髮三千丈，緣愁似箇長。"
+            ]
+          },
+          {
+            subName: "縮小誇飾",
+            formula: "把事物的數量、規模、程度往小處或弱處描寫",
+            examples: [
+              "這間套房小得連轉個身都困難。",
+              "他心胸狹隘得連一粒沙子都容不下。",
+              "烏鴉翅膀只要拍打兩下，就能飛過這塊狹小的土地。",
+              "這粒米大點的芝麻小事，何必掛在心上？"
+            ]
+          },
+          {
+            subName: "超前誇飾",
+            formula: "把後出現的事物描寫成先出現，或兩者同時出現",
+            examples: [
+              "我還沒喝到酒，心就已經醉了。",
+              "看見這美味的菜餚，我舌頭早已經掉下來了。",
+              "聽到這個好消息，他高興得還沒出門腳就已經飛了起來。",
+              "響笛尚未吹響，我的心早已奔向終點。"
+            ]
+          }
+        ],
+        trap: "【易錯陷阱】必須明顯違背常理與客觀事實才能算誇飾；若是合理的常態大幅度描寫（如：天氣非常熱）則不算。"
+      },
+      {
+        id: "r4",
+        name: "設問",
+        category: "語氣感官",
+        definition: "說話或寫作時，特意採用詢問、提問的語氣來吸引注意或強化語氣。",
+        subtypesDetail: [
+          {
+            subName: "提問",
+            formula: "自問自答（問題後面緊接著公布答案）",
+            examples: [
+              "問渠那得清如許？為有源頭活水來。",
+              "什麼是成功？成功就是堅持到底。",
+              "座右銘的意思是什麼？就是記在座位旁邊提醒自己的銘言。",
+              "人生最寶貴的是什麼？是時間。"
+            ]
+          },
+          {
+            subName: "激問 / 反問",
+            formula: "答案在問題的反面，明知故問，不需要回答",
+            examples: [
+              "天下哪有不勞而獲的事？（意思是：絕對沒有）",
+              "難道我們能眼睜睜看著他犯錯嗎？（意思是：絕對不能）",
+              "這不正是我們夢寐以求的機會嗎？（意思是：正是）",
+              "敗軍之將，何敢言勇？（意思是：不敢）"
+            ]
+          },
+          {
+            subName: "懸問",
+            formula: "心中無定見，純粹發問，沒有提供答案",
+            examples: [
+              "不知明月何時照我還？",
+              "今天的晚餐究竟要吃什麼好呢？",
+              "夜空中的星星，到底有多少顆？",
+              "前方等著我們的，會是希望還是挑戰？"
+            ]
+          }
+        ],
+        trap: "【易錯陷阱】激問的關鍵在於「答案就在問題的反面」，說話者心中已有明確答案，並非真的在尋求解答。"
+      },
+      {
+        id: "r5",
+        name: "類疊",
+        category: "結構類",
+        definition: "同一個字、詞、句子接連或間隔重複使用，加強語氣與節奏感。",
+        subtypesDetail: [
+          {
+            subName: "疊字",
+            formula: "同一個字連續重複使用（AA / AABB）",
+            examples: [
+              "尋尋覓覓，冷冷清清，淒淒慘慘戚戚。",
+              "樹林裡傳來陣陣清脆的鳥鳴。",
+              "弟弟捧著紅彤彤的蘋果，笑得甜滋滋。",
+              "默默地祝福你，願你平平安安。"
+            ]
+          },
+          {
+            subName: "類字",
+            formula: "同一個字間隔重複出現（A...A...）",
+            examples: [
+              "一心一意、三番兩次、無怨無悔。",
+              "大富大貴、多災多難、有始有終。",
+              "捨己為人，捨生取義。",
+              "越戰越勇，越挫越奮。"
+            ]
+          },
+          {
+            subName: "疊句",
+            formula: "同一個句子連續重複使用",
+            examples: [
+              "盼望著，盼望著，東風來了，春天的腳步近了。（朱自清《春》）",
+              "歸來，歸來，親愛的祖國！",
+              "救救孩子，救救孩子！",
+              "來了，來了，歡樂的節日來臨了。"
+            ]
+          },
+          {
+            subName: "類句",
+            formula: "同一個句子間隔重複出現",
+            examples: [
+              "燕子去了，有再來的時候；楊柳枯了，有再青的時候；桃花謝了，有再開的時候。",
+              "天下的媽媽都是一樣的，天下的媽媽都是偉大的。",
+              "少年不識愁滋味，愛上層樓；愛上層樓，為賦新詞強說愁。",
+              "聽，聲音在迴響；看，希望在閃耀。"
+            ]
+          }
+        ],
+        trap: "【易錯陷阱】注意分清是「連在一起（疊）」還是「中間隔著別的字（類）」。"
+      },
+      {
+        id: "r6",
+        name: "雙關",
+        category: "語氣感官",
+        definition: "利用語言文字的多義或同音特點，使一句話同時兼含兩種意思。",
+        subtypesDetail: [
+          {
+            subName: "諧音雙關",
+            formula: "利用聲音相同或相近的字，產生雙重涵義",
+            examples: [
+              "東邊日出西邊雨，道是無「晴」卻有「晴」。（晴/情）",
+              "蓮（憐）子心中苦，梨（離）兒腹內酸。",
+              "學生過年最喜歡吃「年糕」，期許自己年年「高」升。",
+              "這家餐館叫「無餓不坐」，吸引許多饕客前來。"
+            ]
+          },
+          {
+            subName: "字義雙關",
+            formula: "利用一個字詞本身的兩種不同涵義",
+            examples: [
+              "春蠶到死「絲」方盡。（絲/思念）",
+              "欲窮「千里目」，更上一層樓。（眼界/目光）",
+              "總裁說公司的「前途」一片光明。（前途/錢途）",
+              "夜市裡的烤「香腸」，飄香千里。（美食/遊戲）"
+            ]
+          }
+        ],
+        trap: "【易錯陷阱】雙關表面上有一個字面上的意思，但背後一定暗指另一個的核心意涵。"
+      },
+      {
+        id: "r7",
+        name: "摹寫",
+        category: "語氣感官",
+        definition: "將人類五官（視覺、聽覺、嗅覺、味覺、觸覺）所接收到的感官體驗具體描繪出來。",
+        subtypesDetail: [
+          {
+            subName: "視覺摹寫",
+            formula: "描繪眼睛所看到的顏色、形狀、動態",
+            examples: [
+              "碧綠的稻田隨風起伏，像一片綠色的海洋。",
+              "紅彤彤的夕陽徐徐沉入地平線。",
+              "白色的雪花紛紛揚揚地飄落下來。",
+              "蔚藍的天空中飄著幾朵潔白的祥雲。"
+            ]
+          },
+          {
+            subName: "聽覺摹寫",
+            formula: "描繪耳朵所聽到的聲音、音調",
+            examples: [
+              "春水潺潺，蛙鳴如雷。",
+              "窗外傳來陣陣清脆的鳥鳴聲。",
+              "淅淅瀝瀝的秋雨落在了樹葉上。",
+              "清晨的校園裡響起了琅琅的讀書聲。"
+            ]
+          },
+          {
+            subName: "嗅覺摹寫",
+            formula: "描繪鼻子所聞到的氣味、香氣",
+            examples: [
+              "微風過處，送來縷縷清香。",
+              "空氣中彌漫著桂花的甜香。",
+              "廚房裡飄出陣陣濃郁的咖哩香氣。",
+              "雨後的草地上散發著泥土的清香。"
+            ]
+          },
+          {
+            subName: "味覺摹寫",
+            formula: "描繪舌頭所嚐到的酸甜苦辣鹹",
+            examples: [
+              "這顆檸檬酸得讓人皺起眉頭。",
+              "西瓜甘甜多汁，沁人心脾。",
+              "麻辣火鍋辣得人直呼過癮。",
+              "苦瓜入口微苦，隨後回甘。"
+            ]
+          },
+          {
+            subName: "觸覺摹寫",
+            formula: "描繪皮膚所感受到的冷熱、軟硬、粗細",
+            examples: [
+              "吹面不寒楊柳風，溫柔地拂過臉龐。",
+              "冰涼的河水刺骨般疼痛。",
+              "陽光曬在身上，感覺暖洋洋的。",
+              "絲綢般順滑的觸感令人驚嘆。"
+            ]
+          },
+          {
+            subName: "通感（移覺）",
+            formula: "將一種感官體驗轉化轉移為另一種感官體驗來描寫",
+            examples: [
+              "微風過處，送來縷縷清香，彷彿遠處高樓上渺茫的歌聲。（嗅覺轉化為聽覺）",
+              "他的聲音聽起來真甜。（聽覺轉化為味覺）",
+              "冷冷的月光照在身上。（視覺轉化為觸覺）",
+              "一陣清香撲鼻而來，帶來了滿室的涼意。（嗅覺轉化為觸覺）"
+            ]
+          }
+        ],
+        trap: "【易錯陷阱】要精準區分具體是哪一種器官發揮主要作用；通感則是用另一種器官的感受來比喻。"
+      },
+      {
+        id: "r8",
+        name: "對偶",
+        category: "結構類",
+        definition: "兩句字數相等、詞性相對、結構相同、對稱並列的文句。",
+        subtypesDetail: [
+          {
+            subName: "正對",
+            formula: "上下兩句意義相近、相補充",
+            examples: [
+              "白日依山盡，黃河入海流。",
+              "綠樹村邊合，青山郭外斜。",
+              "海内存知己，天涯若比鄰。",
+              "窗含西嶺千秋雪，門泊東吳萬里船。"
+            ]
+          },
+          {
+            subName: "反對",
+            formula: "上下兩句意義相反、相對照",
+            examples: [
+              "橫眉冷對千夫指，俯首甘為孺子牛。",
+              "朱門酒肉臭，路有凍死骨。",
+              "滿招損，謙受益。",
+              "憂勞可以興國，逸豫可以亡身。"
+            ]
+          },
+          {
+            subName: "串對 / 流水對",
+            formula: "前後兩句具有順序、因果或條件關係",
+            examples: [
+              "野火燒不盡，春風吹又生。",
+              "即從巴峽穿巫峽，便下襄陽向洛陽。",
+              "欲窮千里目，更上一層樓。",
+              "采菊東籬下，悠然見南山。"
+            ]
+          }
+        ],
+        trap: "【易錯陷阱】對偶嚴格講求「兩句」，且詞性必須兩兩相對（名詞對名詞、動詞對動詞）。"
+      },
+      {
+        id: "r9",
+        name: "排比",
+        category: "結構類",
+        definition: "用三個或三個以上結構相似、語氣一致、字數大致相近的詞組或句子排列在一起。",
+        subtypesDetail: [
+          {
+            subName: "排比句群",
+            formula: "三個以上平行結構句型連用",
+            examples: [
+              "燕子去了，有再來的時候；楊柳枯了，有再青的時候；桃花謝了，有再開的時候。（朱自清《匆匆》）",
+              "富貴不能淫，貧賤不能移，威武不能屈。",
+              "智慧是明燈，照亮前行的路；智慧是鑰匙，開啟知識的門；智慧是航標，指引人生的方向。",
+              "書籍是人類進步的階梯，是開啟智慧的鑰匙，是慰藉心靈的良藥。"
+            ]
+          }
+        ],
+        trap: "【易錯陷阱】數量必須為「三個或三個以上」；若只有兩個對應句則是對偶或對比。"
+      },
+      {
+        id: "r10",
+        name: "映襯",
+        category: "表意類",
+        definition: "把兩種相反或相對的事物、現象或觀念放在一起比較襯托。",
+        subtypesDetail: [
+          {
+            subName: "反襯",
+            formula: "以次要事物襯托主要事物（以靜襯動、以聲襯靜）",
+            examples: [
+              "蟬噪林逾靜，鳥鳴山更幽。（以聲音襯托環境寧靜）",
+              "在繁華的都市霓虹下，更顯出他孤單的身影。",
+              "月明星稀。（以月亮明亮襯托星星稀少）",
+              "敗草裏的鮮花。（以敗草襯托鮮花嬌豔）"
+            ]
+          },
+          {
+            subName: "對比",
+            formula: "兩種事物平行並重對照比較",
+            examples: [
+              "創業的人往往默默無聞，而收成的人卻名利雙收。",
+              "有的人活著，他已經死了；有的人死了，他還活著。",
+              "虛心使人進步，驕傲使人落後。",
+              "朱門酒肉臭，路有凍死骨。"
+            ]
+          }
+        ],
+        trap: "【易錯陷阱】必須有「相反或相對」的元素，藉由對立產生強烈的視覺或情感震撼。"
+      },
+      {
+        id: "r11",
+        name: "借代",
+        category: "表意類",
+        definition: "不直接說出要表達的人事物本名，而借用與其有密切關係的特徵、別名來代替。",
+        subtypesDetail: [
+          {
+            subName: "特徵 / 標誌代本體",
+            formula: "用顯著特徵代指本體",
+            examples: [
+              "巾幗不讓「鬚眉」。（鬚眉代指男子，巾幗代指女子）",
+              "何以解憂？唯有「杜康」。（杜康代指酒）",
+              "過盡「千帆」皆不是。（帆代指船隻）",
+              "「朱門」酒肉臭。（朱門代指富貴人家）"
+            ]
+          }
+        ],
+        trap: "【易錯陷阱】借代沒有喻詞（像、如），也不是拿別的事物來做比喻，而是直接「替換名稱」。"
+      },
+      {
+        id: "r12",
+        name: "層遞",
+        category: "結構類",
+        definition: "將三個或三個以上有大小、輕重、深淺、遠近等階梯關係的事物，依序層層推進排列。",
+        subtypesDetail: [
+          {
+            subName: "遞升",
+            formula: "由小到大、由淺到深、由少到多",
+            examples: [
+              "知之者不如好之者，好之者不如樂之者。",
+              "古之欲明明德於天下者，先治其國；欲治其國者，先齊其家；欲齊其家者，先修其身。",
+              "一而十，十而百，百而千，千而萬。",
+              "文章要寫得通順、流暢，進而精煉，最後達到優美的境界。"
+            ]
+          },
+          {
+            subName: "遞降",
+            formula: "由大到小、由深到淺、由多到少",
+            examples: [
+              "國之不存，家將焉附？人又何以自立？",
+              "太上立德，其次立功，其次立言。",
+              "千里之行，始於足下，積於跬步。",
+              "巨大的海嘯吞噬了城鎮，毀壞了房屋，淹沒了車輛。"
+            ]
+          }
+        ],
+        trap: "【易錯陷阱】層遞強調的是「階梯推進順序」，排比強調的是「句式平行齊整」。"
+      },
+      {
+        id: "r13",
+        name: "頂真（頂針）",
+        category: "結構類",
+        definition: "用前一句結尾的詞語，作為下一句開頭的詞語，首尾相連。",
+        subtypesDetail: [
+          {
+            subName: "頂真句式",
+            formula: "前句尾詞 = 後句頭詞",
+            examples: [
+              "歸來見天子，天子坐明堂。",
+              "軍書十二卷，卷卷有爺名。",
+              "竹葉青，青如翠；翠如玉，玉無瑕。",
+              "大雪壓青松，青松挺且直。"
+            ]
+          }
+        ],
+        trap: "【易錯陷阱】一定要是「前句尾」連接著「後句頭」，形成環環相扣的效果。"
+      },
+      {
+        id: "r14",
+        name: "倒反（反諷）",
+        category: "語氣感官",
+        definition: "字面上的意思與說話者內心真正想表達的意思完全相反（諷刺或幽默）。",
+        subtypesDetail: [
+          {
+            subName: "反語",
+            formula: "字面上讚美實則責備，或字面上責備實則愛護",
+            examples: [
+              "你真是太「聰明」了，居然把鑰匙鎖在車子裡面！",
+              "我那時真是聰明過分，總覺得他說話不大漂亮。（朱自清《背影》）",
+              "你的字寫得真「工整」，連你自己都認不出來吧！",
+              "這道題這麼「簡單」，全班居然只有一個人做對。"
+            ]
+          }
+        ],
+        trap: "【易錯陷阱】必須結合語境來判斷，不可單看字面意思。"
+      },
+      {
+        id: "r15",
+        name: "互文",
+        category: "結構類",
+        definition: "上下兩句語意互相呼應、互相補充，必須合併起來理解才是完整意思。",
+        subtypesDetail: [
+          {
+            subName: "互文見義",
+            formula: "AB兩句各舉一部份，需合看補全",
+            examples: [
+              "將軍百戰死，壯士十年歸。（將軍與壯士皆有戰死者與生還者）",
+              "主人下馬客在船。（主人與客人同時下了馬並上了船）",
+              "煙籠寒水月籠沙。（煙霧與月光同時籠罩著寒水與黃沙）",
+              "秦時明月漢時關。（秦漢時期的明月與關隘）"
+            ]
+          }
+        ],
+        trap: "【易錯陷阱】不能按字面拆開解釋，否則會邏輯不通。"
+      },
+      {
+        id: "r16",
+        name: "回文",
+        category: "結構類",
+        definition: "上下兩句詞彙相同，但詞序相反，形成順讀倒讀皆成文的迴環效果。",
+        subtypesDetail: [
+          {
+            subName: "回文句",
+            formula: "AB 與 BA 詞序反轉",
+            examples: [
+              "喝酒不開車，開車不喝酒。",
+              "讀書不忘救國，救國不忘讀書。",
+              "上海自來水來自海上。",
+              "人人為我，我為人人。"
+            ]
+          }
+        ],
+        trap: "【易錯陷阱】關鍵在於詞順前後倒置。"
+      },
+      {
+        id: "r17",
+        name: "引用",
+        category: "表意類",
+        definition: "援引古今名言、成語、俗語、典故或名著來佐證自己的觀點。",
+        subtypesDetail: [
+          {
+            subName: "明引",
+            formula: "標明出處或說話者",
+            examples: [
+              "孔子說：「三人行，必有我師焉。」",
+              "孟子曰：「生於憂患，死於安樂。」",
+              "俗話說：「一分耕耘，一分收獲。」",
+              "詩經有云：「他山之石，可以攻錯。」"
+            ]
+          },
+          {
+            subName: "暗引",
+            formula: "未標明出處，直接融入文句中",
+            examples: [
+              "滿招損，謙受益，這是古今不變的道理。",
+              "我們應該抱著「知之為知之，不知為不知」的求知態度。",
+              "人非聖賢，孰能無過？過而能改，善莫大焉。",
+              "失敗乃成功之母，只要不放棄就有希望。"
+            ]
+          }
+        ],
+        trap: "【易錯陷阱】注意是否有引述既有的權威或知名警句。"
+      },
+      {
+        id: "r18",
+        name: "感嘆",
+        category: "語氣感官",
+        definition: "使用帶有強烈情感的嘆詞或助詞，抒發喜怒哀樂或驚嘆等情緒。",
+        subtypesDetail: [
+          {
+            subName: "抒情感嘆",
+            formula: "搭配感嘆詞（唉、啊、嗚呼）與驚嘆號",
+            examples: [
+              "唉！我不知何時再能與他相見！",
+              "嗚呼！勝地不常，盛筵難再。",
+              "偉哉！這壯麗的長城令人讚嘆！",
+              "悲夫！歲月易逝，青春難再！"
+            ]
+          }
+        ],
+        trap: "【易錯陷阱】多伴隨情緒嘆詞與驚嘆號。"
+      },
+      {
+        id: "r19",
+        name: "象徵",
+        category: "表意類",
+        definition: "用具體的事物來表現抽象的概念、精神或情感。",
+        subtypesDetail: [
+          {
+            subName: "象徵寄託",
+            formula: "具體物件 -> 抽象精神",
+            examples: [
+              "用「鴿子」與「橄欖枝」象徵和平。",
+              "《背影》中的「紫毛大衣」與「朱紅橘子」象徵深沉父愛。",
+              "用「梅花」象徵堅貞不屈的精神。",
+              "用「綠葉」象徵默默奉獻、不求回報的無私精神。"
+            ]
+          }
+        ],
+        trap: "【易錯陷阱】象徵是貫穿全文或特定物件的精神寄託，與單純一句比喻不同。"
+      },
+      {
+        id: "r20",
+        name: "襯托",
+        category: "表意類",
+        definition: "為了突出主要事物，用次要事物從旁加以陪襯。",
+        subtypesDetail: [
+          {
+            subName: "陪襯突出",
+            formula: "次要配角 -> 烘托主要主角",
+            examples: [
+              "桃花潭水深千尺，不及汪倫送我情。（以潭水深襯托友情更深）",
+              "在眾多名模身旁，他顯得格外矮小。（以身材高大襯托矮小）",
+              "萬綠叢中一點紅。（以滿山綠葉襯托紅花嬌豔）",
+              "在大雪紛飛的嚴冬裡，只有臘梅獨自綻放。（以惡劣環境襯托強韌生命力）"
+            ]
+          }
+        ],
+        trap: "【易錯陷阱】襯托有明確的「主角」與「配角」之分。"
+      }
+    ];
+
+    // 2. 測驗題庫（包含單選與複選，嚴格遵守答錯不公開答案）
+    const questionBank = [
+      {
+        id: 1,
+        type: "single",
+        question: "「我是一根漂流木，在茫茫人海中浮沉。」這句話主要使用了哪一種譬喻修辭？",
+        options: ["明喻", "隱喻（暗喻）", "略喻", "借喻"],
+        correct: [1],
+        hints: [
+          "觀念引導：請觀察句中連接本體（我）與喻體（漂流木）的繫詞是什麼？是用『像/如』還是『是/成了』？",
+          "進階提示：使用『是』來連接本體與喻體的譬喻形式稱為隱喻（暗喻）。"
+        ],
+        explanation: "句中用「是」連結本體（我）與喻體（漂流木），這是典型的「隱喻（暗喻）」。"
+      },
+      {
+        id: 2,
+        type: "single",
+        question: "「何以解憂？唯有杜康。」句中用「杜康」代表「酒」，這是屬於哪種修辭手法？",
+        options: ["借代", "譬喻", "誇飾", "互文"],
+        correct: [0],
+        hints: [
+          "觀念引導：『杜康』相傳是古代最早造酒的人。作者是用創作者的名號直接替換該事物，句中並沒有出現『像』或『如』等比喻詞。",
+          "進階提示：不直接說出本名，而拿與該事物密切相關的名人特徵來取代，稱為借代。"
+        ],
+        explanation: "直接用造酒始祖「杜康」來替代「酒」本身，屬於「借代」修辭。"
+      },
+      {
+        id: 3,
+        type: "multiple",
+        question: "【複選題】「白日依山盡，黃河入海流。欲窮千里目，更上一層樓。」這首詩中包含了哪兩個修辭手法？",
+        options: ["對偶", "層遞", "頂真", "倒反"],
+        correct: [0, 1],
+        hints: [
+          "觀念引導（複選提醒）：本題有 2 個正確答案。\n1. 觀察前兩句「白日依山盡」與「黃河入海流」，字數與詞性對應關係如何？\n2. 觀察後兩句從「欲窮千里目」推進到「更上一層樓」，具有什麼樣的順序關係？",
+          "進階提示：前兩句對仗工整（名詞對名詞，動詞對動詞）；後兩句展現出由低處往高處、一階一階遞進的層次感。"
+        ],
+        explanation: "1. 前兩句字數相同、詞性相對，為「對偶」；2. 後兩句從站高看到更遠，層層推進，為「層遞」。"
+      },
+      {
+        id: 4,
+        type: "single",
+        question: "「天下哪有不勞而獲的事情呢？」這句話在設問修辭中屬於哪一類？",
+        options: ["提問（自問自答）", "激問（答案在反面）", "懸問（心中無定見）", "借喻"],
+        correct: [1],
+        hints: [
+          "觀念引導：請思考作者問這個問題時，他心中有沒有既定答案？他需要讀者回答他嗎？",
+          "進階提示：這句話的意思其實是「天下絕沒有不勞而獲的事」。答案就在問題的反面，不需要回答的問句屬於哪種設問？"
+        ],
+        explanation: "答案在問題的反面（即「沒有不勞而獲的事」），明知故問以加強語氣，屬於「激問」。"
+      },
+      {
+        id: 5,
+        type: "multiple",
+        question: "【複選題】「那河畔的金柳，是夕陽中的新娘。」這句話運用了哪兩種修辭手法？",
+        options: ["譬喻（暗喻）", "轉化（擬人）", "排比", "借代"],
+        correct: [0, 1],
+        hints: [
+          "觀念引導（複選提醒）：本題有 2 個正確答案。\n1. 句中使用了「...是...」的句型連繫本體與喻體。\n2. 將自然植物「金柳」賦予了人類女子出嫁（新娘）的身分。",
+          "進階提示：同時具備暗喻（以『是』連結）與把物描寫成人的特徵。"
+        ],
+        explanation: "用「是」連結本體（金柳）與喻體（新娘）為「暗喻」；同時把金柳當作人類的新娘來描寫為「擬人」。"
+      },
+      {
+        id: 6,
+        type: "single",
+        question: "「你可真『準時』啊，約好八點，你十點才慢吞吞地走進來！」這句話使用的是哪種修辭？",
+        options: ["倒反", "誇飾", "雙關", "摹寫"],
+        correct: [0],
+        hints: [
+          "觀念引導：請結合說話時的情境：對方遲到了兩個小時，說話者字面上讚美他「準時」，背後真正的用意是什麼？",
+          "進階提示：字面上的意思與內心真正想表達的責備剛好相反，這種諷刺語氣稱為？"
+        ],
+        explanation: "字面說「準時」，實則諷刺對方嚴重遲到，言不由衷，為「倒反（反諷）」。"
+      },
+      {
+        id: 7,
+        type: "multiple",
+        question: "【複選題】「將軍百戰死，壯士十年歸。」這句經典詩句包含了哪些修辭手法？（請選出 2 個）",
+        options: ["對偶", "互文", "頂真", "設問"],
+        correct: [0, 1],
+        hints: [
+          "觀念引導（複選提醒）：本題有 2 個正確答案。\n1. 上下兩句結構相同、字數相等、詞性相對。\n2. 意義上並非只有將軍戰死、壯士生還，而是「將軍與壯士皆有人戰死，有人歷經多年生還」。",
+          "進階提示：前後兩句文意必須互相補充結合理解，同時句型嚴格對仗。"
+        ],
+        explanation: "1. 兩句字數相等、對仗工整為「對偶」；2. 兩句文意互相交錯補充（將軍與壯士都有人戰死、有人生還）為「互文」。"
+      },
+      {
+        id: 8,
+        type: "single",
+        question: "「知之者不如好之者，好之者不如樂之者。」這句話同時運用了哪兩種修辭？",
+        options: ["層遞與頂真", "排比與倒反", "對偶與借代", "雙關與誇飾"],
+        correct: [0],
+        hints: [
+          "觀念引導：\n1. 觀察由『知之』到『好之』再到『樂之』，學習的境界是否有階梯式的推進？\n2. 觀察前一句結尾的『好之者』，與下一句開頭的『好之者』有何關係？",
+          "進階提示：境界層層遞進（層遞）+ 前句尾銜接後句頭（頂真）。"
+        ],
+        explanation: "學習境界由淺入深推進為「層遞」；「好之者」前句尾接後句頭為「頂真」。"
+      },
+      {
+        id: 9,
+        type: "single",
+        question: "「東邊日出西邊雨，道是無晴卻有晴。」句中利用「晴」與「情」的發音相同，表達微妙情感，這屬於：",
+        options: ["雙關（諧音）", "誇飾", "回文", "排比"],
+        correct: [0],
+        hints: [
+          "觀念引導：這句話表面上在講天氣的天晴（晴），實際上暗指男女之間的感情（情）。利用同音字產生雙重意涵。",
+          "進階提示：一詞兩用，兼具字面與深層意涵，特別是利用聲音相近者稱為？"
+        ],
+        explanation: "利用「晴」與「情」同音，使句子兼具天氣與感情雙重意涵，為「諧音雙關」。"
+      },
+      {
+        id: 10,
+        type: "multiple",
+        question: "【複選題】「燕子去了，有再來的時候；楊柳枯了，有再青的時候；桃花謝了，有再開的時候。」這段話包含了哪兩種修辭？",
+        options: ["排比", "類疊", "借代", "倒反"],
+        correct: [0, 1],
+        hints: [
+          "觀念引導（複選提醒）：本題有 2 個正確答案。\n1. 共有三個結構相同、語氣一致的短句排列在一起。\n2. 觀察『去了』、『枯了』、『謝了』與『有...的時候』等字詞間隔重複出現。",
+          "進階提示：三個平行句子（排比）+ 特定詞彙間隔重複（類句/類字）。"
+        ],
+        explanation: "三個句式齊整的句子並列為「排比」；「有...的時候」等字詞重複出現為「類疊（類句）」。"
+      }
+    ];
+
+    // 3. 系統狀態與邏輯控制
+    let currentFilteredQuestions = [...questionBank];
+    let currentQIndex = 0;
+    let attemptCount = 0;
+    let selectedCategory = 'all';
+
+    // 切換分頁
+    function switchTab(tab) {
+      const quizTab = document.getElementById("tab-quiz");
+      const dictTab = document.getElementById("tab-dict");
+      const quizBtn = document.getElementById("nav-quiz-btn");
+      const dictBtn = document.getElementById("nav-dict-btn");
+
+      if (tab === 'quiz') {
+        quizTab.classList.remove("hidden");
+        dictTab.classList.add("hidden");
+        quizBtn.className = "px-4 py-2 text-sm font-semibold rounded-lg transition-all bg-white text-brand-600 shadow-sm";
+        dictBtn.className = "px-4 py-2 text-sm font-semibold rounded-lg transition-all text-slate-600 hover:text-slate-900";
+        renderCurrentQuestion();
+      } else {
+        quizTab.classList.add("hidden");
+        dictTab.classList.remove("hidden");
+        dictBtn.className = "px-4 py-2 text-sm font-semibold rounded-lg transition-all bg-white text-brand-600 shadow-sm";
+        quizBtn.className = "px-4 py-2 text-sm font-semibold rounded-lg transition-all text-slate-600 hover:text-slate-900";
+        renderDictGrid();
+      }
+    }
+
+    // 4. 修辭寶典區渲染 logic（詳細展示細分類別與各自 4 個範例）
+    function setDictCategory(cat) {
+      selectedCategory = cat;
+      document.querySelectorAll(".category-btn").forEach(btn => {
+        if ((cat === 'all' && btn.innerText.includes('全部')) || btn.innerText.includes(cat)) {
+          btn.className = "category-btn active px-3 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white";
+        } else {
+          btn.className = "category-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200";
+        }
+      });
+      filterRhetoricDict();
+    }
+
+    function filterRhetoricDict() {
+      const searchKeyword = document.getElementById("dict-search").value.toLowerCase().trim();
+
+      const filtered = rhetoricDatabase.filter(item => {
+        const matchCategory = selectedCategory === 'all' || item.category === selectedCategory;
+        const matchSearch = item.name.toLowerCase().includes(searchKeyword) ||
+                            item.definition.toLowerCase().includes(searchKeyword) ||
+                            item.subtypesDetail.some(sub => 
+                              sub.subName.toLowerCase().includes(searchKeyword) ||
+                              sub.examples.some(ex => ex.toLowerCase().includes(searchKeyword))
+                            );
+        return matchCategory && matchSearch;
+      });
+
+      renderDictGrid(filtered);
+    }
+
+    function renderDictGrid(data = rhetoricDatabase) {
+      const grid = document.getElementById("dict-grid");
+      grid.innerHTML = "";
+
+      if (data.length === 0) {
+        grid.innerHTML = `<div class="text-center py-12 text-slate-400">找不到符合搜尋條件的修辭項目。</div>`;
+        return;
+      }
+
+      data.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "bg-white rounded-2xl border border-slate-200 shadow-sm p-6 hover:shadow-md transition-all space-y-5";
+        
+        // 組合細項 HTML
+        let subtypesHtml = "";
+        item.subtypesDetail.forEach(sub => {
+          subtypesHtml += `
+            <div class="bg-slate-50/80 rounded-xl p-4 border border-slate-200/80 space-y-2">
+              <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/60 pb-2">
+                <span class="font-bold text-sm text-brand-700 bg-brand-50 px-2.5 py-0.5 rounded border border-brand-200">
+                  <i class="fa-solid fa-tag text-xs mr-1"></i>${sub.subName}
+                </span>
+                <span class="text-xs text-slate-500 font-mono">公式/句型：${sub.formula}</span>
+              </div>
+              
+              <div class="space-y-1 pt-1">
+                <span class="text-xs font-bold text-slate-600 block mb-1">
+                  <i class="fa-solid fa-circle-dot text-brand-500 text-xs mr-1"></i>4 大標準範例與經典例句：
+                </span>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs sm:text-sm text-slate-700">
+                  ${sub.examples.map((ex, idx) => `
+                    <li class="bg-white p-2.5 rounded-lg border border-slate-200 flex items-start gap-2 shadow-2xs">
+                      <span class="font-bold text-brand-600 shrink-0">例 ${idx + 1}:</span>
+                      <span class="leading-relaxed">${ex}</span>
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+            </div>
+          `;
+        });
+
+        card.innerHTML = `
+          <div class="space-y-3">
+            <div class="flex justify-between items-start">
+              <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                ${item.name}
+              </h3>
+              <span class="px-2.5 py-1 text-xs font-semibold rounded-md bg-slate-100 text-slate-600">
+                ${item.category}
+              </span>
+            </div>
+
+            <p class="text-sm text-slate-600 leading-relaxed bg-slate-50 p-3 rounded-lg border border-slate-100">
+              <strong>定義核心：</strong>${item.definition}
+            </p>
+
+            <!-- 細分項目與四個例句展演區 -->
+            <div class="space-y-3 pt-2">
+              ${subtypesHtml}
+            </div>
+          </div>
+
+          <!-- 易錯陷阱 -->
+          ${item.trap ? `
+            <div class="pt-2 text-xs text-amber-800 bg-amber-50 p-3 rounded-xl border border-amber-200 flex items-start gap-2">
+              <i class="fa-solid fa-triangle-exclamation text-amber-600 text-sm mt-0.5 shrink-0"></i>
+              <div>${item.trap}</div>
+            </div>
+          ` : ''}
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // 5. 測驗區邏輯（答錯絕對不透題，僅給予引導）
+    function renderCurrentQuestion() {
+      if (currentFilteredQuestions.length === 0) {
+        document.getElementById("q-title").innerText = "目前沒有符合條件的題目。";
+        document.getElementById("q-options").innerHTML = "";
+        return;
+      }
+
+      const q = currentFilteredQuestions[currentQIndex];
+      attemptCount = 0;
+
+      // 更新進度與狀態
+      document.getElementById("quiz-progress-text").innerText = `${currentQIndex + 1} / ${currentFilteredQuestions.length} 題`;
+      const progressPercent = ((currentQIndex + 1) / currentFilteredQuestions.length) * 100;
+      document.getElementById("quiz-progress-bar").style.width = `${progressPercent}%`;
+
+      document.getElementById("q-attempt-val").innerText = attemptCount;
+
+      // 類型標籤
+      const typeBadge = document.getElementById("q-badge-type");
+      if (q.type === "multiple") {
+        typeBadge.className = "px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800";
+        typeBadge.innerHTML = `<i class="fa-solid fa-square-check mr-1"></i>複選題`;
+        document.getElementById("q-subtitle").innerText = "本題為複選題，可能包含兩個或以上的正確答案。";
+      } else {
+        typeBadge.className = "px-3 py-1 rounded-full text-xs font-bold bg-sky-100 text-sky-800";
+        typeBadge.innerHTML = `<i class="fa-solid fa-circle-dot mr-1"></i>單選題`;
+        document.getElementById("q-subtitle").innerText = "請選出一個最適當的答案。";
+      }
+
+      document.getElementById("q-title").innerText = q.question;
+
+      // 渲染選項
+      const optionsContainer = document.getElementById("q-options");
+      optionsContainer.innerHTML = "";
+
+      q.options.forEach((optText, idx) => {
+        const optionLabel = document.createElement("label");
+        optionLabel.className = "flex items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-brand-500 hover:bg-slate-50 cursor-pointer transition-all option-item";
+        
+        const inputType = q.type === "multiple" ? "checkbox" : "radio";
+        
+        optionLabel.innerHTML = `
+          <input type="${inputType}" name="quiz-option" value="${idx}" onchange="handleOptionSelect(this)" class="w-4 h-4 text-brand-600 focus:ring-brand-500 border-slate-300 rounded">
+          <span class="text-sm sm:text-base font-medium text-slate-700">${optText}</span>
+        `;
+        optionsContainer.appendChild(optionLabel);
+      });
+
+      // 重置反饋面板與按鈕
+      hideFeedback();
+      document.getElementById("btn-submit").classList.remove("hidden");
+      document.getElementById("btn-next").classList.add("hidden");
+      document.getElementById("btn-next").classList.remove("flex");
+    }
+
+    function handleOptionSelect(inputEl) {
+      const q = currentFilteredQuestions[currentQIndex];
+      if (q.type === "single") {
+        document.querySelectorAll(".option-item").forEach(item => {
+          item.classList.remove("border-brand-500", "bg-brand-50/50");
+        });
+      }
+      const parent = inputEl.closest(".option-item");
+      if (inputEl.checked) {
+        parent.classList.add("border-brand-500", "bg-brand-50/50");
+      } else {
+        parent.classList.remove("border-brand-500", "bg-brand-50/50");
+      }
+    }
+
+    function checkAnswer() {
+      const q = currentFilteredQuestions[currentQIndex];
+      const selectedInputs = Array.from(document.querySelectorAll('input[name="quiz-option"]:checked'));
+      const userSelected = selectedInputs.map(input => parseInt(input.value)).sort((a,b) => a-b);
+
+      if (userSelected.length === 0) {
+        showFeedback("warning", "請先選擇答案！", "請至少勾選一個選項後再點擊提交。");
+        return;
+      }
+
+      // 比對答案是否完全吻合
+      const isCorrect = userSelected.length === q.correct.length &&
+                        userSelected.every((val, i) => val === q.correct[i]);
+
+      if (isCorrect) {
+        showFeedback(
+          "success",
+          "🎉 太棒了！答對了！",
+          `<strong>解析說明：</strong>${q.explanation}`
+        );
+        document.getElementById("btn-submit").classList.add("hidden");
+        document.getElementById("btn-next").classList.remove("hidden");
+        document.getElementById("btn-next").classList.add("flex");
+      } else {
+        // 答錯處理：不透露答案，根據嘗試次數給予引導性提示
+        attemptCount++;
+        document.getElementById("q-attempt-val").innerText = attemptCount;
+
+        let hintMessage = "";
+        
+        let multiWarning = "";
+        if (q.type === "multiple") {
+          multiWarning = `<div class="mt-2 text-xs font-semibold text-amber-700 bg-amber-50 p-2 rounded-lg border border-amber-200"><i class="fa-solid fa-triangle-exclamation mr-1"></i>複選題叮嚀：本題正確答案共有 ${q.correct.length} 個選項，請檢查是否少選或多選。</div>`;
+        }
+
+        if (attemptCount === 1) {
+          hintMessage = `<div>${q.hints[0]}</div>${multiWarning}`;
+        } else {
+          hintMessage = `<div>${q.hints[1] || q.hints[0]}</div>${multiWarning}`;
+        }
+
+        showFeedback(
+          "hint",
+          `💡 還差一點點喔！（第 ${attemptCount} 次嘗試）`,
+          hintMessage + `<div class="mt-3 font-semibold text-amber-900">請根據上述提示重新審視選項，再試一次吧！</div>`
+        );
+      }
+    }
+
+    function toggleExplicitHint() {
+      const q = currentFilteredQuestions[currentQIndex];
+      showFeedback(
+        "hint",
+        "💡 解題思考方向提示",
+        `<div>${q.hints[0]}</div>`
+      );
+    }
+
+    function showFeedback(type, title, bodyHtml) {
+      const panel = document.getElementById("feedback-panel");
+      const header = document.getElementById("feedback-header");
+      const body = document.getElementById("feedback-body");
+
+      panel.classList.remove("hidden", "bg-emerald-50", "border-emerald-200", "text-emerald-900", "bg-amber-50", "border-amber-200", "text-amber-900", "bg-sky-50", "border-sky-200", "text-sky-900");
+
+      if (type === "success") {
+        panel.classList.add("bg-emerald-50", "border", "border-emerald-200", "text-emerald-900");
+        header.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 text-base"></i> <span class="text-emerald-800">${title}</span>`;
+      } else if (type === "hint") {
+        panel.classList.add("bg-amber-50", "border", "border-amber-200", "text-amber-900");
+        header.innerHTML = `<i class="fa-solid fa-lightbulb text-amber-600 text-base"></i> <span class="text-amber-800">${title}</span>`;
+      } else {
+        panel.classList.add("bg-sky-50", "border", "border-sky-200", "text-sky-900");
+        header.innerHTML = `<i class="fa-solid fa-info-circle text-sky-600 text-base"></i> <span class="text-sky-800">${title}</span>`;
+      }
+
+      body.innerHTML = bodyHtml;
+    }
+
+    function hideFeedback() {
+      document.getElementById("feedback-panel").classList.add("hidden");
+    }
+
+    function nextQuestion() {
+      if (currentQIndex < currentFilteredQuestions.length - 1) {
+        currentQIndex++;
+        renderCurrentQuestion();
+      } else {
+        showFeedback(
+          "success",
+          "🏆 恭喜完成本區段所有題目！",
+          "你已經練習完目前的題庫內容。點擊上方「重新開始」按鈕可再次練習，或切換至「修辭寶典」複習觀念與例句。"
+        );
+        document.getElementById("btn-next").classList.add("hidden");
+      }
+    }
+
+    function filterQuestions() {
+      const val = document.getElementById("quiz-filter").value;
+      if (val === "single") {
+        currentFilteredQuestions = questionBank.filter(q => q.type === "single");
+      } else if (val === "multiple") {
+        currentFilteredQuestions = questionBank.filter(q => q.type === "multiple");
+      } else {
+        currentFilteredQuestions = [...questionBank];
+      }
+      currentQIndex = 0;
+      renderCurrentQuestion();
+    }
+
+    function resetQuiz() {
+      currentQIndex = 0;
+      renderCurrentQuestion();
+    }
+
+    // 系統初始化載入
+    window.onload = function() {
+      renderDictGrid();
+      renderCurrentQuestion();
+    };
+  </script>
+</body>
+</html>
