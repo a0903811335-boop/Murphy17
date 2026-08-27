@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>名師備課教材專區 | 國中文學數位教學總覽</title>
+  <title>國中文學 · 備課寶典 | 名師備課教學總庫</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -58,48 +58,45 @@
 
   <style>
     body {
-      background-color: #fcfaf6;
+      background-color: #fdfbf7;
     }
-    .card-shadow {
-      box-shadow: 0 10px 25px -5px rgba(79, 30, 142, 0.07), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    .vault-card {
+      transition: all 0.25s ease;
     }
-    .card-shadow:hover {
-      box-shadow: 0 20px 35px -5px rgba(79, 30, 142, 0.14), 0 10px 15px -5px rgba(0, 0, 0, 0.06);
+    .vault-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 30px -10px rgba(115, 42, 211, 0.12), 0 10px 15px -5px rgba(0, 0, 0, 0.04);
     }
   </style>
 </head>
-<body class="text-slate-800 antialiased font-sans selection:bg-rose-200 selection:text-rose-950 flex flex-col min-h-screen">
+<body class="text-slate-800 antialiased font-sans flex flex-col min-h-screen">
 
   <!-- Top Sticky Navigation Bar -->
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-lilac-200 shadow-xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         
-        <!-- Left: Logo & Portal Return -->
+        <!-- Left: Logo & Home Link -->
         <div class="flex items-center space-x-3">
-          <a href="index.html" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-lilac-50 hover:bg-lilac-100 border border-lilac-200 text-lilac-900 font-bold text-xs transition">
-            <i class="fa-solid fa-house text-lilac-600"></i>
-            <span>返回教學首頁</span>
+          <a href="index.html" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-lilac-100 border border-slate-200 text-slate-700 hover:text-lilac-900 font-bold text-xs transition">
+            <i class="fa-solid fa-house text-slate-500"></i>
+            <span>教材首頁</span>
           </a>
-          <span class="text-slate-300 hidden sm:inline">|</span>
-          <div class="flex items-center gap-2.5">
-            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-rose-600 to-lilac-700 text-white flex items-center justify-center text-base shadow-sm">
-              <i class="fa-solid fa-folder-open"></i>
+          <span class="text-slate-300">/</span>
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-rose-600 to-lilac-700 text-white flex items-center justify-center text-sm shadow-sm">
+              <i class="fa-solid fa-book-bookmark"></i>
             </div>
-            <div>
-              <h1 class="text-base sm:text-lg font-serif font-black text-slate-900 leading-tight">名師備課教材資源專區</h1>
-              <p class="text-[11px] text-slate-500 hidden sm:block">各課深度備課手冊 · PISA 提問庫 · 形音義考點 · 修辭與類文</p>
-            </div>
+            <h1 class="text-base sm:text-lg font-serif font-black text-slate-900 leading-tight">
+              國中文學 · 備課寶典
+            </h1>
           </div>
         </div>
 
-        <!-- Right: Fast Jump Links -->
+        <!-- Right Action -->
         <div class="flex items-center space-x-2">
-          <a href="index.html" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition">
-            學生教材入口
-          </a>
-          <a href="修辭.html" class="px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 font-bold text-xs transition border border-amber-200">
-            ✍️ 修辭學堂
+          <a href="index.html" class="px-3.5 py-1.5 rounded-xl bg-lilac-50 hover:bg-lilac-100 text-lilac-900 font-bold text-xs transition border border-lilac-200">
+            <i class="fa-solid fa-graduation-cap mr-1 text-lilac-600"></i> 學生互動課堂
           </a>
         </div>
 
@@ -107,249 +104,300 @@
     </div>
   </header>
 
-  <!-- Hero Banner -->
-  <section class="bg-gradient-to-r from-rose-950 via-lilac-950 to-indigo-950 text-white py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden border-b border-lilac-800">
-    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#d5bffd_1px,transparent_1px)] [background-size:16px_16px]"></div>
-    <div class="absolute -right-10 -bottom-10 w-96 h-96 bg-rose-500/20 rounded-full blur-3xl"></div>
-    <div class="absolute left-10 -top-10 w-80 h-80 bg-lilac-500/20 rounded-full blur-3xl"></div>
-
-    <div class="max-w-7xl mx-auto relative z-10 space-y-4 text-center sm:text-left">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-xs font-semibold text-rose-300">
-        <i class="fa-solid fa-chalkboard-user"></i> 專為國中國文教師打造 · 一站式教學與備課手冊資源總庫
+  <!-- Hero Header -->
+  <section class="bg-gradient-to-r from-slate-900 via-lilac-950 to-indigo-950 text-white py-10 px-4 sm:px-6 lg:px-8 border-b border-lilac-800">
+    <div class="max-w-7xl mx-auto space-y-3">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-rose-300 border border-white/20">
+        <i class="fa-solid fa-folder-tree"></i> 名師備課專區 · 課文清單目錄
       </div>
-      
-      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif font-black tracking-tight leading-tight text-white">
-        點選下方教材，直接開啟 <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-300 via-sunlight-300 to-amber-200">各課名師備課手冊</span>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-serif font-black text-white">
+        📖 備課寶典 · 請點選欲備課之課文
       </h2>
-      
-      <p class="text-xs sm:text-sm text-lilac-200 max-w-3xl leading-relaxed">
-        這裡匯聚了所有課文的深度備課資料：包含各課 16 題引導提問與參考解答、段考必考字詞形音義、作家深度專題、修辭解析、成語寫作心法與拓展類文。點擊即可直接閱讀、上課提問或一鍵列印成講義！
+      <p class="text-xs sm:text-sm text-lilac-200 max-w-2xl leading-relaxed">
+        點擊下方課文卡片，即可開啟該課的完整深度備課資料（包含 16 題引導提問與參考解答、字音字形考點、外來語百科、成語會考題解與類文選讀）。
       </p>
     </div>
   </section>
 
-  <!-- Main Material Cards Section -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10 flex-1">
-    
-    <!-- Section Title -->
+  <!-- Main Content Area: Lesson Directory -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 space-y-8">
+
+    <!-- Grade Filter Tabs -->
     <div class="flex items-center justify-between border-b border-lilac-200 pb-3">
-      <div>
-        <h3 class="text-xl font-serif font-black text-slate-900 flex items-center gap-2">
-          <i class="fa-solid fa-book-open-reader text-rose-600"></i> 各課名師深度備課手冊列表
-        </h3>
-        <p class="text-xs text-slate-500 mt-0.5">點擊卡片即可進入各課專屬的完整備課教材頁面</p>
+      <div class="flex items-center space-x-2">
+        <span class="text-xs font-bold text-slate-500 mr-2"><i class="fa-solid fa-filter mr-1"></i>年級選擇：</span>
+        <button class="px-3.5 py-1.5 rounded-xl bg-lilac-700 text-white text-xs font-bold shadow-xs">全部課文</button>
+        <button class="px-3.5 py-1.5 rounded-xl bg-white hover:bg-lilac-50 text-slate-600 border border-slate-200 text-xs font-medium transition">七年級</button>
+        <button class="px-3.5 py-1.5 rounded-xl bg-white hover:bg-lilac-50 text-slate-600 border border-slate-200 text-xs font-medium transition">八年級</button>
       </div>
-      <span class="text-xs bg-rose-100 text-rose-800 font-bold px-3 py-1 rounded-full border border-rose-200">持續擴充中</span>
+      <span class="text-xs text-slate-500 font-medium">共 7 篇名師備課教材</span>
     </div>
 
-    <!-- Cards Grid -->
+    <!-- Lessons Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-      <!-- ============================================== -->
-      <!-- CARD 1: 聲音鐘 名師深度備課手冊 (FEATURED) -->
-      <!-- ============================================== -->
-      <div class="bg-white rounded-3xl overflow-hidden border-2 border-rose-300 card-shadow flex flex-col justify-between transition-all duration-300 relative group">
+      <!-- ========================================== -->
+      <!-- LESSON 1: 聲音鐘 (CLICKABLE TO FULL DATA) -->
+      <!-- ========================================== -->
+      <a href="lesson_sound_clock_prep.html" class="vault-card bg-white rounded-3xl p-6 border-2 border-rose-300 shadow-sm flex flex-col justify-between group cursor-pointer relative overflow-hidden">
         
-        <!-- Top Featured Badge -->
-        <div class="absolute top-3 right-3 z-10">
-          <span class="px-3 py-1 bg-rose-600 text-white font-bold text-[11px] rounded-full shadow-md">
-            🔥 完整 8 大模組
+        <!-- Status Tag -->
+        <div class="absolute top-4 right-4">
+          <span class="px-3 py-1 bg-rose-600 text-white font-bold text-[11px] rounded-full shadow-xs">
+            🔥 完整 8 大模組備課手冊
           </span>
         </div>
 
-        <div>
-          <!-- Card Header Banner -->
-          <div class="bg-gradient-to-r from-rose-900 via-lilac-900 to-indigo-900 p-6 text-white relative overflow-hidden">
-            <div class="space-y-1">
-              <span class="text-[11px] font-bold text-rose-300 uppercase tracking-wider">七年級（下）第一課 · 翰林版</span>
-              <h4 class="text-2xl font-serif font-black tracking-wide text-white flex items-center gap-2">
-                <span>《聲音鐘》</span>
-                <span class="text-xs font-sans font-normal text-rose-200 bg-white/20 px-2 py-0.5 rounded">陳黎</span>
-              </h4>
+        <div class="space-y-4">
+          <!-- Icon & Grade -->
+          <div class="flex items-center space-x-3">
+            <div class="w-12 h-12 rounded-2xl bg-rose-100 text-rose-700 flex items-center justify-center text-xl shadow-xs group-hover:scale-110 transition duration-200">
+              <i class="fa-solid fa-bell"></i>
             </div>
-            <p class="text-xs text-lilac-200 mt-2 line-clamp-2">
-              完整收錄 16 題引導提問、字音字形考點（乍暖還寒讀音考據）、外來語大百科、作家自況《陳腐先生傳》與 4 篇精選類文。
-            </p>
+            <div>
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">七年級（下）第一課 · 翰林版</span>
+              <h3 class="text-xl font-serif font-black text-slate-900 group-hover:text-rose-700 transition">
+                聲音鐘
+              </h3>
+              <p class="text-xs text-slate-500">作者：陳黎 · 當代記敘散文</p>
+            </div>
           </div>
 
-          <!-- Modules Checklist -->
-          <div class="p-6 space-y-3 text-xs text-slate-700">
-            <div class="font-bold text-slate-900 pb-1 border-b border-slate-100 flex items-center gap-1.5">
-              <i class="fa-solid fa-list-check text-rose-600"></i> 本手冊包含內容：
+          <!-- Description -->
+          <p class="text-xs text-slate-600 leading-relaxed">
+            以時間為經、叫賣聲為緯，生動刻劃台灣小鎮街巷商販的生命力與聲音美學。
+          </p>
+
+          <!-- Module Highlights Inside this Lesson -->
+          <div class="bg-rose-50/60 p-3.5 rounded-2xl border border-rose-100 space-y-1.5 text-xs text-rose-950">
+            <div class="font-bold flex items-center gap-1.5 text-rose-900 pb-1 border-b border-rose-200/60">
+              <i class="fa-solid fa-folder-open text-rose-600"></i> 點開查看完整備課資料：
             </div>
-            <ul class="space-y-1.5 text-slate-600">
-              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600 text-[10px]"></i> <strong>16 題 PISA 素養段落提問</strong>（附參考答案）</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600 text-[10px]"></i> <strong>段考必考字詞形音義</strong>（含國語會考據）</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600 text-[10px]"></i> <strong>作家深度專題</strong>（陳黎筆名由來、自況四絕）</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600 text-[10px]"></i> <strong>外來語大百科</strong>（梵語/英語/日語源流）</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600 text-[10px]"></i> <strong>歷屆基測會考真題</strong>（100 基測/107 會考）</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600 text-[10px]"></i> <strong>4 篇精選類文延伸</strong>（江文也/陳黎/賴鈺婷）</li>
-            </ul>
+            <div class="grid grid-cols-2 gap-1 text-[11px] text-slate-600 pt-1">
+              <div>✓ 16 題引導提問</div>
+              <div>✓ 乍暖還寒讀音考據</div>
+              <div>✓ 外來語大百科</div>
+              <div>✓ 歷屆基測會考題解</div>
+              <div>✓ 作家《陳腐先生傳》</div>
+              <div>✓ 4 篇拓展類文選讀</div>
+            </div>
           </div>
         </div>
 
-        <!-- Action Button -->
-        <div class="p-6 pt-0">
-          <a href="lesson_sound_clock_prep.html" class="w-full py-3.5 bg-gradient-to-r from-rose-600 to-lilac-700 hover:from-rose-700 hover:to-lilac-800 text-white font-bold text-sm rounded-2xl shadow-md transition flex items-center justify-center gap-2 group-hover:shadow-lg">
-            <span>📖 點此進入《聲音鐘》備課手冊</span>
-            <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition"></i>
-          </a>
+        <!-- Open Action Button -->
+        <div class="pt-5 border-t border-slate-100 mt-4 flex items-center justify-between">
+          <span class="text-xs font-bold text-rose-600 group-hover:translate-x-1 transition flex items-center gap-1.5">
+            點擊開啟《聲音鐘》全套資料 <i class="fa-solid fa-arrow-right text-[11px]"></i>
+          </span>
+          <span class="w-8 h-8 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center text-xs group-hover:bg-rose-600 group-hover:text-white transition">
+            <i class="fa-solid fa-chevron-right"></i>
+          </span>
         </div>
 
-      </div>
+      </a>
 
-      <!-- ============================================== -->
-      <!-- CARD 2: 修辭大圖鑑與題庫 (RHETORIC) -->
-      <!-- ============================================== -->
-      <div class="bg-white rounded-3xl overflow-hidden border border-amber-200 card-shadow flex flex-col justify-between transition-all duration-300 relative group">
+      <!-- ========================================== -->
+      <!-- LESSON 2: 修辭大圖鑑與題庫 -->
+      <!-- ========================================== -->
+      <a href="修辭.html" class="vault-card bg-white rounded-3xl p-6 border border-purple-200 shadow-sm flex flex-col justify-between group cursor-pointer">
         
-        <div>
-          <!-- Card Header Banner -->
-          <div class="bg-gradient-to-r from-amber-700 via-sunlight-600 to-orange-700 p-6 text-white relative overflow-hidden">
-            <div class="space-y-1">
-              <span class="text-[11px] font-bold text-sunlight-200 uppercase tracking-wider">國中三年全冊適用 · 必考修辭</span>
-              <h4 class="text-2xl font-serif font-black tracking-wide text-white flex items-center gap-2">
-                <span>《國語修辭學堂》</span>
-              </h4>
+        <div class="space-y-4">
+          <div class="flex items-center space-x-3">
+            <div class="w-12 h-12 rounded-2xl bg-purple-100 text-purple-700 flex items-center justify-center text-xl shadow-xs group-hover:scale-110 transition duration-200">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
             </div>
-            <p class="text-xs text-amber-100 mt-2">
-              完整分類譬喻、轉化、借代、映襯、誇飾等 16+ 核心修辭，每項提供 4 個經典例句與即時互動測驗題庫。
-            </p>
+            <div>
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">國中全冊通用 · 必考修辭</span>
+              <h3 class="text-xl font-serif font-black text-slate-900 group-hover:text-purple-700 transition">
+                國語修辭學堂
+              </h3>
+              <p class="text-xs text-slate-500">16+ 核心修辭圖鑑與題庫</p>
+            </div>
           </div>
 
-          <!-- Modules Checklist -->
-          <div class="p-6 space-y-3 text-xs text-slate-700">
-            <div class="font-bold text-slate-900 pb-1 border-b border-slate-100 flex items-center gap-1.5">
-              <i class="fa-solid fa-list-check text-amber-600"></i> 本模組包含內容：
+          <p class="text-xs text-slate-600 leading-relaxed">
+            收錄譬喻、轉化、借代、映襯、誇飾等 16 種修辭，每項提供 4 個課文例句與互動測驗。
+          </p>
+
+          <div class="bg-purple-50/60 p-3.5 rounded-2xl border border-purple-100 space-y-1.5 text-xs text-purple-950">
+            <div class="font-bold flex items-center gap-1.5 text-purple-900 pb-1 border-b border-purple-200/60">
+              <i class="fa-solid fa-folder-open text-purple-600"></i> 點開查看修辭資料：
             </div>
-            <ul class="space-y-1.5 text-slate-600">
-              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600 text-[10px]"></i> <strong>16 種常用修辭完整寶典</strong></li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600 text-[10px]"></i> <strong>每項 4 個課文經典例句解析</strong></li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600 text-[10px]"></i> <strong>即時隨堂修辭測驗與評量</strong></li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600 text-[10px]"></i> <strong>明喻、隱喻、借喻三要素辨析</strong></li>
-            </ul>
+            <div class="grid grid-cols-2 gap-1 text-[11px] text-slate-600 pt-1">
+              <div>✓ 16 大常用修辭解析</div>
+              <div>✓ 課文經典例句庫</div>
+              <div>✓ 隨堂修辭互動測驗</div>
+              <div>✓ 譬喻三大要素辨析</div>
+            </div>
           </div>
         </div>
 
-        <!-- Action Button -->
-        <div class="p-6 pt-0">
-          <a href="修辭.html" class="w-full py-3.5 bg-gradient-to-r from-amber-600 to-sunlight-600 hover:from-amber-700 hover:to-sunlight-700 text-white font-bold text-sm rounded-2xl shadow-md transition flex items-center justify-center gap-2 group-hover:shadow-lg">
-            <span>✍️ 進入《國語修辭學堂》</span>
-            <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition"></i>
-          </a>
+        <div class="pt-5 border-t border-slate-100 mt-4 flex items-center justify-between">
+          <span class="text-xs font-bold text-purple-600 group-hover:translate-x-1 transition flex items-center gap-1.5">
+            點擊開啟修辭資料庫 <i class="fa-solid fa-arrow-right text-[11px]"></i>
+          </span>
+          <span class="w-8 h-8 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center text-xs group-hover:bg-purple-600 group-hover:text-white transition">
+            <i class="fa-solid fa-chevron-right"></i>
+          </span>
         </div>
 
-      </div>
+      </a>
 
-      <!-- ============================================== -->
-      <!-- CARD 3: 紙船印象 備課指引 (PAPER BOAT) -->
-      <!-- ============================================== -->
-      <div class="bg-white rounded-3xl overflow-hidden border border-cyan-200 card-shadow flex flex-col justify-between transition-all duration-300 relative group">
+      <!-- ========================================== -->
+      <!-- LESSON 3: 紙船印象 -->
+      <!-- ========================================== -->
+      <a href="lesson_paper_boat.html" class="vault-card bg-white rounded-3xl p-6 border border-cyan-200 shadow-sm flex flex-col justify-between group cursor-pointer">
         
-        <div>
-          <!-- Card Header Banner -->
-          <div class="bg-gradient-to-r from-cyan-900 via-teal-800 to-slate-900 p-6 text-white relative overflow-hidden">
-            <div class="space-y-1">
-              <span class="text-[11px] font-bold text-cyan-300 uppercase tracking-wider">七年級（上）第三課 · 洪醒夫</span>
-              <h4 class="text-2xl font-serif font-black tracking-wide text-white flex items-center gap-2">
-                <span>《紙船印象》</span>
-                <span class="text-xs font-sans font-normal text-cyan-200 bg-white/20 px-2 py-0.5 rounded">洪醒夫</span>
-              </h4>
+        <div class="space-y-4">
+          <div class="flex items-center space-x-3">
+            <div class="w-12 h-12 rounded-2xl bg-cyan-100 text-cyan-700 flex items-center justify-center text-xl shadow-xs group-hover:scale-110 transition duration-200">
+              <i class="fa-solid fa-paper-plane"></i>
             </div>
-            <p class="text-xs text-cyan-100 mt-2">
-              母愛象徵、紙船意象心智圖、借事抒情寫作手法解析與情意教學延伸。
-            </p>
-          </div>
-
-          <!-- Modules Checklist -->
-          <div class="p-6 space-y-3 text-xs text-slate-700">
-            <div class="font-bold text-slate-900 pb-1 border-b border-slate-100 flex items-center gap-1.5">
-              <i class="fa-solid fa-list-check text-cyan-600"></i> 本手冊包含內容：
+            <div>
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">七年級（上）第三課</span>
+              <h3 class="text-xl font-serif font-black text-slate-900 group-hover:text-cyan-700 transition">
+                紙船印象
+              </h3>
+              <p class="text-xs text-slate-500">作者：洪醒夫 · 抒情記敘散文</p>
             </div>
-            <ul class="space-y-1.5 text-slate-600">
-              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600 text-[10px]"></i> <strong>紙船象徵與母愛傳承核心意象</strong></li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600 text-[10px]"></i> <strong>記敘散文開頭與結尾呼應法</strong></li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600 text-[10px]"></i> <strong>洪醒夫鄉土作家生平采風</strong></li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600 text-[10px]"></i> <strong>隨堂互動教學與課文報讀</strong></li>
-            </ul>
+          </div>
+
+          <p class="text-xs text-slate-600 leading-relaxed">
+            透過雨天童年摺紙船的回憶，寄託母愛如江河綿長的深摯情感與生命傳承。
+          </p>
+
+          <div class="bg-cyan-50/60 p-3.5 rounded-2xl border border-cyan-100 space-y-1.5 text-xs text-cyan-950">
+            <div class="font-bold flex items-center gap-1.5 text-cyan-900 pb-1 border-b border-cyan-200/60">
+              <i class="fa-solid fa-folder-open text-cyan-600"></i> 點開查看課文指引：
+            </div>
+            <div class="grid grid-cols-2 gap-1 text-[11px] text-slate-600 pt-1">
+              <div>✓ 紙船母愛象徵意象</div>
+              <div>✓ 記敘抒情寫作手法</div>
+              <div>✓ 洪醒夫鄉土文學采風</div>
+              <div>✓ 課文互動教學報讀</div>
+            </div>
           </div>
         </div>
 
-        <!-- Action Button -->
-        <div class="p-6 pt-0">
-          <a href="lesson_paper_boat.html" class="w-full py-3.5 bg-gradient-to-r from-cyan-700 to-teal-700 hover:from-cyan-800 hover:to-teal-800 text-white font-bold text-sm rounded-2xl shadow-md transition flex items-center justify-center gap-2 group-hover:shadow-lg">
-            <span>⛵ 進入《紙船印象》教材</span>
-            <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition"></i>
-          </a>
+        <div class="pt-5 border-t border-slate-100 mt-4 flex items-center justify-between">
+          <span class="text-xs font-bold text-cyan-600 group-hover:translate-x-1 transition flex items-center gap-1.5">
+            點擊開啟《紙船印象》教材 <i class="fa-solid fa-arrow-right text-[11px]"></i>
+          </span>
+          <span class="w-8 h-8 rounded-full bg-cyan-50 text-cyan-600 flex items-center justify-center text-xs group-hover:bg-cyan-600 group-hover:text-white transition">
+            <i class="fa-solid fa-chevron-right"></i>
+          </span>
         </div>
 
-      </div>
+      </a>
 
-    </div>
-
-    <!-- Section 2: Classroom Teaching Toolkit Preview -->
-    <div class="bg-gradient-to-br from-lilac-50/60 to-indigo-50/40 rounded-3xl p-6 sm:p-8 border border-lilac-200 space-y-6">
-      <div class="flex items-center justify-between border-b border-lilac-200/80 pb-3">
-        <div class="flex items-center gap-2.5">
-          <div class="w-8 h-8 rounded-xl bg-lilac-700 text-white flex items-center justify-center text-sm">
-            <i class="fa-solid fa-toolbox"></i>
+      <!-- ========================================== -->
+      <!-- LESSON 4: 背影 -->
+      <!-- ========================================== -->
+      <div class="vault-card bg-white rounded-3xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
+        <div class="space-y-4">
+          <div class="flex items-center space-x-3">
+            <div class="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-xl shadow-xs">
+              <i class="fa-solid fa-book"></i>
+            </div>
+            <div>
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">八年級（上）第二課</span>
+              <h3 class="text-xl font-serif font-black text-slate-900">
+                背影
+              </h3>
+              <p class="text-xs text-slate-500">作者：朱自清 · 經典記敘散文</p>
+            </div>
           </div>
-          <div>
-            <h4 class="text-base sm:text-lg font-serif font-black text-slate-900">隨堂教學互動小工具</h4>
-            <p class="text-xs text-slate-500">上課隨點即用，支援電子白板大螢幕投影</p>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            月台買橘背影的細膩特寫，含蓄深沉地刻劃父子間的愧疚與深情。
+          </p>
+          <div class="text-[11px] text-slate-500 bg-slate-50 p-3 rounded-xl border border-slate-100">
+            📌 包含：買橘細節動作特寫、四次流淚心境變化、三層次素養提問設計。
           </div>
         </div>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-        <div class="bg-white p-4 rounded-2xl border border-lilac-200 space-y-2">
-          <div class="font-bold text-amber-950 flex items-center gap-1.5">
-            <i class="fa-solid fa-dice text-amber-600 text-base"></i> 1 到 20 號 課堂竹木籤筒
-          </div>
-          <p class="text-slate-600">支援擬真搖籤動態、木質撞擊聲效、不重複自動劃記與課堂隨機籤詩任務。</p>
-          <a href="index.html" class="inline-flex items-center gap-1 text-amber-700 font-bold hover:underline pt-1">
-            至首頁使用抽籤筒 <i class="fa-solid fa-angle-right text-[10px]"></i>
-          </a>
-        </div>
-
-        <div class="bg-white p-4 rounded-2xl border border-lilac-200 space-y-2">
-          <div class="font-bold text-emerald-950 flex items-center gap-1.5">
-            <i class="fa-solid fa-stopwatch text-emerald-600 text-base"></i> 小組討論計時器（3分/5分）
-          </div>
-          <p class="text-slate-600">專為小組 3 分鐘快思、5 分鐘深度撰寫設計，支援電子白板全螢幕投影與提示鐘聲。</p>
-          <a href="index.html" class="inline-flex items-center gap-1 text-emerald-700 font-bold hover:underline pt-1">
-            至首頁使用計時器 <i class="fa-solid fa-angle-right text-[10px]"></i>
-          </a>
-        </div>
-
-        <div class="bg-white p-4 rounded-2xl border border-lilac-200 space-y-2">
-          <div class="font-bold text-purple-950 flex items-center gap-1.5">
-            <i class="fa-solid fa-lightbulb text-purple-600 text-base"></i> PISA 素養三層次提問指引
-          </div>
-          <p class="text-slate-600">第一層擷取訊息、第二層文意推論統整、第三層省思評鑑價值，助您設計素養好題。</p>
-          <a href="index.html" class="inline-flex items-center gap-1 text-purple-700 font-bold hover:underline pt-1">
-            至首頁查看提問模板 <i class="fa-solid fa-angle-right text-[10px]"></i>
-          </a>
+        <div class="pt-5 border-t border-slate-100 mt-4 flex items-center justify-between text-xs text-slate-400">
+          <span>八年級教材系列</span>
+          <span class="px-2.5 py-1 bg-slate-100 rounded-lg font-semibold">教材大綱已備妥</span>
         </div>
       </div>
+
+      <!-- ========================================== -->
+      <!-- LESSON 5: 兒時記趣 -->
+      <!-- ========================================== -->
+      <div class="vault-card bg-white rounded-3xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
+        <div class="space-y-4">
+          <div class="flex items-center space-x-3">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl shadow-xs">
+              <i class="fa-solid fa-leaf"></i>
+            </div>
+            <div>
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">七年級（上）第四課</span>
+              <h3 class="text-xl font-serif font-black text-slate-900">
+                兒時記趣
+              </h3>
+              <p class="text-xs text-slate-500">作者：沈復 · 古典文言記敘</p>
+            </div>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            透過豐富的童心與想像力，在微小平凡的事物中發現超然物外的志趣。
+          </p>
+          <div class="text-[11px] text-slate-500 bg-slate-50 p-3 rounded-xl border border-slate-100">
+            📌 包含：物外之趣三大主線、文言虛詞「之/其」辨析、誇飾摹寫手法。
+          </div>
+        </div>
+        <div class="pt-5 border-t border-slate-100 mt-4 flex items-center justify-between text-xs text-slate-400">
+          <span>七年級文言經典</span>
+          <span class="px-2.5 py-1 bg-slate-100 rounded-lg font-semibold">教材大綱已備妥</span>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- LESSON 6: 木蘭詩 -->
+      <!-- ========================================== -->
+      <div class="vault-card bg-white rounded-3xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
+        <div class="space-y-4">
+          <div class="flex items-center space-x-3">
+            <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl shadow-xs">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div>
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">八年級（下）第六課</span>
+              <h3 class="text-xl font-serif font-black text-slate-900">
+                木蘭詩
+              </h3>
+              <p class="text-xs text-slate-500">作者：佚名 · 北朝樂府敘事民歌</p>
+            </div>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            記敘木蘭代父從軍的傳奇故事，融合剛毅英勇與女性溫柔孝思。
+          </p>
+          <div class="text-[11px] text-slate-500 bg-slate-50 p-3 rounded-xl border border-slate-100">
+            📌 包含：互文修辭辨析、排比複沓結構、木蘭形象古今對照。
+          </div>
+        </div>
+        <div class="pt-5 border-t border-slate-100 mt-4 flex items-center justify-between text-xs text-slate-400">
+          <span>八年級古典韻文</span>
+          <span class="px-2.5 py-1 bg-slate-100 rounded-lg font-semibold">教材大綱已備妥</span>
+        </div>
+      </div>
+
     </div>
 
   </main>
 
   <!-- Footer -->
-  <footer class="bg-lilac-950 text-lilac-300 py-8 border-t border-lilac-900 mt-12">
+  <footer class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 mt-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
-      <div class="flex items-center space-x-2">
-        <a href="index.html" class="text-white hover:text-sunlight-300 font-serif font-bold">🏠 國中文學教學入口</a>
+      <div class="flex items-center space-x-3">
+        <a href="index.html" class="text-white hover:text-rose-300 font-serif font-bold">🏠 返回教材首頁</a>
         <span>·</span>
-        <a href="prep_hub.html" class="hover:text-sunlight-300 font-bold text-rose-300">📚 備課教材專區</a>
+        <a href="prep_hub.html" class="text-rose-300 font-bold">📖 備課寶典目錄</a>
         <span>·</span>
-        <a href="lesson_sound_clock_prep.html" class="hover:text-sunlight-300">📖 《聲音鐘》備課手冊</a>
+        <a href="lesson_sound_clock_prep.html" class="hover:text-white">《聲音鐘》備課資料</a>
         <span>·</span>
-        <a href="修辭.html" class="hover:text-sunlight-300">✍️ 國語修辭學堂</a>
+        <a href="修辭.html" class="hover:text-white">國語修辭學堂</a>
       </div>
       <div>
-        © 2026 國中國文數位美感教學資源網 · 名師備課教材資源專區
+        © 2026 國中文學數位美感教學資源網 · 備課寶典
       </div>
     </div>
   </footer>
